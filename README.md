@@ -1,6 +1,6 @@
 # doughmain
 
-Jack Mason
-Darleen Brazoban
-Alex Lozano
-Helen Tran
+- Jack Mason
+- Darleen Brazoban
+- Alex Lozano
+- Helen Tran
