@@ -6,6 +6,7 @@ target/
 **/node_modules
 *.lesson.json
 .etignore
+mvnw
 
 ### STS ###
 .apt_generated
@@ -34,3 +35,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### maven wrapper ####
+mvnw
+
