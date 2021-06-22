@@ -16,7 +16,6 @@ const PizzaStyleTile = props => {
         </div>
       </div>
     </div>
-    
   )
 }
 
