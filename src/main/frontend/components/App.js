@@ -4,23 +4,17 @@ import "foundation-sites";
 import $ from "jquery";
 import "../assets/scss/main.scss"
 
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-
-import PizzaStylesIndex from "./PizzaStylesIndex"
+import NavBar from "./NavBar"
+import { BrowserRouter, Route } from "react-router-dom";
 
 const App = (props) => {
   useEffect(() => {
     $(document).foundation();
   }, []);
 
-  return (
+  return(
     <BrowserRouter>
-      <Switch>
-        <Route exact path="/">
-          <Redirect to="/pizza-styles"/>
-        </Route>
-        <Route exact path="/pizza-styles" component={PizzaStylesIndex}/>
-      </Switch>
+      <Route path="/" component={NavBar} />
     </BrowserRouter>
   )
 };
