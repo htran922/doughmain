@@ -23,4 +23,8 @@ public class PizzaStyleService {
   public List<PizzaStyle> findByName(String name) {
     return repository.findByName(name);
   }
+
+  public Iterable<PizzaStyle> findAll() {
+    return repository.findAll();
+  }
 }
