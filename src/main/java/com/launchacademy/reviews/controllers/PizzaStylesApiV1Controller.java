@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/pizza-styles")
@@ -25,5 +25,12 @@ public class PizzaStylesApiV1Controller {
     Map<String, List<PizzaStyle>> pizzaStylesMap = new HashMap<>();
     pizzaStylesMap.put("pizzaStyles", pizzaStyleService.findAll());
     return pizzaStylesMap;
+  }
+
+  @GetMapping("/new")
+  public Map<String, PizzaStyle> addPizzaStyle(@RequestBody @Valid PizzaStyle pizzaStyle) {
+    Map<String, PizzaStyle> style = new HashMap<>();
+    style.put("pizzaStyle", pizzaStyle);
+    return style;
   }
 }
