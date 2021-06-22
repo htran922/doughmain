@@ -27,13 +27,6 @@ public class PizzaStylesApiV1Controller {
     return pizzaStylesMap;
   }
 
-  @GetMapping("/new")
-  public Map<String, PizzaStyle> getForm(@RequestBody @Valid PizzaStyle pizzaStyle) {
-    Map<String, PizzaStyle> style = new HashMap<>();
-    style.put("pizzaStyle", pizzaStyle);
-    return style;
-  }
-
   @PostMapping
   public Map<String, PizzaStyle> addPizzaStyle(@RequestBody @Valid PizzaStyle pizzaStyle) {
     Map<String, PizzaStyle> newStyle = new HashMap<>();

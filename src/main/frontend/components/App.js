@@ -4,8 +4,6 @@ import "foundation-sites";
 import $ from "jquery";
 import "../assets/scss/main.scss"
 
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-
 import NavBar from "./NavBar"
 import { BrowserRouter, Route } from "react-router-dom";
 
