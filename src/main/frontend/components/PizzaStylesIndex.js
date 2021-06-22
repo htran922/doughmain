@@ -34,8 +34,14 @@ const PizzaStylesIndex = props => {
   })
 
   return (
-    <div>
-      {pizzaStyleTiles}
+    <div className="grid-container">
+      <h1>See All Pizza Styles</h1>
+      <div className="grid-x grid-margin-x small-up-2 medium-up-3">
+        {pizzaStyleTiles}
+     
+      </div>
+      
+     
     </div>
   )
 }
