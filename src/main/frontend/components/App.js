@@ -6,6 +6,7 @@ import $ from "jquery";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import PizzaStylesIndex from "./PizzaStylesIndex"
+import PizzaStyleShow from "./PizzaStyleShow";
 
 const App = (props) => {
   useEffect(() => {
@@ -19,6 +20,7 @@ const App = (props) => {
           <Redirect to="/pizza-styles"/>
         </Route>
         <Route exact path="/pizza-styles" component={PizzaStylesIndex}/>
+        <Route exact path="/pizza-styles/:id" component={PizzaStyleShow} />
       </Switch>
     </BrowserRouter>
   )
