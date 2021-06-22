@@ -10,6 +10,8 @@ const NewPizzaStyleForm = props => {
     imgUrl: ""
   })
   const [errors, setErrors] = useState({})
+  const [styleId, setStyleId] = useState(null)
+  const [shouldRedirect, setShouldRedirect] = useState(false)
 
   const addStyle = async() => {
     try {
@@ -31,7 +33,8 @@ const NewPizzaStyleForm = props => {
         }
       }
       const body = await response.json()
-      console.log(body.pizzaStyle)
+      setStyleId(body.pizzaStyle.id)
+      setShouldRedirect(true)
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`)
     }
@@ -62,6 +65,10 @@ const NewPizzaStyleForm = props => {
       ...formPayload,
       [event.currentTarget.name]: event.currentTarget.value
     })
+  }
+
+  if (shouldRedirect) {
+    return <Redirect push to={`/pizza-styles/${styleId}`} />
   }
 
   return (

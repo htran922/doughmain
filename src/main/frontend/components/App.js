@@ -6,24 +6,17 @@ import "../assets/scss/main.scss"
 
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
-import PizzaStylesIndex from "./PizzaStylesIndex"
-import NewPizzaStyleForm from "./NewPizzaStyleForm";
+import NavBar from "./NavBar"
+import { BrowserRouter, Route } from "react-router-dom";
 
 const App = (props) => {
   useEffect(() => {
     $(document).foundation();
   }, []);
 
-  return (
+  return(
     <BrowserRouter>
-      <Switch>
-        <Route exact path="/">
-          <Redirect to="/pizza-styles"/>
-        </Route>
-        <Route exact path="/pizza-styles" component={PizzaStylesIndex}/>
-
-        <Route exact path="/pizza-styles/new" component={NewPizzaStyleForm}/>
-      </Switch>
+      <Route path="/" component={NavBar} />
     </BrowserRouter>
   )
 };
