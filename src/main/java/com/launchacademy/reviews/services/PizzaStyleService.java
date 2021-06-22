@@ -23,4 +23,8 @@ public class PizzaStyleService {
   public List<PizzaStyle> findByName(String name) {
     return repository.findByName(name);
   }
+
+  public List<PizzaStyle> findAll() {
+    return (List<PizzaStyle>)repository.findAll();
+  }
 }
