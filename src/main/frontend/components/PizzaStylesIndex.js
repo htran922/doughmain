@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react"
 
+import PizzaStyleTile from "./PizzaStyleTile";
+
 const PizzaStylesIndex = props => {
   const [pizzaStyles, setPizzaStyles] = useState([])
 
