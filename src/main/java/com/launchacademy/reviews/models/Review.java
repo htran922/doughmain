@@ -33,7 +33,7 @@ public class Review {
 
   @NotBlank
   @Column(nullable = false)
-  private String description;
+  private String comment;
 
   @Min(0)
   @Max(5)
@@ -50,7 +50,7 @@ public class Review {
 
   public Review(String title, String description, Integer rating, String imgUrl) {
     this.title = title;
-    this.description = description;
+    this.comment = description;
     this.rating = rating;
     this.imgUrl = imgUrl;
     createdAt = LocalDateTime.now();
