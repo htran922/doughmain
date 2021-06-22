@@ -4,7 +4,7 @@ CREATE TABLE reviews (
     description TEXT NOT NULL,
     rating INTEGER NOT NULL,
     img_url VARCHAR(255),
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
