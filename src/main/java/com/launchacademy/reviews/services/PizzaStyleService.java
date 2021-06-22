@@ -27,4 +27,8 @@ public class PizzaStyleService {
   public List<PizzaStyle> findAll() {
     return (List<PizzaStyle>)repository.findAll();
   }
+
+  public List<PizzaStyle> findByNameIgnoreCase(String name) {
+    return repository.findByNameIgnoreCase(name);
+  }
 }
