@@ -1,16 +1,20 @@
 package com.launchacademy.reviews.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,20 +44,27 @@ public class Review {
   @Column(nullable = false)
   private Integer rating;
 
-  @NotBlank
-  @Column(nullable = false)
   private String imgUrl;
 
   private LocalDateTime createdAt;
 
   private LocalDateTime updatedAt;
 
-  public Review(String title, String description, Integer rating, String imgUrl) {
+  @ManyToOne
+  @NotNull
+  @JoinColumn(name="pizza_style_id")
+  @JsonIgnoreProperties("reviews")
+  private PizzaStyle pizzaStyle;
+
+
+  public Review(String title, String description, Integer rating, String imgUrl, PizzaStyle pizzaStyle) {
     this.title = title;
     this.comment = description;
     this.rating = rating;
     this.imgUrl = imgUrl;
+    this.pizzaStyle = pizzaStyle;
     createdAt = LocalDateTime.now();
     updatedAt = LocalDateTime.now();
+
   }
 }
