@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react"
 import PizzaStyleTile from "./PizzaStyleTile";
 
+import PizzaStyleTile from "./PizzaStyleTile";
+
 const PizzaStylesIndex = props => {
   const [pizzaStyles, setPizzaStyles] = useState([])
 
@@ -33,8 +35,11 @@ const PizzaStylesIndex = props => {
   })
 
   return (
-    <div>
-      {pizzaStyleTiles}
+    <div className="grid-container">
+      <h1>See All Pizza Styles</h1>
+      <div className="grid-x grid-margin-x small-up-2 medium-up-3">
+        {pizzaStyleTiles}
+      </div>
     </div>
   )
 }
