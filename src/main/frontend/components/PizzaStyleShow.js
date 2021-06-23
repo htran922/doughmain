@@ -1,17 +1,16 @@
-import React, {useEffect, useState} from "react"
-import ReviewTile from "./ReviewTile";
-import PizzaStyleTile from "./PizzaStyleTile";
+import React, { useEffect, useState } from "react"
+import ReviewTile from "./ReviewTile"
+import PizzaStyleTile from "./PizzaStyleTile"
 
 const PizzaStyleShow = props => {
-  const [pizzaStyle, setPizzaStyle] = useState({reviews: []})
+  const [pizzaStyle, setPizzaStyle] = useState({ reviews: [] })
   const fetchPizzaStyle = async () => {
     try {
-      const response = await fetch(
-          `/api/v1/pizza-styles/${props.match.params.id}`)
+      const response = await fetch(`/api/v1/pizza-styles/${props.match.params.id}`)
       if (!response.ok) {
         const errorMessage = `${response.status} (${response.statusText})`
         const error = new Error(errorMessage)
-        throw(error)
+        throw error
       }
       const pizzaStyleData = await response.json()
       setPizzaStyle(pizzaStyleData.pizzaStyle)
@@ -25,22 +24,14 @@ const PizzaStyleShow = props => {
   }, [])
 
   const reviewTiles = pizzaStyle.reviews.map(review => {
-    return (
-        <ReviewTile
-            key={review.id}
-            review={review}
-        />
-    )
+    return <ReviewTile key={review.id} review={review} />
   })
 
   return (
-      <div>
-        <PizzaStyleTile
-            key={pizzaStyle.id}
-            pizzaStyle={pizzaStyle}
-        />
-        {reviewTiles}
-      </div>
+    <div>
+      <PizzaStyleTile key={pizzaStyle.id} pizzaStyle={pizzaStyle} />
+      {reviewTiles}
+    </div>
   )
 }
 export default PizzaStyleShow
