@@ -38,4 +38,5 @@ build/
 
 ### maven wrapper ####
 mvnw
+src/main/frontend/yarn.lock
 
