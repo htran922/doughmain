@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import ReviewTile from "./ReviewTile"
 import PizzaStyleTile from "./PizzaStyleTile"
 
@@ -29,12 +30,17 @@ const PizzaStyleShow = props => {
 
   return (
     <div>
-      <div className="callout card-image text-center">
-       <h1>{pizzaStyle.name}</h1>
-      <img src={pizzaStyle.imgUrl} /> 
+      <div className="text-center">
+        <h1>{pizzaStyle.name}</h1>
+        <img src={pizzaStyle.imgUrl} />
+        <div>
+          <Link to="/reviews/new" className="button" type="button">
+            Add A Review
+          </Link>
+        </div>
       </div>
-      
-      <button className="button" type="button">Add A Review</button>
+
+      <hr />
       {reviewTiles}
     </div>
   )
