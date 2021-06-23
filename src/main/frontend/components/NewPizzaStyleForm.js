@@ -22,6 +22,7 @@ const NewPizzaStyleForm = props => {
         }),
         body: JSON.stringify(formPayload)
       })
+      console.log(response);
       if(!response.ok) {
         if (response.status === 422) {
           const body = await response.json()
@@ -54,7 +55,6 @@ const NewPizzaStyleForm = props => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log(formPayload);
     if(validForSubmission()) {
       addStyle()
     }
