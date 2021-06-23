@@ -22,5 +22,4 @@ public class MainSeeder implements CommandLineRunner {
     styleSeeder.run();
     reviewSeeder.run();
   }
-
 }

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import ReviewTile from "./ReviewTile"
 import PizzaStyleTile from "./PizzaStyleTile"
 
 const PizzaStyleShow = props => {
   const [pizzaStyle, setPizzaStyle] = useState({ reviews: [] })
+  let location = useLocation()
+
   const fetchPizzaStyle = async () => {
     try {
       const response = await fetch(`/api/v1/pizza-styles/${props.match.params.id}`)
@@ -22,7 +24,7 @@ const PizzaStyleShow = props => {
 
   useEffect(() => {
     fetchPizzaStyle()
-  }, [])
+  }, [location.pathname])
 
   const reviewTiles = pizzaStyle.reviews.map(review => {
     return <ReviewTile key={review.id} review={review} />
