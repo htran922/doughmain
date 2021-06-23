@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, {useEffect, useState} from "react"
 import ReviewTile from "./ReviewTile";
 import PizzaStyleTile from "./PizzaStyleTile";
@@ -6,20 +5,10 @@ import {jsonGet, jsonPut, jsonPost, jsonDelete} from "./jsonFetch";
 
 const PizzaStyleShow = props => {
   const [pizzaStyle, setPizzaStyle] = useState({reviews: []})
+
   const fetchPizzaStyle = async () => {
-    try {
-      const response = await fetch(
-          `/api/v1/pizza-styles/${props.match.params.id}`)
-      if (!response.ok) {
-        const errorMessage = `${response.status} (${response.statusText})`
-        const error = new Error(errorMessage)
-        throw(error)
-      }
-      const pizzaStyleData = await response.json()
-      setPizzaStyle(pizzaStyleData.pizzaStyle)
-    } catch (err) {
-      console.error(`Error in fetch: ${err.message}`)
-    }
+    const respBody = await jsonGet(`/api/v1/pizza-styles/${props.match.params.id}`)
+    setPizzaStyle(respBody.pizzaStyle);
   }
 
   useEffect(() => {
@@ -27,22 +16,21 @@ const PizzaStyleShow = props => {
   }, [])
 
   const callBack = (data) => {
-    alert("callBack( " + data + " )");
+    fetchPizzaStyle();
   }
 
   const deleteReview = async (url) => {
-    callBack(await jsonDelete(url));
+    await jsonDelete(url, callBack);
   }
   const onClick = event => {
     if (event.target.value.includes("delete")) {
       let id = event.target.value.split(":")[1];
-      alert(`/api/v1/pizza-styles/delete/${id}`);
       deleteReview(`/api/v1/pizza-styles/delete/${id}`)
 
     } else if (event.target.value.includes("edit")) {
       let id = event.target.value.split(":")[1];
-      alert(`/api/v1/pizza-styles/edit/${id}`);
-      jsonPut(`/api/v1/pizza-styles/edit/${id}`, "", callBack);
+      alert(`EDIT: Incomplete: See deleteReview() create and hit endpoint: /api/v1/pizza-styles/edit/${id}`);
+      //jsonPut(`/api/v1/pizza-styles/edit/${id}`, "", callBack);
     }
   }
 

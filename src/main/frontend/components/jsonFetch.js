@@ -2,14 +2,12 @@ const jsonGet = async (url) => {
   let responseData = null;
   try {
     const response = await fetch(url);
-    console.log("jsonGetch() response: " + response);
     if (!response.ok) {
       const errorMessage = `${response.status} (${response.statusText})`
       const error = new Error(errorMessage)
       throw (error)
     }
     responseData = await response.json();
-    console.log(responseData);
     return responseData;
   } catch (err) {
     console.error(`Error in fetch: ${err.message}`)
@@ -17,7 +15,7 @@ const jsonGet = async (url) => {
   }
 }
 
-//Callback should set state to cause view to update.
+//Callback should set state to cause view to update as needed.
 const jsonPost = async (url, payload, callback) => {
   try {
     const response = await fetch(url, {
@@ -43,6 +41,7 @@ const jsonPost = async (url, payload, callback) => {
   }
 }
 
+//Callback should set state to cause view to update as needed.
 const jsonPut = async (url, payload, callback) => {
   try {
     const response = await fetch(url, {
@@ -68,7 +67,7 @@ const jsonPut = async (url, payload, callback) => {
   }
 }
 
-
+//Callback should set state to cause view to update as needed.
 const jsonDelete = async (url, callback) => {
   try {
     const response = await fetch(url, {
@@ -87,7 +86,7 @@ const jsonDelete = async (url, callback) => {
     //The model has been updated. We are done. Handle
     //concat of data.strKey to existing state be handled by
     //client of this function, which will invoke a rendering
-    callback(null);
+    callback();
 
   } catch (err) {
     console.error(`Error in fetch: ${err.status} (${err.message})`);
