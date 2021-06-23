@@ -7,10 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,33 +33,19 @@ public class PizzaStylesApiV1Controller {
   }
 
   @PostMapping
-  public Object addPizzaStyle(@Valid @RequestBody PizzaStyle pizzaStyle, BindingResult bindingResult) {
+  public Object addPizzaStyle(@RequestBody @Valid PizzaStyle pizzaStyle, BindingResult bindingResult) {
     if(bindingResult.hasErrors()) {
-      System.out.println("\nBINDINGRESULT: " + bindingResult.getFieldErrors());
       return customError.handleBindingErrors(bindingResult);
     } else {
       Map<String, PizzaStyle> newStyle = new HashMap<>();
-//      List<PizzaStyle> checkForType = pizzaStyleService.findByNameIgnoreCase(pizzaStyle.getName());
-//      if (checkForType.isEmpty()) {
-      pizzaStyleService.save(pizzaStyle);
-      newStyle.put("pizzaStyle", pizzaStyle);
-      return newStyle;
-//      }
+      List<PizzaStyle> checkForType = pizzaStyleService.findByNameIgnoreCase(pizzaStyle.getName());
+      if (checkForType.isEmpty()) {
+        pizzaStyleService.save(pizzaStyle);
+        newStyle.put("pizzaStyle", pizzaStyle);
+        return newStyle;
+      } else {
+        return customError.alreadyExists();
+      }
     }
   }
-
-//  @PostMapping
-//  public ResponseEntity addStyle(@Valid @RequestBody  PizzaStyle pizzaStyle, BindingResult bindingResult) {
-//    if (bindingResult.hasErrors()) {
-//      Map<String, String> errorList = new HashMap<>();
-//      for (FieldError fieldError : bindingResult.getFieldErrors()) {
-//        errorList.put(fieldError.getField(), fieldError.getDefaultMessage());
-//      }
-//      Map<String, Map> errors = new HashMap<>();
-//      errors.put("errors", errorList);
-//      return new ResponseEntity<Map<String, Map>>(errors, HttpStatus.UNPROCESSABLE_ENTITY);
-//    } else {
-//      return new ResponseEntity<PizzaStyle>(pizzaStyleService.save(pizzaStyle), HttpStatus.CREATED);
-//    }
-//  }
 }

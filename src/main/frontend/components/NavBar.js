@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react"
-import { Route, Switch, Redirect, Link } from "react-router-dom";
+import { Route, Switch, Redirect, Link, useLocation } from "react-router-dom";
 
 import PizzaStylesIndex from "./PizzaStylesIndex"
 import NewPizzaStyleForm from "./NewPizzaStyleForm";
 
 const NavBar = () => {
   const [pizzaStyles, setPizzaStyles] = useState([])
+  let location = useLocation();
 
   const fetchPizzaStyles = async() => {
     try {
@@ -24,7 +25,7 @@ const NavBar = () => {
 
   useEffect(() => {
     fetchPizzaStyles()
-  }, [])
+  }, [location.pathname])
 
   const pizzaStyleLinks = pizzaStyles.map(style => {
     return (

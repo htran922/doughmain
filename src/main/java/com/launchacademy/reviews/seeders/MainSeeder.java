@@ -19,8 +19,7 @@ public class MainSeeder implements CommandLineRunner {
   }
 
   public void run(String... args){
-//    styleSeeder.run();
-//    reviewSeeder.run();
+    styleSeeder.run();
+    reviewSeeder.run();
   }
-
 }

@@ -24,4 +24,11 @@ public class CustomError extends ResponseEntityExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(errors, "Validation Failed");
         return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
     }
+
+    public ResponseEntity<Object> alreadyExists() {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("Style", "already exists");
+        ErrorResponse errorResponse = new ErrorResponse(errors, "Pizza Style already exists");
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
 }

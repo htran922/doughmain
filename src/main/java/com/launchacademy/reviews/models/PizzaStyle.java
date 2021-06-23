@@ -34,10 +34,8 @@ public class PizzaStyle {
   @Size(min = 3, message = "must be at least 3 characters")
   private String name;
 
-  @NotBlank(message = "can not be blank")
   @Column(name="img_url")
   private String imgUrl;
-
 
   @OneToMany(mappedBy = "pizzaStyle")
   @JsonIgnoreProperties("pizzaStyle")

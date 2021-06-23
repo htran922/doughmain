@@ -22,7 +22,6 @@ const NewPizzaStyleForm = props => {
         }),
         body: JSON.stringify(formPayload)
       })
-      console.log(response);
       if(!response.ok) {
         if (response.status === 422) {
           const body = await response.json()
@@ -46,7 +45,7 @@ const NewPizzaStyleForm = props => {
     const requiredFields = ["name"]
     requiredFields.forEach(field => {
       if(formPayload[field].trim() === "") {
-        errors[field] = "is blank"
+        errors[field] = "can not be blank"
       }
     })
     setErrors(errors)
