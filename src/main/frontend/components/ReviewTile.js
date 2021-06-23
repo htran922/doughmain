@@ -8,6 +8,8 @@ const ReviewTile = props => {
   const day = ts.getDay()
   const hour = ts.getHours()
   const minutes = ts.getMinutes()
+
+  console.log(createdAt);
   return (
     <div>
       <img src={imgUrl} width="300px" />
