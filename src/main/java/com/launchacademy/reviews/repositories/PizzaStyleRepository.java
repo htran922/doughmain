@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PizzaStyleRepository extends CrudRepository<PizzaStyle, Integer> {
   List<PizzaStyle> findByName(String name);
+
+    List<PizzaStyle> findByNameIgnoreCase(String name);
 }

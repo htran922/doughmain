@@ -36,4 +36,8 @@ public class PizzaStyleService {
   public Optional<PizzaStyle> findById(Integer id) {
     return repository.findById(id);
   }
+
+  public List<PizzaStyle> findByNameIgnoreCase(String name) {
+    return repository.findByNameIgnoreCase(name);
+  }
 }

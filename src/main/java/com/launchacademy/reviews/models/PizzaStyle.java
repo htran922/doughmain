@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,11 +31,11 @@ public class PizzaStyle {
   private Integer id;
 
   @NotBlank
+  @Size(min = 3, message = "must be at least 3 characters")
   private String name;
 
   @Column(name="img_url")
   private String imgUrl;
-
 
   @OneToMany(mappedBy = "pizzaStyle")
   @JsonIgnoreProperties("pizzaStyle")
