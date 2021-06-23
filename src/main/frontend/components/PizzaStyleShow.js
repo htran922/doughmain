@@ -29,7 +29,12 @@ const PizzaStyleShow = props => {
 
   return (
     <div>
-      <PizzaStyleTile key={pizzaStyle.id} pizzaStyle={pizzaStyle} />
+      <div className="callout card-image text-center">
+       <h1>{pizzaStyle.name}</h1>
+      <img src={pizzaStyle.imgUrl} /> 
+      </div>
+      
+      <button className="button" type="button">Add A Review</button>
       {reviewTiles}
     </div>
   )
