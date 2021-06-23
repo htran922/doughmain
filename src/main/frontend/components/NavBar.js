@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Route, Switch, Redirect, Link } from "react-router-dom";
 
 import PizzaStylesIndex from "./PizzaStylesIndex"
+import PizzaStyleShow from "./PizzaStyleShow"
 
 const NavBar = () => {
   const [pizzaStyles, setPizzaStyles] = useState([])
@@ -58,7 +59,7 @@ const NavBar = () => {
           <Redirect to="/pizza-styles" />
         </Route>
         <Route exact path="/pizza-styles" component={PizzaStylesIndex} />
-        
+        <Route exact path="/pizza-styles/:id" component={PizzaStyleShow} />
       </Switch>
     </div>
   )
