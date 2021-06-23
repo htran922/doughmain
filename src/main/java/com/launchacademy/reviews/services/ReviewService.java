@@ -19,4 +19,9 @@ public class ReviewService {
   public Long count() {
     return repository.count();
   }
+
+
+  public void deleteById(Integer id) {
+    repository.deleteById(id);
+  }
 }

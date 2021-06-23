@@ -2,6 +2,7 @@ package com.launchacademy.reviews.controllers;
 
 import com.launchacademy.reviews.models.PizzaStyle;
 import com.launchacademy.reviews.services.PizzaStyleService;
+import com.launchacademy.reviews.services.ReviewService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,10 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/pizza-styles")
 public class PizzaStylesApiV1Controller {
   private PizzaStyleService pizzaStyleService;
+  private ReviewService reviewService;
 
   @Autowired
-  public PizzaStylesApiV1Controller(PizzaStyleService pizzaStyleService) {
+  public PizzaStylesApiV1Controller(PizzaStyleService pizzaStyleService, ReviewService reviewService) {
     this.pizzaStyleService = pizzaStyleService;
+    this.reviewService = reviewService;
   }
 
   @GetMapping
@@ -47,7 +50,8 @@ public class PizzaStylesApiV1Controller {
   @DeleteMapping("/delete/{id}")
   public void deleteById(@PathVariable Integer id){
     System.out.println("deleteById( " + id + " )");
-    //pizzaStyleService.deleteById(id);
+    reviewService.deleteById(id);
+    System.out.println("post deleteById( " + id + " )");
   }
 
 

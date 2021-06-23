@@ -26,7 +26,7 @@ const PizzaStyleShow = props => {
   }, [])
 
   const callBack = (data) => {
-    alert("callBack( " + value + " )");
+    alert("callBack( " + data + " )");
   }
 
   const deleteReview = async (url) => {
