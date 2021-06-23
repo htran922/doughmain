@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/pizza-styles")
@@ -26,8 +30,8 @@ public class PizzaStylesApiV1Controller {
   }
 
   @GetMapping
-  public Map<String, List<PizzaStyle>> getAllPizzaStyles() {
-    Map<String, List<PizzaStyle>> pizzaStylesMap = new HashMap<>();
+  public Map<String, Iterable<PizzaStyle>> getAllPizzaStyles() {
+    Map<String, Iterable<PizzaStyle>> pizzaStylesMap = new HashMap<>();
     pizzaStylesMap.put("pizzaStyles", pizzaStyleService.findAll());
     return pizzaStylesMap;
   }
@@ -47,5 +51,19 @@ public class PizzaStylesApiV1Controller {
         return customError.alreadyExists();
       }
     }
+    
+  @GetMapping("/{id}")
+  public Map<String, PizzaStyle> getById(@PathVariable Integer id){
+    Map<String, PizzaStyle> map = new HashMap<>();
+
+    if(pizzaStyleService.findById(id).isPresent()){
+      PizzaStyle pizzaStyle = pizzaStyleService.findById(id).get();
+      map.put("pizzaStyle", pizzaStyle);
+    } else {
+      System.out.println("PizzaStyle with type with id " + id + " was not found");
+      PizzaStyle ps = new PizzaStyle();
+      map.put("pizzaStyle", ps );
+    }
+    return map;
   }
 }

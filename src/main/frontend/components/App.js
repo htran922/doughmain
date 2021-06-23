@@ -1,22 +1,22 @@
-import React, { useEffect } from "react";
-import { hot } from "react-hot-loader/root";
-import "foundation-sites";
-import $ from "jquery";
+import React, { useEffect } from "react"
+import { hot } from "react-hot-loader/root"
+import "foundation-sites"
+import $ from "jquery"
 import "../assets/scss/main.scss"
 
 import NavBar from "./NavBar"
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom"
 
-const App = (props) => {
+const App = props => {
   useEffect(() => {
-    $(document).foundation();
-  }, []);
+    $(document).foundation()
+  }, [])
 
-  return(
+  return (
     <BrowserRouter>
       <Route path="/" component={NavBar} />
     </BrowserRouter>
   )
-};
+}
 
-export default hot(App);
+export default hot(App)

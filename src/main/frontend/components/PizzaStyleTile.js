@@ -1,7 +1,7 @@
 import React from "react"
 
 const PizzaStyleTile = props => {
-  const { id, name, imgUrl } = props.pizzaStyle 
+  const { id, name, imgUrl } = props.pizzaStyle
 
   return (
     <div className="cell">
@@ -12,7 +12,7 @@ const PizzaStyleTile = props => {
           </a>
         </div>
         <div className="card-image text-center">
-          <img src={imgUrl} width="300px"/>
+          <img src={imgUrl} width="300px" />
         </div>
       </div>
     </div>
