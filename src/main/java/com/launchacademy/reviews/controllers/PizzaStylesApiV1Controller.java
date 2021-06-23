@@ -38,7 +38,7 @@ public class PizzaStylesApiV1Controller {
 
   @PostMapping
   public Object addPizzaStyle(@RequestBody @Valid PizzaStyle pizzaStyle, BindingResult bindingResult) {
-    if(bindingResult.hasErrors()) {
+    if (bindingResult.hasErrors()) {
       return customError.handleBindingErrors(bindingResult);
     } else {
       Map<String, PizzaStyle> newStyle = new HashMap<>();
@@ -51,6 +51,7 @@ public class PizzaStylesApiV1Controller {
         return customError.alreadyExists();
       }
     }
+  }
     
   @GetMapping("/{id}")
   public Map<String, PizzaStyle> getById(@PathVariable Integer id){
