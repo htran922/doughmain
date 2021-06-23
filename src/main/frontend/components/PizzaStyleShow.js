@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, {useEffect, useState} from "react"
 import ReviewTile from "./ReviewTile";
 import PizzaStyleTile from "./PizzaStyleTile";
