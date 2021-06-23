@@ -37,7 +37,11 @@ public class PizzaStyleService {
     return repository.findById(id);
   }
 
+
   public void deleteById(Integer id) {
     repository.deleteById(id);
+  }
+  public List<PizzaStyle> findByNameIgnoreCase(String name) {
+    return repository.findByNameIgnoreCase(name);
   }
 }

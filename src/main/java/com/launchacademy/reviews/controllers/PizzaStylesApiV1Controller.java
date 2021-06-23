@@ -1,5 +1,6 @@
 package com.launchacademy.reviews.controllers;
 
+import com.launchacademy.reviews.exceptionHandlers.CustomError;
 import com.launchacademy.reviews.models.PizzaStyle;
 import com.launchacademy.reviews.services.PizzaStyleService;
 import com.launchacademy.reviews.services.ReviewService;
@@ -9,6 +10,9 @@ import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,13 +21,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/pizza-styles")
 public class PizzaStylesApiV1Controller {
+
   private PizzaStyleService pizzaStyleService;
   private ReviewService reviewService;
+  private CustomError customError;
 
   @Autowired
-  public PizzaStylesApiV1Controller(PizzaStyleService pizzaStyleService, ReviewService reviewService) {
+  public PizzaStylesApiV1Controller(PizzaStyleService pizzaStyleService,
+      ReviewService reviewService,
+      CustomError customError) {
     this.pizzaStyleService = pizzaStyleService;
     this.reviewService = reviewService;
+    this.customError = customError;
   }
 
   @GetMapping
@@ -33,22 +42,40 @@ public class PizzaStylesApiV1Controller {
     return pizzaStylesMap;
   }
 
+  @PostMapping
+  public Object addPizzaStyle(@RequestBody @Valid PizzaStyle pizzaStyle,
+      BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+      return customError.handleBindingErrors(bindingResult);
+    } else {
+      Map<String, PizzaStyle> newStyle = new HashMap<>();
+      List<PizzaStyle> checkForType = pizzaStyleService.findByNameIgnoreCase(pizzaStyle.getName());
+      if (checkForType.isEmpty()) {
+        pizzaStyleService.save(pizzaStyle);
+        newStyle.put("pizzaStyle", pizzaStyle);
+        return newStyle;
+      } else {
+        return customError.alreadyExists();
+      }
+    }
+  }
+
   @GetMapping("/{id}")
-  public Map<String, PizzaStyle> getById(@PathVariable Integer id){
+  public Map<String, PizzaStyle> getById(@PathVariable Integer id) {
     Map<String, PizzaStyle> map = new HashMap<>();
     Optional optional = pizzaStyleService.findById(id);
-    if(optional.isPresent()){
+    if (optional.isPresent()) {
       map.put("pizzaStyle", (PizzaStyle) optional.get());
     } else {
       System.out.println("PizzaStyle with type with id " + id + " was not found");
       PizzaStyle ps = new PizzaStyle();
-      map.put("pizzaStyle", ps );
+      map.put("pizzaStyle", ps);
     }
     return map;
   }
 
   @DeleteMapping("/delete/{id}")
-  public void deleteById(@PathVariable Integer id){
+  public void deleteById(@PathVariable Integer id) {
     System.out.println("deleteById( " + id + " )");
     reviewService.deleteById(id);
     System.out.println("post deleteById( " + id + " )");

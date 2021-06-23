@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react"
+import { useLocation } from "react-router-dom"
 import ReviewTile from "./ReviewTile";
 import PizzaStyleTile from "./PizzaStyleTile";
 import {jsonGet, jsonPut, jsonPost, jsonDelete} from "./jsonFetch";
 
 const PizzaStyleShow = props => {
   const [pizzaStyle, setPizzaStyle] = useState({reviews: []})
+  let location = useLocation()
 
   const fetchPizzaStyle = async () => {
     const respBody = await jsonGet(`/api/v1/pizza-styles/${props.match.params.id}`)
@@ -13,7 +15,7 @@ const PizzaStyleShow = props => {
 
   useEffect(() => {
     fetchPizzaStyle()
-  }, [])
+  }, [location.pathname])
 
   const callBack = (data) => {
     fetchPizzaStyle();
@@ -29,8 +31,9 @@ const PizzaStyleShow = props => {
 
     } else if (event.target.value.includes("edit")) {
       let id = event.target.value.split(":")[1];
-      alert(`EDIT: Incomplete: See deleteReview() create and hit endpoint: /api/v1/pizza-styles/edit/${id}`);
-      //jsonPut(`/api/v1/pizza-styles/edit/${id}`, "", callBack);
+      /***** TODO: Hit endPoint to redirect to prepopluated form ***
+       * Then use jsonPut or add an UPDATE method
+       */
     }
   }
 

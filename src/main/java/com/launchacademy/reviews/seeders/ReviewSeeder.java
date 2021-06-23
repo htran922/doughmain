@@ -1,6 +1,5 @@
 package com.launchacademy.reviews.seeders;
 
-import com.launchacademy.reviews.models.PizzaStyle;
 import com.launchacademy.reviews.services.PizzaStyleService;
 import com.launchacademy.reviews.services.ReviewService;
 import com.launchacademy.reviews.models.Review;
