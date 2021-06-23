@@ -4,12 +4,9 @@ const ReviewTile = props => {
   const { title, imgUrl, rating, createdAt } = props.review
   const ts = new Date(createdAt)
   const year = ts.getFullYear()
-  const month = ts.getMonth()
-  const day = ts.getDay()
-  const hour = ts.getHours()
-  const minutes = ts.getMinutes()
+  const month = ts.getMonth() + 1
+  const day = ts.getDate()
 
-  console.log(createdAt);
   return (
     <div>
       <img src={imgUrl} width="300px" />
