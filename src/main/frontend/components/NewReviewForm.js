@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react"
+import PizzaStyleField from "./PizzaStyleField"
 
 const NewReviewForm = props => {
   const [formPayload, setFormPayload] = useState({
+    pizzaStyleId: "",
     title: "",
     comment: "",
     rating: "",
@@ -19,6 +21,10 @@ const NewReviewForm = props => {
     <form className="callout">
       <h2>Add A Review</h2>
       {/* <ErrorList errors={errors} /> */}
+      <PizzaStyleField
+      handleInputChange={handleInputChange}
+      pizzaStyleId={formPayload.pizzaStyleId}
+      />
       <div>
         <label htmlFor="title">Title: </label>
         <input
