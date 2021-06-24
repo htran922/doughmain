@@ -44,11 +44,17 @@ public class Review {
   @Column(nullable = false)
   private Integer rating;
 
+  @Column(name = "img_url")
   private String imgUrl;
 
+  @Column(name = "created_at")
   private LocalDateTime createdAt;
 
+  @Column(name = "updated_at")
   private LocalDateTime updatedAt;
+
+  @Column(name = "pizza_style_id", insertable = false , updatable = false)
+  private Integer pizzaStyleId;
 
   @ManyToOne
   @NotNull
@@ -65,6 +71,5 @@ public class Review {
     this.pizzaStyle = pizzaStyle;
     createdAt = LocalDateTime.now();
     updatedAt = LocalDateTime.now();
-
   }
 }
