@@ -2,6 +2,7 @@ package com.launchacademy.reviews.services;
 
 import com.launchacademy.reviews.models.Review;
 import com.launchacademy.reviews.repositories.ReviewRepository;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,4 +25,7 @@ public class ReviewService {
     repository.deleteById(id);
   }
 
+  public Optional findById(Integer id) {
+    return repository.findById(id);
+  }
 }

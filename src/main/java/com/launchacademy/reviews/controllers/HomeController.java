@@ -8,7 +8,8 @@ public class HomeController {
     "/pizza-styles", 
     "/pizza-styles/{id}", 
     "/pizza-styles/new", 
-    "/reviews/new"
+    "/reviews/new",
+    "/reviews/{id}/edit"
   })
   public String forward() {
     return "forward:/";

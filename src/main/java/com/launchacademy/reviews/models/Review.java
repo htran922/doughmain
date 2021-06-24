@@ -35,7 +35,6 @@ public class Review {
   @Column(nullable = false)
   private String title;
 
-  @NotBlank
   @Column(nullable = false)
   private String comment;
 
@@ -61,7 +60,6 @@ public class Review {
   @JoinColumn(name="pizza_style_id")
   @JsonIgnoreProperties("reviews")
   private PizzaStyle pizzaStyle;
-
 
   public Review(String title, String description, Integer rating, String imgUrl, PizzaStyle pizzaStyle) {
     this.title = title;

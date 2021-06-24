@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { Redirect } from "react-router-dom"
 import { jsonGet, jsonPut } from "../public/js/jsonFetch"
 import PizzaStyleField from "./PizzaStyleField"
 import ErrorList from "./ErrorList"
@@ -11,20 +12,21 @@ const UpdateReviewForm = props => {
     rating: "",
     imgUrl: ""
   })
-
+  const reviewId = props.match.params.id
   const [errors, setErrors] = useState({})
   const [shouldRedirect, setShouldRedirect] = useState(false)
 
   const fetchReview = async () => {
-    const respBody = await jsonGet(`/api/v1/reviews/${props.match.params.id}`)
-    const { pizzaStyleId, title, comment, rating, imgUrl } = respBody.review
+    const respBody = await jsonGet(`/api/v1/reviews/${reviewId}`)
+    const { pizzaStyleId, title, comment, rating, imgUrl, createdAt } = respBody.review
     setFormPayload({
-      ...formPayload, 
-      pizzaStyleId, 
-      title, 
-      comment, 
-      rating, 
-      imgUrl
+      ...formPayload,
+      pizzaStyleId: pizzaStyleId.toString(),
+      title,
+      comment,
+      rating: rating.toString(),
+      imgUrl,
+      createdAt
     })
   }
 
@@ -33,24 +35,16 @@ const UpdateReviewForm = props => {
   }, [])
 
   const updateReview = async () => {
-    await jsonPut(`/api/v1/reviews/${formPayload.id}`, formPayload, setFormPayload)
-    setShouldRedirect(true)
-  }
-  
-  const handleInputChange = event => {
-    setFormPayload({
-      ...formPayload,
-      [event.currentTarget.name]: event.currentTarget.value
-    })
+    await jsonPut(`/api/v1/reviews/${reviewId}`, formPayload, setErrors, setShouldRedirect)
   }
 
   const validForSubmission = () => {
     const errors = {}
-    const requiredFields = ["title", "rating", "pizzaStyleId"]
+    const requiredFields = ["pizzaStyleId", "title", "rating"]
     requiredFields.forEach(field => {
       if (formPayload[field].trim() === "") {
         errors[field] = "can not be blank"
-      }
+      } 
     })
     setErrors(errors)
     return _.isEmpty(errors)
@@ -58,18 +52,26 @@ const UpdateReviewForm = props => {
 
   const handleUpdate = event => {
     event.preventDefault()
+    console.log(formPayload)
     if (validForSubmission()) {
       updateReview()
     }
   }
 
+  const handleInputChange = event => {
+    setFormPayload({
+      ...formPayload,
+      [event.currentTarget.name]: event.currentTarget.value
+    })
+  }
+
   if (shouldRedirect) {
-    return <Redirect push to={`/pizza-styles/${pizzaStyleId}`} />
+    return <Redirect to={`/pizza-styles/${formPayload.pizzaStyleId}`} />
   }
 
   return (
     <form className="callout" onSubmit={handleUpdate}>
-      <h2>Add A Review</h2>
+      <h2>Update Review</h2>
       <ErrorList errors={errors} />
       <PizzaStyleField
         handleInputChange={handleInputChange}
@@ -103,8 +105,8 @@ const UpdateReviewForm = props => {
           name="rating"
           id="rating"
           type="number"
-          min="0"
-          max="5"
+          // min="0"
+          // max="5"
           step="1"
           value={formPayload.rating}
           onChange={handleInputChange}
