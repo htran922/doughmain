@@ -3,6 +3,7 @@ package com.launchacademy.reviews.services;
 import com.launchacademy.reviews.models.PizzaStyle;
 import com.launchacademy.reviews.models.Review;
 import com.launchacademy.reviews.repositories.ReviewRepository;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,8 +18,8 @@ public class ReviewService {
     this.pizzaStyleService = pizzaStyleService;
   }
 
-  public Review save(Review review, Integer id) {
-    PizzaStyle style = pizzaStyleService.findById(id).get();
+  public Review save(Review review, Integer pizzaStyleId) {
+    PizzaStyle style = pizzaStyleService.findById(pizzaStyleId).get();
     review.setPizzaStyle(style);
     review.setCreatedAt(LocalDateTime.now());
     review.setUpdatedAt(LocalDateTime.now());
@@ -33,4 +34,7 @@ public class ReviewService {
     repository.deleteById(id);
   }
 
+  public Optional findById(Integer id) {
+    return repository.findById(id);
+  }
 }

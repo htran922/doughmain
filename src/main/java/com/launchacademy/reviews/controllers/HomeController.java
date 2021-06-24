@@ -10,14 +10,16 @@ public class HomeController {
     "/pizza-styles/{id}", 
     "/pizza-styles/new", 
     "/reviews/new",
+    "/reviews/{id}/edit",
     "/404"
   })
+  
   public String forward() {
     return "forward:/";
   }
 
-    @RequestMapping(value = "/**/{path:[^\\\\.]*}")
-    public String redirect() {
-        return "forward:/404";
-    }
+  @RequestMapping(value = "/**/{path:[^\\\\.]*}")
+  public String redirect() {
+      return "forward:/404";
+  }
 }

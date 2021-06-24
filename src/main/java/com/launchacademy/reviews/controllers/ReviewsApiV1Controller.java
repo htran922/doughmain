@@ -5,11 +5,15 @@ import com.launchacademy.reviews.models.PizzaStyle;
 import com.launchacademy.reviews.models.Review;
 import com.launchacademy.reviews.services.PizzaStyleService;
 import com.launchacademy.reviews.services.ReviewService;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +22,7 @@ import java.time.LocalDateTime;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/v1/reviews")
@@ -33,8 +38,41 @@ public class ReviewsApiV1Controller {
         this.customError = customError;
     }
 
+    @GetMapping("/{id}")
+    public Map<String, Review> getById(@PathVariable Integer id) {
+        Map<String, Review> map = new HashMap<>();
+        Optional optional = reviewService.findById(id);
+        if (optional.isPresent()) {
+            map.put("review", (Review) optional.get());
+        } else {
+            System.out.println("Review with type with id " + id + " was not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return map;
+    }
+
+    @PutMapping("/{id}")
+    public Object updateReview(@PathVariable Integer id, @RequestBody @Valid Review review, BindingResult bindingResult) {
+        if (bindingResult.getAllErrors().size() > 1) {
+            return customError.handleBindingErrors(bindingResult);
+        } else {
+            Review foundReview = null;
+            if (reviewService.findById(id).isPresent()) {
+                foundReview = (Review) reviewService.findById(id).get();
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
+
+            review.setId(foundReview.getId());
+            Map<String, Review> updatedReview = new HashMap<>();
+            reviewService.save(review, review.getPizzaStyleId());
+            updatedReview.put("review", review);
+            return updatedReview;
+        }
+    }
+
     @PostMapping
-    public Object addPizzaStyle(@RequestBody @Valid Review review, BindingResult bindingResult) {
+    public Object addReview(@RequestBody @Valid Review review, BindingResult bindingResult) {
         if (bindingResult.getAllErrors().size() > 1) {
             return customError.handleBindingErrors(bindingResult);
         } else {
