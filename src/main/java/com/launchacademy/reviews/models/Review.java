@@ -63,12 +63,11 @@ public class Review {
   private PizzaStyle pizzaStyle;
 
 
-  public Review(String title, String description, Integer rating, String imgUrl, PizzaStyle pizzaStyle) {
+  public Review(String title, String description, Integer rating, String imgUrl) {
     this.title = title;
     this.comment = description;
     this.rating = rating;
     this.imgUrl = imgUrl;
-    this.pizzaStyle = pizzaStyle;
     createdAt = LocalDateTime.now();
     updatedAt = LocalDateTime.now();
   }

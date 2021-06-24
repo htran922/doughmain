@@ -5,9 +5,11 @@ import PizzaStylesIndex from "./PizzaStylesIndex"
 import PizzaStyleShow from "./PizzaStyleShow"
 import NewPizzaStyleForm from "./NewPizzaStyleForm"
 import NewReviewForm from "./NewReviewForm"
+import NotFoundPage from "./NotFoundPage"
 
 const NavBar = () => {
   const [pizzaStyles, setPizzaStyles] = useState([])
+
   const fetchPizzaStyles = async () => {
     try {
       const response = await fetch("/api/v1/pizza-styles")
@@ -60,8 +62,11 @@ const NavBar = () => {
         <Route exact path="/pizza-styles/new" component={NewPizzaStyleForm} />
         <Route exact path="/pizza-styles/:id" component={PizzaStyleShow} />
         <Route exact path="/reviews/new" component={NewReviewForm} />
+        <Route exact path="/404" component={NotFoundPage} />
+        <Route component={NotFoundPage} />
       </Switch>
     </div>
   )
 }
+
 export default NavBar

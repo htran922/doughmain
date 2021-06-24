@@ -39,13 +39,9 @@ public class ReviewsApiV1Controller {
             return customError.handleBindingErrors(bindingResult);
         } else {
             Integer id = review.getPizzaStyleId();
-            PizzaStyle style = pizzaStyleService.findById(id).get();
-            review.setPizzaStyle(style);
-            review.setCreatedAt(LocalDateTime.now());
-            review.setUpdatedAt(LocalDateTime.now());
 
             Map<String, Review> newReview = new HashMap<>();
-            reviewService.save(review);
+            reviewService.save(review, id);
             newReview.put("review", review);
             return newReview;
         }
