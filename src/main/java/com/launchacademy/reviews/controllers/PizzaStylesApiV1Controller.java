@@ -54,17 +54,15 @@ public class PizzaStylesApiV1Controller {
   }
     
   @GetMapping("/{id}")
-  public Map<String, PizzaStyle> getById(@PathVariable Integer id){
+  public Object getById(@PathVariable Integer id){
     Map<String, PizzaStyle> map = new HashMap<>();
 
     if(pizzaStyleService.findById(id).isPresent()){
       PizzaStyle pizzaStyle = pizzaStyleService.findById(id).get();
       map.put("pizzaStyle", pizzaStyle);
+      return map;
     } else {
-      System.out.println("PizzaStyle with type with id " + id + " was not found");
-      PizzaStyle ps = new PizzaStyle();
-      map.put("pizzaStyle", ps );
+      return customError.doesntExists();
     }
-    return map;
   }
 }

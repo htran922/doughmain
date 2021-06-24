@@ -1,19 +1,27 @@
 import React, { useEffect, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
+import _ from "lodash"
 import ReviewTile from "./ReviewTile"
-import PizzaStyleTile from "./PizzaStyleTile"
 
 const PizzaStyleShow = props => {
   const [pizzaStyle, setPizzaStyle] = useState({ reviews: [] })
+  const [errors, setErrors] = useState("")
   let location = useLocation()
 
   const fetchPizzaStyle = async () => {
     try {
       const response = await fetch(`/api/v1/pizza-styles/${props.match.params.id}`)
       if (!response.ok) {
-        const errorMessage = `${response.status} (${response.statusText})`
-        const error = new Error(errorMessage)
-        throw error
+        if (response.status === 422) {
+          const body = await response.json()
+          console.log(body)
+          setPizzaStyle({})
+          return setErrors(body.message)
+        } else {
+          const errorMessage = `${response.status} (${response.statusText})`
+          const error = new Error(errorMessage)
+          throw error
+        }
       }
       const pizzaStyleData = await response.json()
       setPizzaStyle(pizzaStyleData.pizzaStyle)
@@ -25,6 +33,10 @@ const PizzaStyleShow = props => {
   useEffect(() => {
     fetchPizzaStyle()
   }, [location.pathname])
+
+  if (_.isEmpty(pizzaStyle)) {
+    return <h2 className="text-center">{errors}</h2>
+  }
 
   const reviewTiles = pizzaStyle.reviews.map(review => {
     return <ReviewTile key={review.id} review={review} />
