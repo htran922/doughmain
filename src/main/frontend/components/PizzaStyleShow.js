@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
-import ReviewTile from "./ReviewTile"
-import PizzaStyleTile from "./PizzaStyleTile"
 import { jsonGet, jsonDelete } from "../public/js/jsonFetch"
+import ReviewTile from "./ReviewTile"
 
 const PizzaStyleShow = props => {
   const [pizzaStyle, setPizzaStyle] = useState({ reviews: [] })
@@ -21,16 +20,9 @@ const PizzaStyleShow = props => {
     await jsonDelete(url, fetchPizzaStyle)
   }
 
-  const onClick = event => {
-    if (event.target.value.includes("delete")) {
-      let id = event.target.value.split(":")[1]
-      deleteReview(`/api/v1/reviews/${id}`)
-    } else if (event.target.value.includes("edit")) {
-      let id = event.target.value.split(":")[1]
-      /***** TODO: Hit endPoint to redirect to prepopluated form ***
-       * Then use jsonPut or add an UPDATE method
-       */
-    }
+  const handleDelete = event => {
+    let id = event.target.value
+    deleteReview(`/api/v1/reviews/${id}`)
   }
 
   const reviewTiles = pizzaStyle.reviews.map(review => {
@@ -38,18 +30,15 @@ const PizzaStyleShow = props => {
       <div key={review.id}>
         <ReviewTile review={review} />
         <div className="small button-group">
+          <Link to={`/reviews/${review.id}/edit`}>
+            <button type="button" className="success button">
+              Edit
+            </button>
+          </Link>
           <button
             type="button"
-            value={`edit:${review.id}`}
-            onClick={onClick}
-            className="success button"
-          >
-            Edit
-          </button>
-          <button
-            type="button"
-            value={`delete:${review.id}`}
-            onClick={onClick}
+            value={review.id}
+            onClick={handleDelete}
             className="alert button"
           >
             Delete

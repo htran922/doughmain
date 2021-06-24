@@ -5,6 +5,7 @@ import PizzaStylesIndex from "./PizzaStylesIndex"
 import PizzaStyleShow from "./PizzaStyleShow"
 import NewPizzaStyleForm from "./NewPizzaStyleForm"
 import NewReviewForm from "./NewReviewForm"
+import UpdateReviewForm from "./UpdateReviewForm"
 
 const NavBar = () => {
   const [pizzaStyles, setPizzaStyles] = useState([])
@@ -60,6 +61,7 @@ const NavBar = () => {
         <Route exact path="/pizza-styles/new" component={NewPizzaStyleForm} />
         <Route exact path="/pizza-styles/:id" component={PizzaStyleShow} />
         <Route exact path="/reviews/new" component={NewReviewForm} />
+        <Route exact path="/reviews/:id/edit" component={UpdateReviewForm} />
       </Switch>
     </div>
   )
