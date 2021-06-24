@@ -3,7 +3,6 @@ import PizzaStyleTile from "./PizzaStyleTile"
 
 const PizzaStylesIndex = props => {
   const [pizzaStyles, setPizzaStyles] = useState([])
-
   const fetchPizzaStyles = async () => {
     try {
       const response = await fetch("/api/v1/pizza-styles")

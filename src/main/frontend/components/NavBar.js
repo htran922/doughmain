@@ -8,7 +8,6 @@ import NewReviewForm from "./NewReviewForm"
 
 const NavBar = () => {
   const [pizzaStyles, setPizzaStyles] = useState([])
-
   const fetchPizzaStyles = async () => {
     try {
       const response = await fetch("/api/v1/pizza-styles")
@@ -65,5 +64,4 @@ const NavBar = () => {
     </div>
   )
 }
-
 export default NavBar

@@ -31,6 +31,11 @@ public class ReviewSeeder {
               5,
               "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2018/9/27/0/KC1812_Spaghetti-Squash-Crust-Pizza_s4x3.jpg.rend.hgtvcom.616.462.suffix/1538057934894.jpeg",
               pizzaService.findByName("Sicilian").get(0)));
+      service.save(
+          new Review("Forth Review", "It doesn't get better than this!",
+              4,
+              "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2018/9/27/0/KC1812_Spaghetti-Squash-Crust-Pizza_s4x3.jpg.rend.hgtvcom.616.462.suffix/1538057934894.jpeg",
+              pizzaService.findByName("Sicilian").get(0)));
     }
   }
 }
