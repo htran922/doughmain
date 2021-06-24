@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
-import PizzaStyleTile from "./PizzaStyleTile"
 
-const PizzaStylesIndex = props => {
+const PizzaStyleField = props => {
   const [pizzaStyles, setPizzaStyles] = useState([])
+
   const fetchPizzaStyles = async () => {
     try {
       const response = await fetch("/api/v1/pizza-styles")
@@ -12,6 +12,7 @@ const PizzaStylesIndex = props => {
         throw error
       }
       const pizzaStylesData = await response.json()
+      pizzaStylesData.pizzaStyles.unshift({name: "", id: null})
       setPizzaStyles(pizzaStylesData.pizzaStyles)
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`)
@@ -22,16 +23,22 @@ const PizzaStylesIndex = props => {
     fetchPizzaStyles()
   }, [])
 
-  const pizzaStyleTiles = pizzaStyles.map(style => {
-    return <PizzaStyleTile key={style.id} pizzaStyle={style} />
+  const pizzaStyleOptions = pizzaStyles.map(style => {
+    return (
+      <option value={style.id} key={style.id}>
+        {style.name}
+      </option>
+    )
   })
 
   return (
-    <div className="grid-container">
-      <h1>See All Pizza Styles</h1>
-      <div className="grid-x grid-margin-x small-up-2 medium-up-3">{pizzaStyleTiles}</div>
+    <div>
+      <label htmlFor="pizzaStyleId">Pizza Style:</label>
+      <select name="pizzaStyleId" id="pizzaStyleId" onChange={props.handleInputChange} value={props.pizzaStyleId}>
+        {pizzaStyleOptions}
+      </select>
     </div>
   )
 }
 
-export default PizzaStylesIndex
+export default PizzaStyleField
