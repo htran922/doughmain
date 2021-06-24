@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import _ from "lodash"
 import ReviewTile from "./ReviewTile"
+import { jsonGet, jsonDelete } from "../public/js/jsonFetch"
 
 const PizzaStyleShow = props => {
   const [pizzaStyle, setPizzaStyle] = useState({ reviews: [] })
@@ -38,8 +39,46 @@ const PizzaStyleShow = props => {
     return <h2 className="text-center">{errors}</h2>
   }
 
+  const deleteReview = async url => {
+    await jsonDelete(url, fetchPizzaStyle)
+  }
+
+  const onClick = event => {
+    if (event.target.value.includes("delete")) {
+      let id = event.target.value.split(":")[1]
+      deleteReview(`/api/v1/reviews/${id}`)
+    } else if (event.target.value.includes("edit")) {
+      let id = event.target.value.split(":")[1]
+      /***** TODO: Hit endPoint to redirect to prepopluated form ***
+       * Then use jsonPut or add an UPDATE method
+       */
+    }
+  }
+
   const reviewTiles = pizzaStyle.reviews.map(review => {
-    return <ReviewTile key={review.id} review={review} />
+    return (
+      <div key={review.id}>
+        <ReviewTile review={review} />
+        <div className="small button-group">
+          <button
+            type="button"
+            value={`edit:${review.id}`}
+            onClick={onClick}
+            className="success button"
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            value={`delete:${review.id}`}
+            onClick={onClick}
+            className="alert button"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    )
   })
 
   return (
