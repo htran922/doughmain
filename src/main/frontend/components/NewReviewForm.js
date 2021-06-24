@@ -9,7 +9,7 @@ const NewReviewForm = props => {
     title: "",
     comment: "",
     rating: "",
-    imgUrl: "",
+    imgUrl: ""
   })
   const [errors, setErrors] = useState({})
   const [styleId, setStyleId] = useState(null)
@@ -26,7 +26,7 @@ const NewReviewForm = props => {
     const errors = {}
     const requiredFields = ["title", "rating", "pizzaStyleId"]
     requiredFields.forEach(field => {
-      if(formPayload[field].trim() === "") {
+      if (formPayload[field].trim() === "") {
         errors[field] = "can not be blank"
       }
     })
@@ -34,30 +34,30 @@ const NewReviewForm = props => {
     return _.isEmpty(errors)
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = event => {
     event.preventDefault()
-    if(validForSubmission()) {
+    if (validForSubmission()) {
       addReview()
     }
   }
 
-  const addReview = async() => {
+  const addReview = async () => {
     try {
       const response = await fetch(`/api/v1/reviews`, {
-        method: 'POST',
+        method: "POST",
         headers: new Headers({
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         }),
         body: JSON.stringify(formPayload)
       })
-      if(!response.ok) {
+      if (!response.ok) {
         if (response.status === 422) {
           const body = await response.json()
           return setErrors(body.errors)
         } else {
           const errorMessage = `${response.status} (${response.statusText})`
           const error = new Error(errorMessage)
-          throw(error)
+          throw error
         }
       }
       const body = await response.json()
@@ -72,13 +72,13 @@ const NewReviewForm = props => {
     return <Redirect push to={`/pizza-styles/${styleId}`} />
   }
 
-  return(
+  return (
     <form className="callout" onSubmit={handleSubmit}>
       <h2>Add A Review</h2>
       <ErrorList errors={errors} />
       <PizzaStyleField
-      handleInputChange={handleInputChange}
-      pizzaStyleId={formPayload.pizzaStyleId}
+        handleInputChange={handleInputChange}
+        pizzaStyleId={formPayload.pizzaStyleId}
       />
       <div>
         <label htmlFor="title">Title: </label>

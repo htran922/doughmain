@@ -31,4 +31,11 @@ public class CustomError extends ResponseEntityExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(errors, "Pizza Style already exists");
         return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
     }
+
+    public ResponseEntity<Object> doesntExists() {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("Style", "Not Found");
+        ErrorResponse errorResponse = new ErrorResponse(errors, "Pizza Style Not Found");
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
 }

@@ -13,7 +13,7 @@
   tab-size: 4;
 }
 
-.pet-image {
+.pizza-image {
   width: 40%;
   display: block;
   margin-left: auto;
@@ -22,4 +22,21 @@
 
 .button {
   margin: 10px;
+}
+
+.error-page {
+  text-align: center;
+}
+
+.error-page::after {
+  content: "";
+  background: url("https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cGl6emF8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60");
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: fixed;
+  z-index: -1; 
+  background-size: cover;
 }
