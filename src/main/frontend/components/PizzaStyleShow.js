@@ -42,7 +42,7 @@ const PizzaStyleShow = props => {
         </div>
       </div>
 
-      <hr />
+      <br />
       {reviewTiles}
     </div>
   )
