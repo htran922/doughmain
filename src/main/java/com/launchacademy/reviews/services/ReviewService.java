@@ -18,8 +18,8 @@ public class ReviewService {
     this.pizzaStyleService = pizzaStyleService;
   }
 
-  public Review save(Review review, Integer id) {
-    PizzaStyle style = pizzaStyleService.findById(id).get();
+  public Review save(Review review, Integer pizzaStyleId) {
+    PizzaStyle style = pizzaStyleService.findById(pizzaStyleId).get();
     review.setPizzaStyle(style);
     review.setCreatedAt(LocalDateTime.now());
     review.setUpdatedAt(LocalDateTime.now());

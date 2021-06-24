@@ -10,7 +10,7 @@ public class HomeController {
     "/pizza-styles/{id}", 
     "/pizza-styles/new", 
     "/reviews/new",
-    "/reviews/{id}/edit"
+    "/reviews/{id}/edit",
     "/404"
   })
   

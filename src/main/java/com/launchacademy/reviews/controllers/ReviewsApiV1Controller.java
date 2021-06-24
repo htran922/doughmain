@@ -63,15 +63,9 @@ public class ReviewsApiV1Controller {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND);
             }
 
-            Integer pizzaStyleId = review.getPizzaStyleId();
-            PizzaStyle style = pizzaStyleService.findById(pizzaStyleId).get();
-            review.setPizzaStyle(style);
             review.setId(foundReview.getId());
-            review.setCreatedAt(review.getCreatedAt());
-            review.setUpdatedAt(LocalDateTime.now());
-
             Map<String, Review> updatedReview = new HashMap<>();
-            reviewService.save(review);
+            reviewService.save(review, review.getPizzaStyleId());
             updatedReview.put("review", review);
             return updatedReview;
         }
