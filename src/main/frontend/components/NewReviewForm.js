@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Redirect } from "react-router"
 import PizzaStyleField from "./PizzaStyleField"
 import ErrorList from "./ErrorList"
+import {jsonPost} from "../public/js/jsonFetch";
 
 const NewReviewForm = props => {
   const [formPayload, setFormPayload] = useState({
@@ -14,6 +15,7 @@ const NewReviewForm = props => {
   const [errors, setErrors] = useState({})
   const [styleId, setStyleId] = useState(null)
   const [shouldRedirect, setShouldRedirect] = useState(false)
+  const [imagefile, setImageFile] = useState(undefined)
 
   const handleInputChange = event => {
     setFormPayload({
@@ -34,11 +36,43 @@ const NewReviewForm = props => {
     return _.isEmpty(errors)
   }
 
+  const addReview2 = async () => {
+    const formData = new FormData();
+    formData.append("file", imagefile);
+    formData.append("formPayLoad", JSON.stringify(formPayload));
+    try{
+      const response = await fetch("/api/v1/reviews/file", {
+        method: 'post',
+        body: formData
+      })
+      if (!response.ok) {
+        if (response.status === 422) {
+          const body = await response.json()
+          return setErrors(body.errors)
+        } else { //Non 422
+          const errorMessage = `${response.status} (${response.statusText})`;
+          const error = new Error(errorMessage);
+          throw (error);
+        }
+      } else if(res.ok){
+        console.log(res.data);
+        console.log("File uploaded successfully");
+      }
+    } catch (err) {
+      console.error(`Error in fetch: ${err.message}`)
+    }
+  }
+
   const handleSubmit = event => {
     event.preventDefault()
     if (validForSubmission()) {
-      addReview()
+      addReview2()
     }
+  }
+
+  const onChange = event => {
+    event.preventDefault();
+    setImageFile(event.currentTarget.files[0]);
   }
 
   const addReview = async () => {
@@ -126,6 +160,17 @@ const NewReviewForm = props => {
           onChange={handleInputChange}
         />
       </div>
+
+      <div>
+        <label htmlFor="imgFile">Image URL: </label>
+        <input
+            name="imgFile"
+            id="imgFile"
+            type="file"
+            onChange={onChange}
+        />
+      </div>
+
 
       <input className="button" type="submit" value="Submit" />
     </form>
