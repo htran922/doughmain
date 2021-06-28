@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Redirect } from "react-router"
-import _ from 'lodash'
+import _ from "lodash"
 
 import ErrorList from "./ErrorList"
 
@@ -13,23 +13,23 @@ const NewPizzaStyleForm = props => {
   const [styleId, setStyleId] = useState(null)
   const [shouldRedirect, setShouldRedirect] = useState(false)
 
-  const addStyle = async() => {
+  const addStyle = async () => {
     try {
       const response = await fetch(`/api/v1/pizza-styles`, {
-        method: 'POST',
+        method: "POST",
         headers: new Headers({
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         }),
         body: JSON.stringify(formPayload)
       })
-      if(!response.ok) {
+      if (!response.ok) {
         if (response.status === 422) {
           const body = await response.json()
           return setErrors(body.errors)
         } else {
           const errorMessage = `${response.status} (${response.statusText})`
           const error = new Error(errorMessage)
-          throw(error)
+          throw error
         }
       }
       const body = await response.json()
@@ -44,7 +44,7 @@ const NewPizzaStyleForm = props => {
     const errors = {}
     const requiredFields = ["name"]
     requiredFields.forEach(field => {
-      if(formPayload[field].trim() === "") {
+      if (formPayload[field].trim() === "") {
         errors[field] = "can not be blank"
       }
     })
@@ -52,9 +52,9 @@ const NewPizzaStyleForm = props => {
     return _.isEmpty(errors)
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = event => {
     event.preventDefault()
-    if(validForSubmission()) {
+    if (validForSubmission()) {
       addStyle()
     }
   }
@@ -95,7 +95,7 @@ const NewPizzaStyleForm = props => {
           onChange={handleInputChange}
         />
       </div>
- 
+
       <input className="button" type="submit" value="Submit" />
     </form>
   )

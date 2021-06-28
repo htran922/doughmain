@@ -12,7 +12,7 @@ const PizzaStyleField = props => {
         throw error
       }
       const pizzaStylesData = await response.json()
-      pizzaStylesData.pizzaStyles.unshift({name: "", id: null})
+      pizzaStylesData.pizzaStyles.unshift({ name: "", id: null })
       setPizzaStyles(pizzaStylesData.pizzaStyles)
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`)
@@ -34,7 +34,12 @@ const PizzaStyleField = props => {
   return (
     <div>
       <label htmlFor="pizzaStyleId">Pizza Style:</label>
-      <select name="pizzaStyleId" id="pizzaStyleId" onChange={props.handleInputChange} value={props.pizzaStyleId}>
+      <select
+        name="pizzaStyleId"
+        id="pizzaStyleId"
+        onChange={props.handleInputChange}
+        value={props.pizzaStyleId}
+      >
         {pizzaStyleOptions}
       </select>
     </div>
