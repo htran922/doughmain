@@ -2,7 +2,9 @@ package com.launchacademy.reviews.controllers;
 
 import com.launchacademy.reviews.exceptionHandlers.CustomError;
 import com.launchacademy.reviews.models.PizzaStyle;
+import com.launchacademy.reviews.models.Review;
 import com.launchacademy.reviews.services.PizzaStyleService;
+import com.launchacademy.reviews.services.ReviewService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,12 +19,13 @@ import javax.validation.Valid;
 public class PizzaStylesApiV1Controller {
 
   private PizzaStyleService pizzaStyleService;
+  private ReviewService reviewService;
   private CustomError customError;
 
   @Autowired
-  public PizzaStylesApiV1Controller(PizzaStyleService pizzaStyleService,
-      CustomError customError) {
+  public PizzaStylesApiV1Controller(PizzaStyleService pizzaStyleService,ReviewService reviewService, CustomError customError) {
     this.pizzaStyleService = pizzaStyleService;
+    this.reviewService = reviewService;
     this.customError = customError;
   }
 
@@ -57,6 +60,23 @@ public class PizzaStylesApiV1Controller {
 
     if(pizzaStyleService.findById(id).isPresent()){
       PizzaStyle pizzaStyle = pizzaStyleService.findById(id).get();
+      map.put("pizzaStyle", pizzaStyle);
+      return map;
+    } else {
+      return customError.doesntExists();
+    }
+  }
+
+  @GetMapping("/{id}/{sortOption}")
+  public Object getByIdAndSortReviews(@PathVariable Integer id, @PathVariable String sortOption){
+    Map<String, PizzaStyle> map = new HashMap<>();
+    if(pizzaStyleService.findById(id).isPresent()){
+      PizzaStyle pizzaStyle = pizzaStyleService.findById(id).get();
+      if (sortOption.equals("RatingDesc")) {
+        pizzaStyle.setReviews(reviewService.findByPizzaStyleIdOrderByRatingDesc(id));
+      } else if (sortOption.equals("RatingAsc")) {
+        pizzaStyle.setReviews(reviewService.findByPizzaStyleIdOrderByRatingAsc(id));
+      }
       map.put("pizzaStyle", pizzaStyle);
       return map;
     } else {

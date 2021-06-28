@@ -3,7 +3,9 @@ package com.launchacademy.reviews.services;
 import com.launchacademy.reviews.models.PizzaStyle;
 import com.launchacademy.reviews.models.Review;
 import com.launchacademy.reviews.repositories.ReviewRepository;
+import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -36,5 +38,13 @@ public class ReviewService {
 
   public Optional findById(Integer id) {
     return repository.findById(id);
+  }
+
+  public List<Review> findByPizzaStyleIdOrderByRatingDesc(Integer id) {
+    return repository.findByPizzaStyleIdOrderByRatingDesc(id);
+  }
+
+  public List<Review> findByPizzaStyleIdOrderByRatingAsc(Integer id) {
+    return repository.findByPizzaStyleIdOrderByRatingAsc(id);
   }
 }
