@@ -8,7 +8,7 @@ import ReviewSortField from "./ReviewSortField"
 const PizzaStyleShow = props => {
   const [pizzaStyle, setPizzaStyle] = useState({ reviews: [] })
   const [errors, setErrors] = useState("")
-  const [sortOption, setSortOption] = useState('')
+  const [sortOption, setSortOption] = useState("")
   let location = useLocation()
 
   const fetchPizzaStyle = async () => {
@@ -34,7 +34,9 @@ const PizzaStyleShow = props => {
   }
 
   const fetchPizzaStyleSort = async () => {
-    const pizzaStyleData = await jsonGet(`/api/v1/pizza-styles/${props.match.params.id}/${sortOption}`)
+    const pizzaStyleData = await jsonGet(
+      `/api/v1/pizza-styles/${props.match.params.id}/${sortOption}`
+    )
     setPizzaStyle(pizzaStyleData.pizzaStyle)
   }
 
@@ -74,12 +76,7 @@ const PizzaStyleShow = props => {
               Edit
             </button>
           </Link>
-          <button
-            type="button"
-            value={review.id}
-            onClick={handleDelete}
-            className="alert button"
-          >
+          <button type="button" value={review.id} onClick={handleDelete} className="alert button">
             Delete
           </button>
         </div>
@@ -98,10 +95,7 @@ const PizzaStyleShow = props => {
           </Link>
         </div>
       </div>
-      <ReviewSortField 
-        sortOption={sortOption}
-        handleSortSelect={handleSortSelect}
-      />
+      <ReviewSortField sortOption={sortOption} handleSortSelect={handleSortSelect} />
       <br />
       {reviewTiles}
     </div>
