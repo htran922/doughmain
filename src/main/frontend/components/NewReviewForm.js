@@ -17,7 +17,7 @@ const NewReviewForm = props => {
   const [shouldRedirect, setShouldRedirect] = useState(false)
 
   const handleInputChange = event => {
-    console.log(event.currentTarget.value);
+    console.log(event.currentTarget.value)
     setFormPayload({
       ...formPayload,
       [event.currentTarget.id]: event.currentTarget.value
@@ -111,20 +111,7 @@ const NewReviewForm = props => {
         />
       </div>
 
-      <div>
-        {/* <label htmlFor="rating">Rating: </label> */}
-        {/* <input
-          name="rating"
-          id="rating"
-          type="number"
-          min="0"
-          max="5"
-          step="1"
-          value={formPayload.rating}
-          onChange={handleInputChange}
-        /> */}
-        <StarRating formRating={formPayload.rating} handleRatingChange={handleRatingChange} />
-      </div>
+      <StarRating formRating={formPayload.rating} handleRatingChange={handleRatingChange} />
 
       <div>
         <label htmlFor="imgUrl">Image URL: </label>
