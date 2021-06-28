@@ -17,7 +17,6 @@ const NewReviewForm = props => {
   const [shouldRedirect, setShouldRedirect] = useState(false)
 
   const handleInputChange = event => {
-    console.log(event.currentTarget.value)
     setFormPayload({
       ...formPayload,
       [event.currentTarget.id]: event.currentTarget.value

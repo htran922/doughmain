@@ -7,18 +7,28 @@ const StarRating = ({ formRating, handleRatingChange }) => {
 
   const hoverOver = event => {
     let val = 0
-    if (event && event.target && event.target.getAttribute("data-star-id"))
+    if (event && event.target && event.target.getAttribute("data-star-id")) {
       val = event.target.getAttribute("data-star-id")
-    setSelection(val)
+      setSelection(val)
+    }
   }
 
   const handleClick = event => {
     setRating(event.target.getAttribute("data-star-id") || rating)
   }
-  
+
   useEffect(() => {
     handleRatingChange(rating.toString())
   }, [rating])
+
+  const starComponents = Array.from({ length: 5 }, (v, i) => (
+    <Star
+      starId={i + 1}
+      key={`star_${i + 1}`}
+      marked={selection ? selection >= i + 1 : rating >= i + 1}
+      value={i + 1}
+    />
+  ))
 
   return (
     <div
@@ -29,15 +39,9 @@ const StarRating = ({ formRating, handleRatingChange }) => {
       name="rating"
       id="rating"
     >
-      <label htmlFor="rating">Rating: 
-      {Array.from({ length: 5 }, (v, i) => (
-        <Star
-          starId={i + 1}
-          key={`star_${i + 1}`}
-          marked={selection ? selection >= i + 1 : rating >= i + 1}
-          value={i + 1}
-        />
-      ))}
+      <label htmlFor="rating">
+        Rating:
+        {starComponents}
       </label>
     </div>
   )
