@@ -3,10 +3,12 @@ import { Link, useLocation } from "react-router-dom"
 import _ from "lodash"
 import { jsonGet, jsonDelete } from "../public/js/jsonFetch"
 import ReviewTile from "./ReviewTile"
+import ReviewSortField from "./ReviewSortField"
 
 const PizzaStyleShow = props => {
   const [pizzaStyle, setPizzaStyle] = useState({ reviews: [] })
   const [errors, setErrors] = useState("")
+  const [sortOption, setSortOption] = useState("")
   let location = useLocation()
 
   const fetchPizzaStyle = async () => {
@@ -31,9 +33,20 @@ const PizzaStyleShow = props => {
     }
   }
 
+  const fetchPizzaStyleSort = async () => {
+    const pizzaStyleData = await jsonGet(
+      `/api/v1/pizza-styles/${props.match.params.id}/${sortOption}`
+    )
+    setPizzaStyle(pizzaStyleData.pizzaStyle)
+  }
+
   useEffect(() => {
     fetchPizzaStyle()
   }, [location.pathname])
+
+  useEffect(() => {
+    fetchPizzaStyleSort()
+  }, [sortOption])
 
   if (_.isEmpty(pizzaStyle)) {
     return <h2 className="text-center">{errors}</h2>
@@ -48,6 +61,11 @@ const PizzaStyleShow = props => {
     deleteReview(`/api/v1/reviews/${id}`)
   }
 
+  const handleSortSelect = event => {
+    const selected = event.target.value
+    setSortOption(selected)
+  }
+
   const reviewTiles = pizzaStyle.reviews.map(review => {
     return (
       <div key={review.id}>
@@ -58,12 +76,7 @@ const PizzaStyleShow = props => {
               Edit
             </button>
           </Link>
-          <button
-            type="button"
-            value={review.id}
-            onClick={handleDelete}
-            className="alert button"
-          >
+          <button type="button" value={review.id} onClick={handleDelete} className="alert button">
             Delete
           </button>
         </div>
@@ -72,7 +85,7 @@ const PizzaStyleShow = props => {
   })
 
   return (
-    <div>
+    <div className="grid-container">
       <div className="text-center">
         <h1>{pizzaStyle.name}</h1>
         <img src={pizzaStyle.imgUrl} />
@@ -82,10 +95,11 @@ const PizzaStyleShow = props => {
           </Link>
         </div>
       </div>
-
+      <ReviewSortField sortOption={sortOption} handleSortSelect={handleSortSelect} />
       <br />
       {reviewTiles}
     </div>
   )
 }
+
 export default PizzaStyleShow
