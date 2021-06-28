@@ -36,43 +36,16 @@ const NewReviewForm = props => {
     return _.isEmpty(errors)
   }
 
-  const addReview2 = async () => {
-    const formData = new FormData();
-    formData.append("file", imagefile);
-    formData.append("formPayLoad", JSON.stringify(formPayload));
-    try{
-      const response = await fetch("/api/v1/reviews/file", {
-        method: 'post',
-        body: formData
-      })
-      if (!response.ok) {
-        if (response.status === 422) {
-          const body = await response.json()
-          return setErrors(body.errors)
-        } else { //Non 422
-          const errorMessage = `${response.status} (${response.statusText})`;
-          const error = new Error(errorMessage);
-          throw (error);
-        }
-      } else if(res.ok){
-        console.log(res.data);
-        console.log("File uploaded successfully");
-      }
-    } catch (err) {
-      console.error(`Error in fetch: ${err.message}`)
-    }
-  }
-
   const handleSubmit = event => {
     event.preventDefault()
     if (validForSubmission()) {
-      addReview2()
+      addReview()
     }
   }
 
   const onChange = event => {
-    event.preventDefault();
-    setImageFile(event.currentTarget.files[0]);
+    event.preventDefault()
+    setImageFile(event.currentTarget.files[0])
   }
 
   const addReview = async () => {
@@ -149,18 +122,6 @@ const NewReviewForm = props => {
           onChange={handleInputChange}
         />
       </div>
-
-      <div>
-        <label htmlFor="imgUrl">Image URL: </label>
-        <input
-          name="imgUrl"
-          id="imgUrl"
-          type="text"
-          value={formPayload.imgUrl}
-          onChange={handleInputChange}
-        />
-      </div>
-
       <div>
         <label htmlFor="imgFile">Image URL: </label>
         <input

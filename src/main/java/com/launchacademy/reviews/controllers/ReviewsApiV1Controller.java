@@ -113,19 +113,18 @@ public class ReviewsApiV1Controller {
           MultipartFile mpf = files.get(0);
           String originalFileName = mpf.getOriginalFilename();
           String ext = "." + originalFileName.split("\\.")[1];
-          String imagesDir = System.getProperty("user.dir") + "/src/main/frontend/public/images/";
+          String imagePath = System.getProperty("user.dir") + "/src/main/frontend/public/images/";
           String uuid = UUID.randomUUID().toString();
-          imageUrl = imagesDir + uuid + ext;
+          imageUrl = "/public/images/" + uuid + ext;
+          System.out.println(imageUrl);
           //Create image file from imageDir, savedReview.id, and ext
-          String imagesPath = System.getProperty("user.dir") + "/src/main/frontend/public/images/";
-          File file = new File(imagesPath + uuid + ext);
+          File file = new File(imagePath + uuid + ext);
           try (OutputStream os = Files.newOutputStream(file.toPath())) {
               os.write(mpf.getBytes());
           } catch (IOException e) {
               e.printStackTrace();
           }
       }
-
     //Work with the JSON to extract the JSON Review, add the imageURl and save it via reviewService
     ObjectMapper mapper = new ObjectMapper();
     Review review = null;
@@ -138,9 +137,9 @@ public class ReviewsApiV1Controller {
     if (imageUrl != null) {
       review.setImgUrl(imageUrl);
     }
-    Review savedReview = reviewService.save(review, review.getPizzaStyleId());
+    reviewService.save(review, review.getPizzaStyleId());
     Map<String, Review> map = new HashMap<>();
-    map.put("review", savedReview);
+    map.put("review", review);
     return map;
   }
 
