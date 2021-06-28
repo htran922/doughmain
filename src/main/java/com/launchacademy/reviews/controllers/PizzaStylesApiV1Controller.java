@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -57,9 +59,9 @@ public class PizzaStylesApiV1Controller {
   @GetMapping("/{id}")
   public Object getById(@PathVariable Integer id){
     Map<String, PizzaStyle> map = new HashMap<>();
-
-    if(pizzaStyleService.findById(id).isPresent()){
-      PizzaStyle pizzaStyle = pizzaStyleService.findById(id).get();
+    Optional pizzaStyleOptional = pizzaStyleService.findById(id);
+    if(pizzaStyleOptional.isPresent()){
+      PizzaStyle pizzaStyle = (PizzaStyle) pizzaStyleOptional.get();
       map.put("pizzaStyle", pizzaStyle);
       return map;
     } else {
@@ -70,12 +72,13 @@ public class PizzaStylesApiV1Controller {
   @GetMapping("/{id}/{sortOption}")
   public Object getByIdAndSortReviews(@PathVariable Integer id, @PathVariable String sortOption){
     Map<String, PizzaStyle> map = new HashMap<>();
-    if(pizzaStyleService.findById(id).isPresent()){
-      PizzaStyle pizzaStyle = pizzaStyleService.findById(id).get();
+    Optional pizzaStyleOptional = pizzaStyleService.findById(id);
+    if(pizzaStyleOptional.isPresent()){
+      PizzaStyle pizzaStyle = (PizzaStyle) pizzaStyleOptional.get();
       if (sortOption.equals("RatingDesc")) {
-        pizzaStyle.setReviews(reviewService.findByPizzaStyleIdOrderByRatingDesc(id));
+        pizzaStyle.setReviews(reviewService.findByPizzaStyleId(id, Sort.by("rating").descending()));
       } else if (sortOption.equals("RatingAsc")) {
-        pizzaStyle.setReviews(reviewService.findByPizzaStyleIdOrderByRatingAsc(id));
+        pizzaStyle.setReviews(reviewService.findByPizzaStyleId(id, Sort.by("rating").ascending()));
       }
       map.put("pizzaStyle", pizzaStyle);
       return map;

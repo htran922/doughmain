@@ -40,11 +40,8 @@ public class ReviewService {
     return repository.findById(id);
   }
 
-  public List<Review> findByPizzaStyleIdOrderByRatingDesc(Integer id) {
-    return repository.findByPizzaStyleIdOrderByRatingDesc(id);
+  public List<Review> findByPizzaStyleId(Integer id, Sort sort) {
+    return repository.findByPizzaStyleId(id, sort);
   }
 
-  public List<Review> findByPizzaStyleIdOrderByRatingAsc(Integer id) {
-    return repository.findByPizzaStyleIdOrderByRatingAsc(id);
-  }
 }

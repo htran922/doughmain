@@ -2,12 +2,12 @@ package com.launchacademy.reviews.repositories;
 
 import com.launchacademy.reviews.models.Review;
 import java.util.List;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ReviewRepository extends CrudRepository<Review, Integer> {
+public interface ReviewRepository extends PagingAndSortingRepository<Review, Integer> {
 
-  List<Review> findByPizzaStyleIdOrderByRatingDesc(Integer id);
-  List<Review> findByPizzaStyleIdOrderByRatingAsc(Integer id);
+  List<Review> findByPizzaStyleId(Integer id, Sort sort);
 }
