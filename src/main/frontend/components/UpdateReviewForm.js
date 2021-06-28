@@ -44,7 +44,7 @@ const UpdateReviewForm = props => {
     requiredFields.forEach(field => {
       if (formPayload[field].trim() === "") {
         errors[field] = "can not be blank"
-      } 
+      }
     })
     setErrors(errors)
     return _.isEmpty(errors)
