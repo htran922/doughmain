@@ -48,9 +48,6 @@ public class Review {
   @Column(name = "img_url")
   private String imgUrl;
 
-  @Transient
-  private File imgFile;
-
   @Column(name = "created_at")
   private LocalDateTime createdAt;
 

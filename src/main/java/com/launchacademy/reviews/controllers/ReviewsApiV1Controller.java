@@ -1,12 +1,22 @@
 package com.launchacademy.reviews.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.launchacademy.reviews.exceptionHandlers.CustomError;
 import com.launchacademy.reviews.models.PizzaStyle;
 import com.launchacademy.reviews.models.Review;
 import com.launchacademy.reviews.services.PizzaStyleService;
 import com.launchacademy.reviews.services.ReviewService;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -33,82 +43,109 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/api/v1/reviews")
 public class ReviewsApiV1Controller {
-    private ReviewService reviewService;
-    private PizzaStyleService pizzaStyleService;
-    private CustomError customError;
 
-    @Autowired
-    public ReviewsApiV1Controller(ReviewService reviewService, PizzaStyleService pizzaStyleService, CustomError customError) {
-        this.reviewService = reviewService;
-        this.pizzaStyleService = pizzaStyleService;
-        this.customError = customError;
+  private ReviewService reviewService;
+  private PizzaStyleService pizzaStyleService;
+  private CustomError customError;
+
+  @Autowired
+  public ReviewsApiV1Controller(ReviewService reviewService, PizzaStyleService pizzaStyleService,
+      CustomError customError) {
+    this.reviewService = reviewService;
+    this.pizzaStyleService = pizzaStyleService;
+    this.customError = customError;
+  }
+
+  @GetMapping("/{id}")
+  public Map<String, Review> getById(@PathVariable Integer id) {
+    Map<String, Review> map = new HashMap<>();
+    Optional optional = reviewService.findById(id);
+    if (optional.isPresent()) {
+      map.put("review", (Review) optional.get());
+    } else {
+      System.out.println("Review with type with id " + id + " was not found");
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
+    return map;
+  }
 
-    @GetMapping("/{id}")
-    public Map<String, Review> getById(@PathVariable Integer id) {
-        Map<String, Review> map = new HashMap<>();
-        Optional optional = reviewService.findById(id);
-        if (optional.isPresent()) {
-            map.put("review", (Review) optional.get());
-        } else {
-            System.out.println("Review with type with id " + id + " was not found");
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return map;
+  @PutMapping("/{id}")
+  public Object updateReview(@PathVariable Integer id, @RequestBody @Valid Review review,
+      BindingResult bindingResult) {
+    if (bindingResult.getAllErrors().size() > 1) {
+      return customError.handleBindingErrors(bindingResult);
+    } else {
+      Review foundReview = null;
+      if (reviewService.findById(id).isPresent()) {
+        foundReview = (Review) reviewService.findById(id).get();
+      } else {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+      }
+
+      review.setId(foundReview.getId());
+      Map<String, Review> updatedReview = new HashMap<>();
+      reviewService.save(review, review.getPizzaStyleId());
+      updatedReview.put("review", review);
+      return updatedReview;
     }
+  }
 
-    @PutMapping("/{id}")
-    public Object updateReview(@PathVariable Integer id, @RequestBody @Valid Review review, BindingResult bindingResult) {
-        if (bindingResult.getAllErrors().size() > 1) {
-            return customError.handleBindingErrors(bindingResult);
-        } else {
-            Review foundReview = null;
-            if (reviewService.findById(id).isPresent()) {
-                foundReview = (Review) reviewService.findById(id).get();
-            } else {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-            }
-
-            review.setId(foundReview.getId());
-            Map<String, Review> updatedReview = new HashMap<>();
-            reviewService.save(review, review.getPizzaStyleId());
-            updatedReview.put("review", review);
-            return updatedReview;
-        }
+  @PostMapping
+  public Object addReview(@RequestBody @Valid Review review, BindingResult bindingResult) {
+    if (bindingResult.getAllErrors().size() > 1) {
+      return customError.handleBindingErrors(bindingResult);
+    } else {
+      Integer id = review.getPizzaStyleId();
+      Map<String, Review> newReview = new HashMap<>();
+      reviewService.save(review, id);
+      newReview.put("review", review);
+      return newReview;
     }
+  }
 
-    @PostMapping
-    public Object addReview(@RequestBody @Valid Review review, BindingResult bindingResult) {
-        if (bindingResult.getAllErrors().size() > 1) {
-            return customError.handleBindingErrors(bindingResult);
-        } else {
-            System.out.println(review.getImgFile());
-            Integer id = review.getPizzaStyleId();
-            Map<String, Review> newReview = new HashMap<>();
-            reviewService.save(review, id);
-            newReview.put("review", review);
-            return newReview;
-        }
+  @PostMapping(value = "/file", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE,
+      MediaType.MULTIPART_FORM_DATA_VALUE})
+  public Object uploadFileAndFormData(@RequestPart("file") List<MultipartFile> files,
+      @RequestPart("formPayLoad") String formPayLoad) {
+    String imageUrl = null;
+      if (files.size() > 0) {
+          //Work with the multipart file
+          MultipartFile mpf = files.get(0);
+          String originalFileName = mpf.getOriginalFilename();
+          String ext = "." + originalFileName.split("\\.")[1];
+          String imagesDir = System.getProperty("user.dir") + "/src/main/frontend/public/images/";
+          String uuid = UUID.randomUUID().toString();
+          imageUrl = imagesDir + uuid + ext;
+          //Create image file from imageDir, savedReview.id, and ext
+          String imagesPath = System.getProperty("user.dir") + "/src/main/frontend/public/images/";
+          File file = new File(imagesPath + uuid + ext);
+          try (OutputStream os = Files.newOutputStream(file.toPath())) {
+              os.write(mpf.getBytes());
+          } catch (IOException e) {
+              e.printStackTrace();
+          }
+      }
+
+    //Work with the JSON to extract the JSON Review, add the imageURl and save it via reviewService
+    ObjectMapper mapper = new ObjectMapper();
+    Review review = null;
+    try {
+      review = mapper.readValue(formPayLoad, Review.class);
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
     }
-
-    @PostMapping(value = "/file", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity uploadFileAndFormData(@RequestPart("file") List<MultipartFile> file,
-        @RequestPart("formPayLoad") String formPayLoad ){
-        System.out.println(file.get(0).getOriginalFilename());
-        System.out.println(formPayLoad);
-        1. USE JACKSON to convert JSON string to an object - Checkout Articles/Assignments
-        2. Create a Review, get it's ID and make it the file name.jpg or whatever it is,
-        3. Set the imgUrl to point at "/images/id.extension"
-         Eg. review.id = 2 and photo is named pizza.jpg,
-         the photo would be saved as frontend/assets/images/2.jpeg Unique as ID or better!
-
-        return ResponseEntity.ok().build();
+    //add imageUrl if image was provided
+    if (imageUrl != null) {
+      review.setImgUrl(imageUrl);
     }
+    Review savedReview = reviewService.save(review, review.getPizzaStyleId());
+    Map<String, Review> map = new HashMap<>();
+    map.put("review", savedReview);
+    return map;
+  }
 
-
-
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Integer id) {
-      reviewService.deleteById(id);
-    }
+  @DeleteMapping("/{id}")
+  public void deleteById(@PathVariable Integer id) {
+    reviewService.deleteById(id);
+  }
 }
