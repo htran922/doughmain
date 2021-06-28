@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Redirect } from "react-router"
 import PizzaStyleField from "./PizzaStyleField"
 import ErrorList from "./ErrorList"
+import StarRating from "./StarRating"
 
 const NewReviewForm = props => {
   const [formPayload, setFormPayload] = useState({
@@ -18,7 +19,14 @@ const NewReviewForm = props => {
   const handleInputChange = event => {
     setFormPayload({
       ...formPayload,
-      [event.currentTarget.name]: event.currentTarget.value
+      [event.currentTarget.id]: event.currentTarget.value
+    })
+  }
+
+  const handleRatingChange = rating => {
+    setFormPayload({
+      ...formPayload,
+      rating: rating
     })
   }
 
@@ -102,19 +110,7 @@ const NewReviewForm = props => {
         />
       </div>
 
-      <div>
-        <label htmlFor="rating">Rating: </label>
-        <input
-          name="rating"
-          id="rating"
-          type="number"
-          min="0"
-          max="5"
-          step="1"
-          value={formPayload.rating}
-          onChange={handleInputChange}
-        />
-      </div>
+      <StarRating formRating={formPayload.rating} handleRatingChange={handleRatingChange} />
 
       <div>
         <label htmlFor="imgUrl">Image URL: </label>

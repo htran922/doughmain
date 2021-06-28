@@ -28,13 +28,11 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/api/v1/reviews")
 public class ReviewsApiV1Controller {
     private ReviewService reviewService;
-    private PizzaStyleService pizzaStyleService;
     private CustomError customError;
 
     @Autowired
-    public ReviewsApiV1Controller(ReviewService reviewService, PizzaStyleService pizzaStyleService, CustomError customError) {
+    public ReviewsApiV1Controller(ReviewService reviewService, CustomError customError) {
         this.reviewService = reviewService;
-        this.pizzaStyleService = pizzaStyleService;
         this.customError = customError;
     }
 
@@ -45,7 +43,6 @@ public class ReviewsApiV1Controller {
         if (optional.isPresent()) {
             map.put("review", (Review) optional.get());
         } else {
-            System.out.println("Review with type with id " + id + " was not found");
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return map;
