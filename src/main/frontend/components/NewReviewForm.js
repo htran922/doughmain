@@ -84,7 +84,7 @@ const NewReviewForm = props => {
     }
   }
 
-  const onChange = event => {
+  const handleImageUpload = event => {
     //event.preventDefault()
     let file_size = event.target.files[0].size;
     if(file_size > 10485760){
@@ -174,7 +174,8 @@ const NewReviewForm = props => {
             name="imgFile"
             id="imgFile"
             type="file"
-            onChange={onChange}
+            accept="image/*"
+            onChange={handleImageUpload}
         />
       </div>
 
