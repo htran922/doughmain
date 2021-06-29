@@ -130,6 +130,21 @@ public class ReviewsApiV1Controller {
     }
   }
 
+  @PutMapping("/{id}/upvote")
+  public Object updateUpvoteCount(@PathVariable Integer id, @RequestBody Integer updatedCount) {
+      Review foundReview = null;
+      if (reviewService.findById(id).isPresent()) {
+          foundReview = (Review) reviewService.findById(id).get();
+      } else {
+          throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+      }
+      foundReview.setUpvoteCount(updatedCount);
+      Map<String, Review> updatedReview = new HashMap<>();
+      reviewService.save(foundReview, foundReview.getPizzaStyleId());
+      updatedReview.put("review", foundReview);
+      return updatedReview;
+  }
+  
   @PutMapping("/{id}/file")
   public Object updateReviewWithImage(@PathVariable Integer id, @RequestPart("file") List<MultipartFile> files,
       @RequestPart("formPayLoad") String formPayLoad) {
