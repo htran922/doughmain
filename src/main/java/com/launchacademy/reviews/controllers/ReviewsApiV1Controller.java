@@ -112,7 +112,6 @@ public class ReviewsApiV1Controller {
       String fileName = UUID.randomUUID().toString();
       //Create imageUrl for reviews.img_url field
       imageUrl = "/public/images/" + fileName + ext;
-      System.out.println(imageUrl);
       //Create image file for persisting uploaded file to disk
       File file = new File(imagePath + fileName + ext);
       //Write the uploaded file to disk. - See ImageEndPoint controller regarding image serving
