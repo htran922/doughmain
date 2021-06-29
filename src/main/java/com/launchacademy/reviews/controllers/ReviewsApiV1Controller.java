@@ -68,6 +68,21 @@ public class ReviewsApiV1Controller {
         }
     }
 
+    @PutMapping("/{id}/upvote")
+    public Object updateUpvoteCount(@PathVariable Integer id, @RequestBody Integer updatedCount) {
+        Review foundReview = null;
+        if (reviewService.findById(id).isPresent()) {
+            foundReview = (Review) reviewService.findById(id).get();
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        foundReview.setUpvoteCount(updatedCount);
+        Map<String, Review> updatedReview = new HashMap<>();
+        reviewService.save(foundReview, foundReview.getPizzaStyleId());
+        updatedReview.put("review", foundReview);
+        return updatedReview;
+    }
+
     @PostMapping
     public Object addReview(@RequestBody @Valid Review review, BindingResult bindingResult) {
         if (bindingResult.getAllErrors().size() > 1) {
