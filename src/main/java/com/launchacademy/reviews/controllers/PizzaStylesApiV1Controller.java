@@ -69,16 +69,16 @@ public class PizzaStylesApiV1Controller {
     }
   }
 
-  @GetMapping("/{id}/{sortOption}")
-  public Object getByIdAndSortReviews(@PathVariable Integer id, @PathVariable String sortOption){
+  @GetMapping("/{id}/{sortField}/{sortOrder}")
+  public Object getByIdAndSortReviews(@PathVariable Integer id, @PathVariable String sortField, @PathVariable String sortOrder){
     Map<String, PizzaStyle> map = new HashMap<>();
     Optional pizzaStyleOptional = pizzaStyleService.findById(id);
     if(pizzaStyleOptional.isPresent()){
       PizzaStyle pizzaStyle = (PizzaStyle) pizzaStyleOptional.get();
-      if (sortOption.equals("RatingDesc")) {
-        pizzaStyle.setReviews(reviewService.findByPizzaStyleId(id, Sort.by("rating").descending()));
-      } else if (sortOption.equals("RatingAsc")) {
-        pizzaStyle.setReviews(reviewService.findByPizzaStyleId(id, Sort.by("rating").ascending()));
+      if (sortOrder.equals("descending")) {
+        pizzaStyle.setReviews(reviewService.findByPizzaStyleId(id, Sort.by(sortField).descending()));
+      } else if (sortOrder.equals("ascending")) {
+        pizzaStyle.setReviews(reviewService.findByPizzaStyleId(id, Sort.by(sortField).ascending()));
       }
       map.put("pizzaStyle", pizzaStyle);
       return map;
