@@ -46,12 +46,17 @@ const NavBar = () => {
             <h5>doughmain</h5>
           </Link>
         </div>
-        <div className="top-bar-right">
+        <div className="top-bar">
           <div className="dropdown menu" data-dropdown-menu>
             <li>
-              <Link to={`/pizza-styles`}>Find Reviews By Pizza Style</Link>
+              <Link to={`/pizza-styles`}>Pizza Styles</Link>
               <ul className="menu">{pizzaStyleLinks}</ul>
             </li>
+          </div>
+          <div className="top-bar-right">
+            <div>
+              <Link className="button secondary label" to={`/reviews/new`}>Write A Review</Link>
+            </div>
           </div>
         </div>
       </div>

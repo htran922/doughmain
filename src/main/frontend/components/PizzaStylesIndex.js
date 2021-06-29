@@ -28,7 +28,8 @@ const PizzaStylesIndex = props => {
 
   return (
     <div className="grid-container">
-      <h1>See All Pizza Styles</h1>
+      <h1 className="big-image">Discover the best pizza styles for you</h1>
+      <h2>See All Pizza Styles</h2>
       <div className="grid-x grid-margin-x small-up-2 medium-up-3">{pizzaStyleTiles}</div>
     </div>
   )
