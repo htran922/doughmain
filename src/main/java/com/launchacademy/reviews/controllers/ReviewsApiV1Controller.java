@@ -69,7 +69,7 @@ public class ReviewsApiV1Controller {
     }
 
     @PutMapping("/{id}/upvote")
-    public Object updateReview(@PathVariable Integer id, @RequestBody Integer updatedCount) {
+    public Object updateUpvoteCount(@PathVariable Integer id, @RequestBody Integer updatedCount) {
         Review foundReview = null;
         if (reviewService.findById(id).isPresent()) {
             foundReview = (Review) reviewService.findById(id).get();

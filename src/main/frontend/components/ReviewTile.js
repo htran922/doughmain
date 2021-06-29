@@ -49,7 +49,7 @@ const ReviewTile = props => {
       </p>
       <div>
         <span>Was this review helpful to you?</span>
-        <button type="button" id="upvote-icon" disabled={disabledStatus} onClick={handleUpvoteClick}>
+        <button type="button" disabled={disabledStatus} onClick={handleUpvoteClick}>
           <i className="fas fa-thumbs-up fa-2x"></i>
         </button>
         <span>{voteCount}</span>
