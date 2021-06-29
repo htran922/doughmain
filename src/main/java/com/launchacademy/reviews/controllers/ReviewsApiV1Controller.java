@@ -3,15 +3,10 @@ package com.launchacademy.reviews.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.launchacademy.reviews.exceptionHandlers.CustomError;
-import com.launchacademy.reviews.models.PizzaStyle;
 import com.launchacademy.reviews.models.Review;
-import com.launchacademy.reviews.services.PizzaStyleService;
 import com.launchacademy.reviews.services.ReviewService;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.List;
@@ -19,8 +14,6 @@ import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,10 +22,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import java.time.LocalDateTime;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -104,24 +95,20 @@ public class ReviewsApiV1Controller {
       @RequestPart("formPayLoad") String formPayLoad) {
     String imageUrl = null;
     if (files.size() > 0) {
-      //Work with the multipart file
       MultipartFile mpf = files.get(0);
       String originalFileName = mpf.getOriginalFilename();
       String ext = "." + originalFileName.split("\\.")[1];
       String imagePath = System.getProperty("user.dir") + "/src/main/frontend/public/images/";
       String fileName = UUID.randomUUID().toString();
-      //Create imageUrl for reviews.img_url field
       imageUrl = "/public/images/" + fileName + ext;
-      //Create image file for persisting uploaded file to disk
       File file = new File(imagePath + fileName + ext);
-      //Write the uploaded file to disk. - See ImageEndPoint controller regarding image serving
       try (OutputStream os = Files.newOutputStream(file.toPath())) {
         os.write(mpf.getBytes());
       } catch (IOException e) {
         e.printStackTrace();
       }
     }
-    //Work Jackson to map JSON passed to a Review
+
     ObjectMapper mapper = new ObjectMapper();
     Review review = null;
     try {
@@ -129,7 +116,7 @@ public class ReviewsApiV1Controller {
     } catch (JsonProcessingException e) {
       e.printStackTrace();
     }
-    //add the imageUrl if provided in form.
+
     if (imageUrl != null) {
       review.setImgUrl(imageUrl);
     }

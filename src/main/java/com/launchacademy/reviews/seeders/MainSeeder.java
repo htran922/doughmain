@@ -14,8 +14,8 @@ public class MainSeeder implements CommandLineRunner {
 
   @Autowired
   public MainSeeder(PizzaStyleSeeder styleSeeder, ReviewSeeder reviewSeeder) {
-      this.styleSeeder = styleSeeder;
-      this.reviewSeeder = reviewSeeder;
+    this.styleSeeder = styleSeeder;
+    this.reviewSeeder = reviewSeeder;
   }
 
   public void run(String... args){

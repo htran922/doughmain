@@ -4,7 +4,6 @@ import PizzaStyleField from "./PizzaStyleField"
 import ErrorList from "./ErrorList"
 import StarRating from "./StarRating"
 
-
 const NewReviewForm = props => {
   const [formPayload, setFormPayload] = useState({
     pizzaStyleId: "",
@@ -17,93 +16,6 @@ const NewReviewForm = props => {
   const [styleId, setStyleId] = useState(null)
   const [shouldRedirect, setShouldRedirect] = useState(false)
   const [imageFile, setImageFile] = useState(null)
-
-  const handleInputChange = event => {
-    setFormPayload({
-      ...formPayload,
-      [event.currentTarget.id]: event.currentTarget.value
-    })
-  }
-
-  const handleRatingChange = rating => {
-    setFormPayload({
-      ...formPayload,
-      rating: rating
-    })
-  }
-
-  const validForSubmission = () => {
-    const errors = {}
-    const requiredFields = ["title", "rating", "pizzaStyleId"]
-    requiredFields.forEach(field => {
-      if (formPayload[field].trim() === "") {
-        errors[field] = "can not be blank"
-      }
-    })
-    setErrors(errors)
-    return _.isEmpty(errors)
-  }
-
-  const addReviewWithImage = async () => {
-    const formData = new FormData()
-    formData.append("file", imageFile)
-    formData.append("formPayLoad", JSON.stringify(formPayload))
-    try{
-      const response = await fetch("/api/v1/reviews/file", {
-        method: 'post',
-        body: formData
-      })
-      if (!response.ok) {
-        if (response.status === 422) {
-          const body = await response.json()
-          return setErrors(body.errors)
-        } else { //Non 422
-          const errorMessage = `${response.status} (${response.statusText})`
-          const error = new Error(errorMessage)
-          throw (error)
-        }
-      } else if(response.ok){
-        console.log(response.data)
-        console.log("File uploaded successfully")
-        const body = await response.json()
-        setStyleId(body.review.pizzaStyle.id)
-        setShouldRedirect(true)
-      }
-    } catch (err) {
-      console.error(`Error in fetch: ${err.message}`)
-    }
-  }
-
-  const handleSubmit = event => {
-    event.preventDefault()
-    if (validForSubmission()) {
-      if(!!imageFile)
-        addReviewWithImage();
-      else
-        addReview();
-    }
-  }
-
-  const handleImageUpload = event => {
-    //event.preventDefault()
-    let file_size = event.target.files[0].size;
-    if(file_size > 10485760){
-      setErrors({
-        ...errors,
-        "The image" : "file size: " + file_size +
-            " bytes,  exceeds the size limit: " + 10485760 + " bytes."
-      });
-      //Clear the state for the uncontrolled component.
-      setImageFile(null);
-    } else {
-      //Clear error
-     let lessSizeErrors = errors;
-      delete lessSizeErrors["The image"];
-      setErrors(lessSizeErrors);
-      //Set the state for the uncontrolled component
-      setImageFile(event.currentTarget.files[0])
-    }
-  }
 
   const addReview = async () => {
     try {
@@ -129,6 +41,87 @@ const NewReviewForm = props => {
       setShouldRedirect(true)
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`)
+    }
+  }
+
+  const addReviewWithImage = async () => {
+    const formData = new FormData()
+    formData.append("file", imageFile)
+    formData.append("formPayLoad", JSON.stringify(formPayload))
+    try {
+      const response = await fetch("/api/v1/reviews/file", {
+        method: "post",
+        body: formData
+      })
+      if (!response.ok) {
+        if (response.status === 422) {
+          const body = await response.json()
+          return setErrors(body.errors)
+        } else {
+          const errorMessage = `${response.status} (${response.statusText})`
+          const error = new Error(errorMessage)
+          throw error
+        }
+      } else if (response.ok) {
+        console.log(response.data)
+        console.log("File uploaded successfully")
+        const body = await response.json()
+        setStyleId(body.review.pizzaStyle.id)
+        setShouldRedirect(true)
+      }
+    } catch (err) {
+      console.error(`Error in fetch: ${err.message}`)
+    }
+  }
+
+  const validForSubmission = () => {
+    const errors = {}
+    const requiredFields = ["title", "rating", "pizzaStyleId"]
+    requiredFields.forEach(field => {
+      if (formPayload[field].trim() === "") {
+        errors[field] = "can not be blank"
+      }
+    })
+    setErrors(errors)
+    return _.isEmpty(errors)
+  }
+
+  const handleInputChange = event => {
+    setFormPayload({
+      ...formPayload,
+      [event.currentTarget.id]: event.currentTarget.value
+    })
+  }
+
+  const handleRatingChange = rating => {
+    setFormPayload({
+      ...formPayload,
+      rating: rating
+    })
+  }
+
+  const handleImageUpload = event => {
+    let file_size = event.target.files[0].size
+    if (file_size > 10485760) {
+      setErrors({
+        ...errors,
+        "The image":
+          "file size: " + file_size + " bytes,  exceeds the size limit: " + 10485760 + " bytes."
+      })
+      setImageFile(null)
+    } else {
+      let lessSizeErrors = errors
+      delete lessSizeErrors["The image"]
+      setErrors(lessSizeErrors)
+      setImageFile(event.currentTarget.files[0])
+    }
+  }
+
+  const handleSubmit = event => {
+    event.preventDefault()
+    if (validForSubmission()) {
+      if (!!imageFile) addReviewWithImage()
+      else addReview()
     }
   }
 
@@ -171,14 +164,13 @@ const NewReviewForm = props => {
       <div>
         <label htmlFor="imgFile">Image URL: </label>
         <input
-            name="imgFile"
-            id="imgFile"
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
+          name="imgFile"
+          id="imgFile"
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
         />
       </div>
-
 
       <input className="button" type="submit" value="Submit" />
     </form>
