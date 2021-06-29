@@ -34,10 +34,13 @@ const PizzaStyleShow = props => {
   }
 
   const fetchPizzaStyleSort = async () => {
-    const pizzaStyleData = await jsonGet(
-      `/api/v1/pizza-styles/${props.match.params.id}/${sortOption}`
-    )
-    setPizzaStyle(pizzaStyleData.pizzaStyle)
+    if (sortOption !== "") {
+      const sortOptionObject = JSON.parse(sortOption)
+      const pizzaStyleData = await jsonGet(
+        `/api/v1/pizza-styles/${props.match.params.id}/${sortOptionObject.field}/${sortOptionObject.order}`
+      )
+      setPizzaStyle(pizzaStyleData.pizzaStyle)
+    }
   }
 
   useEffect(() => {
