@@ -16,7 +16,7 @@ const NewReviewForm = props => {
   const [errors, setErrors] = useState({})
   const [styleId, setStyleId] = useState(null)
   const [shouldRedirect, setShouldRedirect] = useState(false)
-  const [imagefile, setImageFile] = useState(undefined)
+  const [imagefile, setImageFile] = useState(null)
 
   const handleInputChange = event => {
     setFormPayload({
@@ -86,7 +86,17 @@ const NewReviewForm = props => {
 
   const onChange = event => {
     event.preventDefault()
-    setImageFile(event.currentTarget.files[0])
+    let file_size = event.target.files[0].size;
+    if(file_size > 10485760){
+      setErrors({
+        ...errors,
+        "The image" : "file size: " + file_size +
+            " bytes,  exceeds the size limit: " + 10485760 + " bytes."
+      })
+      event.target.value = null;
+    } else {
+      setImageFile(event.currentTarget.files[0])
+    }
   }
 
   const addReview = async () => {
@@ -155,6 +165,7 @@ const NewReviewForm = props => {
       <div>
         <label htmlFor="imgFile">Image URL: </label>
         <input
+            value={imagefile}
             name="imgFile"
             id="imgFile"
             type="file"
