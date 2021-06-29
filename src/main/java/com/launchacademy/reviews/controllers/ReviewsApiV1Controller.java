@@ -45,14 +45,11 @@ import org.springframework.web.server.ResponseStatusException;
 public class ReviewsApiV1Controller {
 
   private ReviewService reviewService;
-  private PizzaStyleService pizzaStyleService;
   private CustomError customError;
 
   @Autowired
-  public ReviewsApiV1Controller(ReviewService reviewService, PizzaStyleService pizzaStyleService,
-      CustomError customError) {
+  public ReviewsApiV1Controller(ReviewService reviewService, CustomError customError) {
     this.reviewService = reviewService;
-    this.pizzaStyleService = pizzaStyleService;
     this.customError = customError;
   }
 
@@ -63,7 +60,6 @@ public class ReviewsApiV1Controller {
     if (optional.isPresent()) {
       map.put("review", (Review) optional.get());
     } else {
-      System.out.println("Review with type with id " + id + " was not found");
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
     return map;
@@ -107,25 +103,25 @@ public class ReviewsApiV1Controller {
   public Object uploadFileAndFormData(@RequestPart("file") List<MultipartFile> files,
       @RequestPart("formPayLoad") String formPayLoad) {
     String imageUrl = null;
-      if (files.size() > 0) {
-          //Work with the multipart file
-          MultipartFile mpf = files.get(0);
-          String originalFileName = mpf.getOriginalFilename();
-          String ext = "." + originalFileName.split("\\.")[1];
-          String imagePath = System.getProperty("user.dir") + "/src/main/frontend/public/images/";
-          String fileName = UUID.randomUUID().toString();
-          //Create imageUrl for reviews.img_url field
-          imageUrl = "/public/images/" + fileName + ext;
-          System.out.println(imageUrl);
-          //Create image file for persisting uploaded file to disk
-          File file = new File(imagePath + fileName + ext);
-          //Write the uploaded file to disk. - See ImageEndPoint controller regarding image serving
-          try (OutputStream os = Files.newOutputStream(file.toPath())) {
-              os.write(mpf.getBytes());
-          } catch (IOException e) {
-              e.printStackTrace();
-          }
+    if (files.size() > 0) {
+      //Work with the multipart file
+      MultipartFile mpf = files.get(0);
+      String originalFileName = mpf.getOriginalFilename();
+      String ext = "." + originalFileName.split("\\.")[1];
+      String imagePath = System.getProperty("user.dir") + "/src/main/frontend/public/images/";
+      String fileName = UUID.randomUUID().toString();
+      //Create imageUrl for reviews.img_url field
+      imageUrl = "/public/images/" + fileName + ext;
+      System.out.println(imageUrl);
+      //Create image file for persisting uploaded file to disk
+      File file = new File(imagePath + fileName + ext);
+      //Write the uploaded file to disk. - See ImageEndPoint controller regarding image serving
+      try (OutputStream os = Files.newOutputStream(file.toPath())) {
+        os.write(mpf.getBytes());
+      } catch (IOException e) {
+        e.printStackTrace();
       }
+    }
     //Work Jackson to map JSON passed to a Review
     ObjectMapper mapper = new ObjectMapper();
     Review review = null;

@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom"
 import { jsonGet, jsonPut } from "../public/js/jsonFetch"
 import PizzaStyleField from "./PizzaStyleField"
 import ErrorList from "./ErrorList"
+import StarRating from "./StarRating"
 
 const UpdateReviewForm = props => {
   const [formPayload, setFormPayload] = useState({
@@ -65,6 +66,13 @@ const UpdateReviewForm = props => {
     })
   }
 
+  const handleRatingChange = rating => {
+    setFormPayload({
+      ...formPayload,
+      rating: rating
+    })
+  }
+
   if (shouldRedirect) {
     return <Redirect to={`/pizza-styles/${formPayload.pizzaStyleId}`} />
   }
@@ -99,19 +107,7 @@ const UpdateReviewForm = props => {
         />
       </div>
 
-      <div>
-        <label htmlFor="rating">Rating: </label>
-        <input
-          name="rating"
-          id="rating"
-          type="number"
-          // min="0"
-          // max="5"
-          step="1"
-          value={formPayload.rating}
-          onChange={handleInputChange}
-        />
-      </div>
+      <StarRating formRating={formPayload.rating} handleRatingChange={handleRatingChange} />
 
       <div>
         <label htmlFor="imgUrl">Image URL: </label>
