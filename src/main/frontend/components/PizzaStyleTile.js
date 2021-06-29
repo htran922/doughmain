@@ -6,13 +6,13 @@ const PizzaStyleTile = props => {
   return (
     <div className="cell">
       <div className="card">
-        <div className="card-divider">
+        <div className="card-image text-center">
+          <img src={imgUrl} width="300px" />
+        </div>
+        <div className="card-section">
           <a href={`/pizza-styles/${id}`}>
             <h4>{name}</h4>
           </a>
-        </div>
-        <div className="card-image text-center">
-          <img src={imgUrl} width="300px" />
         </div>
       </div>
     </div>

@@ -86,9 +86,11 @@ const PizzaStyleShow = props => {
 
   return (
     <div className="grid-container">
-      <div className="text-center">
-        <h1>{pizzaStyle.name}</h1>
-        <img src={pizzaStyle.imgUrl} />
+      <div>
+        <div className="show-page" style={{ backgroundImage: `url(${pizzaStyle.imgUrl})`}}>
+          {/* <img src={pizzaStyle.imgUrl} /> */}
+          <h1>{pizzaStyle.name}</h1>
+        </div>
         <div>
           <Link to="/reviews/new" className="button" type="button">
             Add A Review
