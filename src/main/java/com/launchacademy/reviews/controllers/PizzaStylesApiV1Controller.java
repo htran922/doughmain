@@ -36,24 +36,6 @@ public class PizzaStylesApiV1Controller {
     return pizzaStylesMap;
   }
 
-  @PostMapping
-  public Object addPizzaStyle(@RequestBody @Valid PizzaStyle pizzaStyle,
-      BindingResult bindingResult) {
-    if (bindingResult.hasErrors()) {
-      return customError.handleBindingErrors(bindingResult);
-    } else {
-      Map<String, PizzaStyle> newStyle = new HashMap<>();
-      List<PizzaStyle> checkForType = pizzaStyleService.findByNameIgnoreCase(pizzaStyle.getName());
-      if (checkForType.isEmpty()) {
-        pizzaStyleService.save(pizzaStyle);
-        newStyle.put("pizzaStyle", pizzaStyle);
-        return newStyle;
-      } else {
-        return customError.alreadyExists();
-      }
-    }
-  }
-
   @GetMapping("/{id}")
   public Object getById(@PathVariable Integer id){
     Map<String, PizzaStyle> map = new HashMap<>();
@@ -82,6 +64,24 @@ public class PizzaStylesApiV1Controller {
       return map;
     } else {
       return customError.doesntExists();
+    }
+  }
+
+  @PostMapping
+  public Object addPizzaStyle(@RequestBody @Valid PizzaStyle pizzaStyle,
+      BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+      return customError.handleBindingErrors(bindingResult);
+    } else {
+      Map<String, PizzaStyle> newStyle = new HashMap<>();
+      List<PizzaStyle> checkForType = pizzaStyleService.findByNameIgnoreCase(pizzaStyle.getName());
+      if (checkForType.isEmpty()) {
+        pizzaStyleService.save(pizzaStyle);
+        newStyle.put("pizzaStyle", pizzaStyle);
+        return newStyle;
+      } else {
+        return customError.alreadyExists();
+      }
     }
   }
 }

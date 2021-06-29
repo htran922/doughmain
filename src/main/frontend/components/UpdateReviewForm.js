@@ -13,21 +13,21 @@ const UpdateReviewForm = props => {
     rating: "",
     imgUrl: ""
   })
+  const [imageFile, setImageFile] = useState(null)
   const reviewId = props.match.params.id
   const [errors, setErrors] = useState({})
   const [shouldRedirect, setShouldRedirect] = useState(false)
 
   const fetchReview = async () => {
     const respBody = await jsonGet(`/api/v1/reviews/${reviewId}`)
-    const { pizzaStyleId, title, comment, rating, imgUrl, createdAt } = respBody.review
+    const { pizzaStyleId, title, comment, rating, imgUrl } = respBody.review
     setFormPayload({
       ...formPayload,
       pizzaStyleId: pizzaStyleId.toString(),
       title,
       comment,
       rating: rating.toString(),
-      imgUrl,
-      createdAt
+      imgUrl
     })
   }
 
@@ -51,14 +51,6 @@ const UpdateReviewForm = props => {
     return _.isEmpty(errors)
   }
 
-  const handleUpdate = event => {
-    event.preventDefault()
-    console.log(formPayload)
-    if (validForSubmission()) {
-      updateReview()
-    }
-  }
-
   const handleInputChange = event => {
     setFormPayload({
       ...formPayload,
@@ -71,6 +63,63 @@ const UpdateReviewForm = props => {
       ...formPayload,
       rating: rating
     })
+  }
+
+  const handleImageUpload = event => {
+    console.log("in the upload")
+    let file_size = event.target.files[0].size
+    if (file_size > 10485760) {
+      setErrors({
+        ...errors,
+        "The image":
+          "file size: " + file_size + " bytes,  exceeds the size limit: " + 10485760 + " bytes."
+      })
+      setImageFile(null)
+    } else {
+      let lessSizeErrors = errors
+      delete lessSizeErrors["The image"]
+      setErrors(lessSizeErrors)
+      setImageFile(event.currentTarget.files[0])
+    }
+  }
+
+  const updateReviewWithImage = async () => {
+    const formData = new FormData()
+    formData.append("file", imageFile)
+    formData.append("formPayLoad", JSON.stringify(formPayload))
+    console.log(formData)
+    try {
+      const response = await fetch(`/api/v1/reviews/${reviewId}/file`, {
+        method: "put",
+        body: formData
+      })
+      if (!response.ok) {
+        if (response.status === 422) {
+          const body = await response.json()
+          return setErrors(body.errors)
+        } else {
+          const errorMessage = `${response.status} (${response.statusText})`
+          const error = new Error(errorMessage)
+          throw error
+        }
+      } else if (response.ok) {
+        setShouldRedirect(true)
+      }
+    } catch (err) {
+      console.error(`Error in fetch: ${err.message}`)
+    }
+  }
+
+  const handleUpdate = event => {
+    event.preventDefault()
+    console.log(formPayload)
+    if (validForSubmission()) {
+      if (imageFile !== null) {
+        updateReviewWithImage()
+      } else {
+        updateReview()
+      }
+    }
   }
 
   if (shouldRedirect) {
@@ -110,13 +159,13 @@ const UpdateReviewForm = props => {
       <StarRating formRating={formPayload.rating} handleRatingChange={handleRatingChange} />
 
       <div>
-        <label htmlFor="imgUrl">Image URL: </label>
+        <label htmlFor="imgFile">Image URL: </label>
         <input
-          name="imgUrl"
-          id="imgUrl"
-          type="text"
-          value={formPayload.imgUrl}
-          onChange={handleInputChange}
+          name="imgFile"
+          id="imgFile"
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
         />
       </div>
 

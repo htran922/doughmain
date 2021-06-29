@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 
 @Service
@@ -24,7 +23,6 @@ public class ReviewService {
   public Review save(Review review, Integer pizzaStyleId) {
     PizzaStyle style = pizzaStyleService.findById(pizzaStyleId).get();
     review.setPizzaStyle(style);
-    review.setCreatedAt(LocalDateTime.now());
     review.setUpdatedAt(LocalDateTime.now());
     return repository.save(review);
   }

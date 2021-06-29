@@ -120,8 +120,11 @@ const NewReviewForm = props => {
   const handleSubmit = event => {
     event.preventDefault()
     if (validForSubmission()) {
-      if (!!imageFile) addReviewWithImage()
-      else addReview()
+      if (imageFile !== null) {
+        addReviewWithImage()
+      } else {
+        addReview()
+      }
     }
   }
 
