@@ -63,6 +63,8 @@ public class Review {
   @JsonIgnoreProperties("reviews")
   private PizzaStyle pizzaStyle;
 
+  @Column(name = "upvote_count")
+  private Integer upvoteCount;
 
   public Review(String title, String description, Integer rating, String imgUrl) {
     this.title = title;

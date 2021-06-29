@@ -86,18 +86,36 @@ public class ReviewsApiV1Controller {
     }
   }
 
-  @PostMapping
-  public Object addReview(@RequestBody @Valid Review review, BindingResult bindingResult) {
-    if (bindingResult.getAllErrors().size() > 1) {
-      return customError.handleBindingErrors(bindingResult);
-    } else {
-      Integer id = review.getPizzaStyleId();
-      Map<String, Review> newReview = new HashMap<>();
-      reviewService.save(review, id);
-      newReview.put("review", review);
-      return newReview;
+    @PutMapping("/{id}/upvote")
+    public Object updateUpvoteCount(@PathVariable Integer id, @RequestBody Integer updatedCount) {
+        Review foundReview = null;
+        if (reviewService.findById(id).isPresent()) {
+            foundReview = (Review) reviewService.findById(id).get();
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        foundReview.setUpvoteCount(updatedCount);
+        Map<String, Review> updatedReview = new HashMap<>();
+        reviewService.save(foundReview, foundReview.getPizzaStyleId());
+        updatedReview.put("review", foundReview);
+        return updatedReview;
     }
-  }
+
+    @PostMapping
+    public Object addReview(@RequestBody @Valid Review review, BindingResult bindingResult) {
+        if (bindingResult.getAllErrors().size() > 1) {
+            return customError.handleBindingErrors(bindingResult);
+        } else {
+            Integer id = review.getPizzaStyleId();
+
+            Map<String, Review> newReview = new HashMap<>();
+            reviewService.save(review, id);
+            newReview.put("review", review);
+            return newReview;
+        }
+
+    }
+
 
   @PostMapping(value = "/file")
   public Object uploadFileAndFormData(@RequestPart("file") List<MultipartFile> files,
