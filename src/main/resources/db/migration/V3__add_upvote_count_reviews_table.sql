@@ -1,0 +1,2 @@
+ALTER TABLE reviews
+ADD COLUMN upvote_count INTEGER DEFAULT 0;
