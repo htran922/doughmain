@@ -103,8 +103,7 @@ public class ReviewsApiV1Controller {
     }
   }
 
-  @PostMapping(value = "/file", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE,
-      MediaType.MULTIPART_FORM_DATA_VALUE})
+  @PostMapping(value = "/file")
   public Object uploadFileAndFormData(@RequestPart("file") List<MultipartFile> files,
       @RequestPart("formPayLoad") String formPayLoad) {
     String imageUrl = null;
@@ -114,18 +113,20 @@ public class ReviewsApiV1Controller {
           String originalFileName = mpf.getOriginalFilename();
           String ext = "." + originalFileName.split("\\.")[1];
           String imagePath = System.getProperty("user.dir") + "/src/main/frontend/public/images/";
-          String uuid = UUID.randomUUID().toString();
-          imageUrl = "/public/images/" + uuid + ext;
+          String fileName = UUID.randomUUID().toString();
+          //Create imageUrl for reviews.img_url field
+          imageUrl = "/public/images/" + fileName + ext;
           System.out.println(imageUrl);
-          //Create image file from imageDir, savedReview.id, and ext
-          File file = new File(imagePath + uuid + ext);
+          //Create image file for persisting uploaded file to disk
+          File file = new File(imagePath + fileName + ext);
+          //Write the uploaded file to disk. - See ImageEndPoint controller regarding image serving
           try (OutputStream os = Files.newOutputStream(file.toPath())) {
               os.write(mpf.getBytes());
           } catch (IOException e) {
               e.printStackTrace();
           }
       }
-    //Work with the JSON to extract the JSON Review, add the imageURl and save it via reviewService
+    //Work Jackson to map JSON passed to a Review
     ObjectMapper mapper = new ObjectMapper();
     Review review = null;
     try {
@@ -133,7 +134,7 @@ public class ReviewsApiV1Controller {
     } catch (JsonProcessingException e) {
       e.printStackTrace();
     }
-    //add imageUrl if image was provided
+    //add the imageUrl if provided in form.
     if (imageUrl != null) {
       review.setImgUrl(imageUrl);
     }

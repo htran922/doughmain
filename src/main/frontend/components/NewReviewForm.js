@@ -36,10 +36,43 @@ const NewReviewForm = props => {
     return _.isEmpty(errors)
   }
 
+  const addReviewWithImage = async () => {
+    const formData = new FormData()
+    formData.append("file", imagefile)
+    formData.append("formPayLoad", JSON.stringify(formPayload))
+    try{
+      const response = await fetch("/api/v1/reviews/file", {
+        method: 'post',
+        body: formData
+      })
+      if (!response.ok) {
+        if (response.status === 422) {
+          const body = await response.json()
+          return setErrors(body.errors)
+        } else { //Non 422
+          const errorMessage = `${response.status} (${response.statusText})`
+          const error = new Error(errorMessage)
+          throw (error)
+        }
+      } else if(response.ok){
+        console.log(response.data)
+        console.log("File uploaded successfully")
+        const body = await response.json()
+        setStyleId(body.review.pizzaStyle.id)
+        setShouldRedirect(true)
+      }
+    } catch (err) {
+      console.error(`Error in fetch: ${err.message}`)
+    }
+  }
+
   const handleSubmit = event => {
     event.preventDefault()
     if (validForSubmission()) {
-      addReview()
+      if(!!imagefile)
+        addReviewWithImage();
+      else
+        addReview();
     }
   }
 
