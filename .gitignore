@@ -41,3 +41,9 @@ build/
 mvnw
 src/main/frontend/yarn.lock
 
+### Images ###
+*.jpg
+*.jpeg
+*.gif
+*.png
+*.svg
