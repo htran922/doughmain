@@ -16,7 +16,7 @@ const NewReviewForm = props => {
   const [errors, setErrors] = useState({})
   const [styleId, setStyleId] = useState(null)
   const [shouldRedirect, setShouldRedirect] = useState(false)
-  const [imagefile, setImageFile] = useState(null)
+  const [imageFile, setImageFile] = useState(null)
 
   const handleInputChange = event => {
     setFormPayload({
@@ -46,7 +46,7 @@ const NewReviewForm = props => {
 
   const addReviewWithImage = async () => {
     const formData = new FormData()
-    formData.append("file", imagefile)
+    formData.append("file", imageFile)
     formData.append("formPayLoad", JSON.stringify(formPayload))
     try{
       const response = await fetch("/api/v1/reviews/file", {
@@ -77,7 +77,7 @@ const NewReviewForm = props => {
   const handleSubmit = event => {
     event.preventDefault()
     if (validForSubmission()) {
-      if(!!imagefile)
+      if(!!imageFile)
         addReviewWithImage();
       else
         addReview();
@@ -85,16 +85,22 @@ const NewReviewForm = props => {
   }
 
   const onChange = event => {
-    event.preventDefault()
+    //event.preventDefault()
     let file_size = event.target.files[0].size;
     if(file_size > 10485760){
       setErrors({
         ...errors,
         "The image" : "file size: " + file_size +
             " bytes,  exceeds the size limit: " + 10485760 + " bytes."
-      })
-      event.target.value = null;
+      });
+      //Clear the state for the uncontrolled component.
+      setImageFile(null);
     } else {
+      //Clear error
+     let lessSizeErrors = errors;
+      delete lessSizeErrors["The image"];
+      setErrors(lessSizeErrors);
+      //Set the state for the uncontrolled component
       setImageFile(event.currentTarget.files[0])
     }
   }
@@ -165,7 +171,6 @@ const NewReviewForm = props => {
       <div>
         <label htmlFor="imgFile">Image URL: </label>
         <input
-            value={imagefile}
             name="imgFile"
             id="imgFile"
             type="file"
