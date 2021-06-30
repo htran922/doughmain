@@ -16,6 +16,7 @@ const NewReviewForm = props => {
   const [styleId, setStyleId] = useState(null)
   const [shouldRedirect, setShouldRedirect] = useState(false)
   const [imageFile, setImageFile] = useState(null)
+  const [imageFileSize, setImageFileSize] = useState(null)
 
   const addReview = async () => {
     try {
@@ -82,6 +83,11 @@ const NewReviewForm = props => {
         errors[field] = "can not be blank"
       }
     })
+
+    if (imageFileSize !== null && imageFileSize > 10485760) {
+      errors["Image File"] = "must be less than 1 MB"
+    }
+
     setErrors(errors)
     return _.isEmpty(errors)
   }
@@ -101,19 +107,13 @@ const NewReviewForm = props => {
   }
 
   const handleImageUpload = event => {
-    let file_size = event.target.files[0].size
-    if (file_size > 10485760) {
-      setErrors({
-        ...errors,
-        "The image":
-          "file size: " + file_size + " bytes,  exceeds the size limit: " + 10485760 + " bytes."
-      })
-      setImageFile(null)
+    const file = event.currentTarget.files[0]
+    if (file) {
+      setImageFileSize(file.size)
+      setImageFile(file)
     } else {
-      let lessSizeErrors = errors
-      delete lessSizeErrors["The image"]
-      setErrors(lessSizeErrors)
-      setImageFile(event.currentTarget.files[0])
+      setImageFileSize(null)
+      setImageFile(null)
     }
   }
 

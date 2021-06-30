@@ -13,11 +13,12 @@ const UpdateReviewForm = props => {
     rating: "",
     imgUrl: ""
   })
-  const [imageFile, setImageFile] = useState(null)
   const reviewId = props.match.params.id
   const [errors, setErrors] = useState({})
   const [shouldRedirect, setShouldRedirect] = useState(false)
-
+  const [imageFile, setImageFile] = useState(null)
+  const [imageFileSize, setImageFileSize] = useState(null)
+  
   const fetchReview = async () => {
     const respBody = await jsonGet(`/api/v1/reviews/${reviewId}`)
     const { pizzaStyleId, title, comment, rating, imgUrl } = respBody.review
@@ -41,12 +42,17 @@ const UpdateReviewForm = props => {
 
   const validForSubmission = () => {
     const errors = {}
-    const requiredFields = ["pizzaStyleId", "title", "rating"]
+    const requiredFields = ["title", "rating", "pizzaStyleId"]
     requiredFields.forEach(field => {
       if (formPayload[field].trim() === "") {
         errors[field] = "can not be blank"
       }
     })
+
+    if (imageFileSize !== null && imageFileSize > 10485760) {
+      errors["Image File"] = "must be less than 1 MB"
+    }
+
     setErrors(errors)
     return _.isEmpty(errors)
   }
@@ -66,23 +72,16 @@ const UpdateReviewForm = props => {
   }
 
   const handleImageUpload = event => {
-    console.log("in the upload")
-    let file_size = event.target.files[0].size
-    if (file_size > 10485760) {
-      setErrors({
-        ...errors,
-        "The image":
-          "file size: " + file_size + " bytes,  exceeds the size limit: " + 10485760 + " bytes."
-      })
-      setImageFile(null)
+    const file = event.currentTarget.files[0]
+    if (file) {
+      setImageFileSize(file.size)
+      setImageFile(file)
     } else {
-      let lessSizeErrors = errors
-      delete lessSizeErrors["The image"]
-      setErrors(lessSizeErrors)
-      setImageFile(event.currentTarget.files[0])
+      setImageFileSize(null)
+      setImageFile(null)
     }
   }
-
+  
   const updateReviewWithImage = async () => {
     const formData = new FormData()
     formData.append("file", imageFile)
