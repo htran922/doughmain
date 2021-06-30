@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react"
+import { getData } from "../public/js/jsonFetch"
 
 const PizzaStyleField = props => {
   const [pizzaStyles, setPizzaStyles] = useState([])
 
   const fetchPizzaStyles = async () => {
     try {
-      const response = await fetch("/api/v1/pizza-styles")
-      if (!response.ok) {
-        const errorMessage = `${response.status} (${response.statusText})`
-        const error = new Error(errorMessage)
-        throw error
-      }
-      const pizzaStylesData = await response.json()
+      const pizzaStylesData = await getData("/api/v1/pizza-styles")
       pizzaStylesData.pizzaStyles.unshift({ name: "", id: null })
       setPizzaStyles(pizzaStylesData.pizzaStyles)
     } catch (err) {

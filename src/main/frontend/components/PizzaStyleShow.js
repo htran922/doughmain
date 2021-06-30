@@ -1,32 +1,18 @@
 import React, { useEffect, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import _ from "lodash"
-import { jsonGet, jsonDelete } from "../public/js/jsonFetch"
+import { getData, jsonDelete } from "../public/js/jsonFetch"
 import ReviewTile from "./ReviewTile"
 import ReviewSortField from "./ReviewSortField"
 
 const PizzaStyleShow = props => {
   const [pizzaStyle, setPizzaStyle] = useState({ reviews: [] })
-  const [errors, setErrors] = useState("")
   const [sortOption, setSortOption] = useState("")
   let location = useLocation()
 
   const fetchPizzaStyle = async () => {
     try {
-      const response = await fetch(`/api/v1/pizza-styles/${props.match.params.id}`)
-      if (!response.ok) {
-        if (response.status === 422) {
-          const body = await response.json()
-          console.log(body)
-          setPizzaStyle({})
-          return setErrors(body.message)
-        } else {
-          const errorMessage = `${response.status} (${response.statusText})`
-          const error = new Error(errorMessage)
-          throw error
-        }
-      }
-      const pizzaStyleData = await response.json()
+      const pizzaStyleData = await getData(`/api/v1/pizza-styles/${props.match.params.id}`)
       setPizzaStyle(pizzaStyleData.pizzaStyle)
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`)
@@ -36,7 +22,7 @@ const PizzaStyleShow = props => {
   const fetchPizzaStyleSort = async () => {
     if (sortOption !== "") {
       const sortOptionObject = JSON.parse(sortOption)
-      const pizzaStyleData = await jsonGet(
+      const pizzaStyleData = await getData(
         `/api/v1/pizza-styles/${props.match.params.id}/${sortOptionObject.field}/${sortOptionObject.order}`
       )
       setPizzaStyle(pizzaStyleData.pizzaStyle)
@@ -50,10 +36,6 @@ const PizzaStyleShow = props => {
   useEffect(() => {
     fetchPizzaStyleSort()
   }, [sortOption])
-
-  if (_.isEmpty(pizzaStyle)) {
-    return <h2 className="text-center">{errors}</h2>
-  }
 
   const deleteReview = async url => {
     await jsonDelete(url, fetchPizzaStyle)

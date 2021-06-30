@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { Redirect } from "react-router"
-import PizzaStyleField from "./PizzaStyleField"
-import ErrorList from "./ErrorList"
-import StarRating from "./StarRating"
+import ReviewForm from "./ReviewForm"
+import { postData } from "../public/js/jsonFetch"
 
 const NewReviewForm = props => {
   const [formPayload, setFormPayload] = useState({
@@ -16,28 +15,12 @@ const NewReviewForm = props => {
   const [styleId, setStyleId] = useState(null)
   const [shouldRedirect, setShouldRedirect] = useState(false)
   const [imageFile, setImageFile] = useState(null)
+  const [imageFileSize, setImageFileSize] = useState(null)
 
   const addReview = async () => {
     try {
-      const response = await fetch(`/api/v1/reviews`, {
-        method: "POST",
-        headers: new Headers({
-          "Content-Type": "application/json"
-        }),
-        body: JSON.stringify(formPayload)
-      })
-      if (!response.ok) {
-        if (response.status === 422) {
-          const body = await response.json()
-          return setErrors(body.errors)
-        } else {
-          const errorMessage = `${response.status} (${response.statusText})`
-          const error = new Error(errorMessage)
-          throw error
-        }
-      }
-      const body = await response.json()
-      setStyleId(body.review.pizzaStyle.id)
+      const responseBody = await postData("/api/v1/reviews", formPayload, setErrors)
+      setStyleId(responseBody.review.pizzaStyle.id)
       setShouldRedirect(true)
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`)
@@ -47,7 +30,7 @@ const NewReviewForm = props => {
   const addReviewWithImage = async () => {
     const formData = new FormData()
     formData.append("file", imageFile)
-    formData.append("formPayLoad", JSON.stringify(formPayload))
+    formData.append("formPayload", JSON.stringify(formPayload))
     try {
       const response = await fetch("/api/v1/reviews/file", {
         method: "post",
@@ -82,6 +65,11 @@ const NewReviewForm = props => {
         errors[field] = "can not be blank"
       }
     })
+
+    if (imageFileSize !== null && imageFileSize > 10485760) {
+      errors["Image File"] = "must be less than 1 MB"
+    }
+
     setErrors(errors)
     return _.isEmpty(errors)
   }
@@ -101,19 +89,13 @@ const NewReviewForm = props => {
   }
 
   const handleImageUpload = event => {
-    let file_size = event.target.files[0].size
-    if (file_size > 10485760) {
-      setErrors({
-        ...errors,
-        "The image":
-          "file size: " + file_size + " bytes,  exceeds the size limit: " + 10485760 + " bytes."
-      })
-      setImageFile(null)
+    const file = event.currentTarget.files[0]
+    if (file) {
+      setImageFileSize(file.size)
+      setImageFile(file)
     } else {
-      let lessSizeErrors = errors
-      delete lessSizeErrors["The image"]
-      setErrors(lessSizeErrors)
-      setImageFile(event.currentTarget.files[0])
+      setImageFileSize(null)
+      setImageFile(null)
     }
   }
 
@@ -133,50 +115,15 @@ const NewReviewForm = props => {
   }
 
   return (
-    <form className="callout" onSubmit={handleSubmit}>
-      <h2>Add A Review</h2>
-      <ErrorList errors={errors} />
-      <PizzaStyleField
-        handleInputChange={handleInputChange}
-        pizzaStyleId={formPayload.pizzaStyleId}
-      />
-      <div>
-        <label htmlFor="title">Title: </label>
-        <input
-          name="title"
-          id="title"
-          type="text"
-          value={formPayload.title}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div>
-        <label htmlFor="comment">Comment: </label>
-        <input
-          name="comment"
-          id="comment"
-          type="text"
-          value={formPayload.comment}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <StarRating formRating={formPayload.rating} handleRatingChange={handleRatingChange} />
-
-      <div>
-        <label htmlFor="imgFile">Image URL: </label>
-        <input
-          name="imgFile"
-          id="imgFile"
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-        />
-      </div>
-
-      <input className="button" type="submit" value="Submit" />
-    </form>
+    <ReviewForm
+      formTitle="Add a Review"
+      handleSubmit={handleSubmit}
+      handleInputChange={handleInputChange}
+      handleImageUpload={handleImageUpload}
+      handleRatingChange={handleRatingChange}
+      formPayload={formPayload}
+      errors={errors}
+    />
   )
 }
 
