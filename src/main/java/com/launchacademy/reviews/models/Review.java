@@ -73,5 +73,6 @@ public class Review {
     this.imgUrl = imgUrl;
     createdAt = LocalDateTime.now();
     updatedAt = LocalDateTime.now();
+    upvoteCount = 0;
   }
 }
