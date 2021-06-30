@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Redirect } from "react-router"
 import ReviewForm from "./ReviewForm"
+import { postData } from "../public/js/jsonFetch"
 
 const NewReviewForm = props => {
   const [formPayload, setFormPayload] = useState({
@@ -18,25 +19,8 @@ const NewReviewForm = props => {
 
   const addReview = async () => {
     try {
-      const response = await fetch(`/api/v1/reviews`, {
-        method: "POST",
-        headers: new Headers({
-          "Content-Type": "application/json"
-        }),
-        body: JSON.stringify(formPayload)
-      })
-      if (!response.ok) {
-        if (response.status === 422) {
-          const body = await response.json()
-          return setErrors(body.errors)
-        } else {
-          const errorMessage = `${response.status} (${response.statusText})`
-          const error = new Error(errorMessage)
-          throw error
-        }
-      }
-      const body = await response.json()
-      setStyleId(body.review.pizzaStyle.id)
+      const responseBody = await postData("/api/v1/reviews", formPayload, setErrors)
+      setStyleId(responseBody.review.pizzaStyle.id)
       setShouldRedirect(true)
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`)
