@@ -75,7 +75,7 @@ public class ReviewsApiV1Controller {
 
   @PostMapping("/file")
   public Object addReviewWithImage(@RequestPart("file") List<MultipartFile> files,
-      @RequestPart("formPayLoad") String formPayLoad) {
+      @RequestPart("formPayload") String formPayload) {
     String imageUrl = null;
     if (files.size() > 0) {
       MultipartFile mpf = files.get(0);
@@ -95,7 +95,7 @@ public class ReviewsApiV1Controller {
     ObjectMapper mapper = new ObjectMapper();
     Review review = null;
     try {
-      review = mapper.readValue(formPayLoad, Review.class);
+      review = mapper.readValue(formPayload, Review.class);
       review.setImgUrl(imageUrl);
       review.setCreatedAt(LocalDateTime.now());
     } catch (Exception e) {
@@ -147,7 +147,7 @@ public class ReviewsApiV1Controller {
   
   @PutMapping("/{id}/file")
   public Object updateReviewWithImage(@PathVariable Integer id, @RequestPart("file") List<MultipartFile> files,
-      @RequestPart("formPayLoad") String formPayLoad) {
+      @RequestPart("formPayload") String formPayload) {
     String imageUrl = null;
     if (files.size() > 0) {
       MultipartFile mpf = files.get(0);
@@ -175,7 +175,7 @@ public class ReviewsApiV1Controller {
     }
 
     try {
-      review = mapper.readValue(formPayLoad, Review.class);
+      review = mapper.readValue(formPayload, Review.class);
       review.setImgUrl(imageUrl);
       review.setId(foundReview.getId());
       review.setCreatedAt(foundReview.getCreatedAt());

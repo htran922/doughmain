@@ -86,7 +86,7 @@ const UpdateReviewForm = props => {
   const updateReviewWithImage = async () => {
     const formData = new FormData()
     formData.append("file", imageFile)
-    formData.append("formPayLoad", JSON.stringify(formPayload))
+    formData.append("formPayload", JSON.stringify(formPayload))
     console.log(formData)
     try {
       const response = await fetch(`/api/v1/reviews/${reviewId}/file`, {
