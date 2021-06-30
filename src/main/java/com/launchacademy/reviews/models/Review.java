@@ -1,6 +1,7 @@
 package com.launchacademy.reviews.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.File;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -71,5 +73,6 @@ public class Review {
     this.imgUrl = imgUrl;
     createdAt = LocalDateTime.now();
     updatedAt = LocalDateTime.now();
+    upvoteCount = 0;
   }
 }
