@@ -1,5 +1,4 @@
-const jsonGet = async url => {
-  let responseData = null
+const getData = async url => {
   try {
     const response = await fetch(url)
     if (!response.ok) {
@@ -7,11 +6,10 @@ const jsonGet = async url => {
       const error = new Error(errorMessage)
       throw error
     }
-    responseData = await response.json()
-    return responseData
+    const responseBody = await response.json()
+    return responseBody
   } catch (err) {
     console.error(`Error in fetch: ${err.message}`)
-    return null
   }
 }
 
@@ -88,4 +86,4 @@ const jsonDelete = async (url, callback) => {
   }
 }
 
-export { jsonGet, jsonPut, postData, jsonDelete }
+export { getData, jsonPut, postData, jsonDelete }

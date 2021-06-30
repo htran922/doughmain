@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Redirect } from "react-router-dom"
-import { jsonGet, jsonPut } from "../public/js/jsonFetch"
+import { getData, jsonPut } from "../public/js/jsonFetch"
 import ReviewForm from "./ReviewForm"
 
 const UpdateReviewForm = props => {
@@ -18,7 +18,7 @@ const UpdateReviewForm = props => {
   const [imageFileSize, setImageFileSize] = useState(null)
 
   const fetchReview = async () => {
-    const respBody = await jsonGet(`/api/v1/reviews/${reviewId}`)
+    const respBody = await getData(`/api/v1/reviews/${reviewId}`)
     const { pizzaStyleId, title, comment, rating, imgUrl } = respBody.review
     setFormPayload({
       ...formPayload,
