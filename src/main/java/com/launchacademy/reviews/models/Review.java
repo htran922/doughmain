@@ -64,7 +64,7 @@ public class Review {
   private PizzaStyle pizzaStyle;
 
   @Column(name = "upvote_count")
-  private Integer upvoteCount;
+  private Integer upvoteCount = 0;
 
   public Review(String title, String description, Integer rating, String imgUrl) {
     this.title = title;

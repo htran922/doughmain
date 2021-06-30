@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Redirect } from "react-router"
 import _ from "lodash"
+import { postData } from "../public/js/jsonFetch"
 
 import ErrorList from "./ErrorList"
 
@@ -16,25 +17,8 @@ const NewPizzaStyleForm = props => {
 
   const addStyle = async () => {
     try {
-      const response = await fetch(`/api/v1/pizza-styles`, {
-        method: "POST",
-        headers: new Headers({
-          "Content-Type": "application/json"
-        }),
-        body: JSON.stringify(formPayload)
-      })
-      if (!response.ok) {
-        if (response.status === 422) {
-          const body = await response.json()
-          return setErrors(body.errors)
-        } else {
-          const errorMessage = `${response.status} (${response.statusText})`
-          const error = new Error(errorMessage)
-          throw error
-        }
-      }
-      const body = await response.json()
-      setStyleId(body.pizzaStyle.id)
+      const responseBody = await postData("/api/v1/pizza-styles", formPayload, setErrors)
+      setStyleId(responseBody.pizzaStyle.id)
       setShouldRedirect(true)
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`)

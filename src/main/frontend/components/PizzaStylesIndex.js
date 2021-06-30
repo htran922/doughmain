@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react"
 import PizzaStyleTile from "./PizzaStyleTile"
+import { getData } from "../public/js/jsonFetch"
 
 const PizzaStylesIndex = props => {
   const [pizzaStyles, setPizzaStyles] = useState([])
   const fetchPizzaStyles = async () => {
     try {
-      const response = await fetch("/api/v1/pizza-styles")
-      if (!response.ok) {
-        const errorMessage = `${response.status} (${response.statusText})`
-        const error = new Error(errorMessage)
-        throw error
-      }
-      const pizzaStylesData = await response.json()
+      const pizzaStylesData = await getData("/api/v1/pizza-styles")
       setPizzaStyles(pizzaStylesData.pizzaStyles)
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`)
