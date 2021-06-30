@@ -7,7 +7,8 @@ import ErrorList from "./ErrorList"
 const NewPizzaStyleForm = props => {
   const [formPayload, setFormPayload] = useState({
     name: "",
-    imgUrl: ""
+    imgUrl: "",
+    description: ""
   })
   const [errors, setErrors] = useState({})
   const [styleId, setStyleId] = useState(null)
@@ -92,6 +93,16 @@ const NewPizzaStyleForm = props => {
           id="imgUrl"
           type="text"
           value={formPayload.imgUrl}
+          onChange={handleInputChange}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="description">Description: </label>
+        <textarea
+          name="description"
+          id="description"
+          value={formPayload.description}
           onChange={handleInputChange}
         />
       </div>

@@ -6,7 +6,8 @@ const ReviewSortField = props => {
     { id: 1, value: '{"field": "rating", "order": "descending"}', label: "Rating (High to Low)" },
     { id: 2, value: '{"field": "rating", "order": "ascending"}', label: "Rating (Low to High)" },
     { id: 3, value: '{"field": "createdAt", "order": "descending"}', label: "Most Recent" },
-    { id: 4, value: '{"field": "createdAt", "order": "ascending"}', label: "Oldest to Newest" }
+    { id: 4, value: '{"field": "createdAt", "order": "ascending"}', label: "Oldest to Newest" },
+    { id: 5, value: '{"field": "upvoteCount", "order": "descending"}', label: "Most Helpful" }
   ]
 
   const sortOptions = options.map(option => {
