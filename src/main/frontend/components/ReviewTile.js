@@ -9,12 +9,40 @@ const ReviewTile = props => {
   const month = ts.getMonth() + 1
   const day = ts.getDate()
 
+  let one = "far"
+  let two = "far"
+  let three = "far"
+  let four = "far"
+  let five = "far"
+
+  if (rating == 1) {
+    one = "fas"
+  } else if (rating == 2) {
+    one = "fas"
+    two = "fas"
+  } else if (rating == 3) {
+    one = "fas"
+    two = "fas"
+    three = "fas"
+  } else if (rating == 4) {
+    one = "fas"
+    two = "fas"
+    three = "fas"
+    four = "fas"
+  } else if (rating == 5) {
+    one = "fas"
+    two = "fas"
+    three = "fas"
+    four = "fas"
+    five = "fas"
+  }
+
   const stars = [
-    <i className="fas fa-star"></i>, 
-    <i className="fas fa-star"></i>, 
-    <i className="fas fa-star"></i>, 
-    <i className="fas fa-star"></i>, 
-    <i className="far fa-star"></i>
+    <i className={`${one} fa-star`}></i>, 
+    <i className={`${two} fa-star`}></i>, 
+    <i className={`${three} fa-star`}></i>, 
+    <i className={`${four} fa-star`}></i>, 
+    <i className={`${five} fa-star`}></i>
   ]
   
   const updateReview = async () => {
@@ -48,29 +76,24 @@ const ReviewTile = props => {
 
   return (
     <div className="media-object">
-      <div className={`stars-${rating}`}>
-        <h3>{title}</h3>
-        <i>{stars}</i>
-        {/* <p >Rating: {rating}
-        <i className="fas fa-star"></i>
-        <i className="far fa-star"></i>
-        </p> */}
+      <div>
+        <h3>{title}<i className="stars">{stars}</i></h3>
         <p>{comment}</p>
-      </div>
+        <div>
+          <span>Was this review helpful to you? </span>
+          <button type="button" disabled={disabledStatus} onClick={handleUpvoteClick}>
+            <i className="fas fa-thumbs-up fa-2x"></i>
+          </button>
+          <span> {voteCount}</span>
+        </div>
 
       <p>
         {month}/{day}/{year}
       </p>
+      </div>
 
       <div className="media-object-section">
         <img src={imgUrl} width="300px" />
-      <div>
-        <span>Was this review helpful to you?</span>
-        <button type="button" disabled={disabledStatus} onClick={handleUpvoteClick}>
-          <i className="fas fa-thumbs-up fa-2x"></i>
-        </button>
-        <span>{voteCount}</span>
-      </div>
     </div>
   </div>
   )

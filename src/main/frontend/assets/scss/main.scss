@@ -1,8 +1,9 @@
 @import "./foundation/settings";
 @import "~foundation-sites/scss/foundation";
 @include foundation-everything;
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Benne&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Benne&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap");
 // place global css here
 *,
 *::before,
@@ -15,16 +16,18 @@
   tab-size: 4;
 }
 
-$title-font: 'Montserrat', sans-serif;
-$header-font: 'Benne', serif;
-$white: #FFFFFF;
+$title-font: "Montserrat", sans-serif;
+$header-font: "Benne", serif;
+$body-font: "Noto Sans JP", sans-serif;
+$white: #ffffff;
 $red: #933325;
-$orange: #E36F2C;
+$orange: #e36f2c;
 $grey: #333333;
-$beige: #F9EDDC;
+$beige: #f9eddc;
 
 h5 {
   font-family: $title-font;
+  color: $red;
 }
 
 .pizza-image {
@@ -51,7 +54,7 @@ h5 {
   bottom: 0;
   right: 0;
   position: fixed;
-  z-index: -1; 
+  z-index: -1;
   background-size: cover;
 }
 
@@ -63,9 +66,14 @@ h5 {
 .top-bar {
   padding: 0px;
   padding-left: 5px;
+  font-family: $title-font;
 
   .label {
-  padding: 12px;
+    padding: 12px;
+  }
+
+  a {
+    color: $red;
   }
 }
 
@@ -78,26 +86,108 @@ h5 {
   background-size: cover;
 }
 
-h1, h2, h3 {
+h1,
+h2 {
   font-family: $header-font;
+  // padding-left: 20px;
+}
+
+h3,
+h4,
+p,
+span {
+  font-family: $body-font;
 }
 
 .card {
   border-radius: 20px;
+  margin-left: 16px;
+  margin-right: 16px;
+  font-family: $body-font;
 }
 
 .show-page {
   padding: 10em;
+  
+  background: url("https://images.unsplash.com/photo-1579824218206-e70b13561132?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjV8fHBpenphfGVufDB8MHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60");
+  
   background-size: cover;
-
   h1 {
     color: $white;
-    font-style: italic;
-    position: relative;
-    margin-bottom: 0;
+    // font-style: italic;
+    // position: relative;
+    // margin-bottom: 0;
   }
 }
 
-.stars-5 {
+.stars {
   color: $red;
+  font-size: large;
+  margin: 10px;
+  display: inline-flex;
+  justify-content: flex-start;
+}
+
+.media-object {
+  display: flex;
+  justify-content: space-between;
+
+  img {
+    max-width: 300px;
+  }
+}
+
+.callout {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 30px;
+  margin-right: 30px;
+  padding: 10px;
+  background-color: $beige;
+
+  .button {
+    margin: 5px;
+  }
+}
+
+.top-bar {
+  background-color: $grey;
+  color: $red;
+}
+
+.grid-container {
+  padding: 0;
+}
+
+.fa-2x {
+  font-size: large;
+}
+
+.sort-field {
+  display: flex;
+  width: 40%;
+
+  label {
+    flex: 1;
+    text-align: right;
+    font-size: large;
+    margin-right: 5px;
+  }
+
+  select {
+    flex: 3;
+  }
+}
+
+.inline {
+  margin: 10px;
+  display: inline-flex;
+  flex-direction: row;
+  font-family: $body-font;
+}
+
+.review-title {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 30px;
 }

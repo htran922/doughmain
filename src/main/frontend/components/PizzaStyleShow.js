@@ -71,7 +71,7 @@ const PizzaStyleShow = props => {
 
   const reviewTiles = pizzaStyle.reviews.map(review => {
     return (
-      <div key={review.id}>
+      <div key={review.id} className="callout">
         <ReviewTile review={review} />
         <div className="small button-group">
           <Link to={`/reviews/${review.id}/edit`}>
@@ -90,18 +90,27 @@ const PizzaStyleShow = props => {
   return (
     <div className="grid-container">
       <div>
-        <div className="show-page" style={{ backgroundImage: `url(${pizzaStyle.imgUrl})`}}>
+        <div className="show-page" 
+        // style={{ backgroundImage: `url(${pizzaStyle.imgUrl})`}}
+        >
           {/* <img src={pizzaStyle.imgUrl} /> */}
           <h1>{pizzaStyle.name}</h1>
         </div>
-        <div>
+        {/* <div>
           <Link to="/reviews/new" className="button" type="button">
             Add A Review
           </Link>
-        </div>
+        </div> */}
       </div>
+      <span className="inline">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in sollicitudin lacus. Proin imperdiet augue in metus auctor, tincidunt dictum felis pharetra. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nullam a placerat nibh. Sed non faucibus orci. Morbi maximus sit amet urna non blandit.</span>
+
+      <div className="review-title">
+        <h2>Reviews</h2>
       <ReviewSortField sortOption={sortOption} handleSortSelect={handleSortSelect} />
-      <br />
+      </div>
+      
+
+      
       {reviewTiles}
     </div>
   )
