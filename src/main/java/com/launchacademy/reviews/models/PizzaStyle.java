@@ -41,4 +41,7 @@ public class PizzaStyle {
   @JsonIgnoreProperties("pizzaStyle")
   private List<Review> reviews = new ArrayList<>();
 
+  @Column
+  private String description;
+
 }
