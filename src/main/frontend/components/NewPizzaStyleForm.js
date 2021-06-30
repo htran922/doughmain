@@ -72,11 +72,11 @@ const NewPizzaStyleForm = props => {
   }
 
   return (
-    <form className="callout" onSubmit={handleSubmit}>
+    <form className="callout form" onSubmit={handleSubmit}>
       <h2>Add A New Pizza Style</h2>
       <ErrorList errors={errors} />
       <div>
-        <label htmlFor="name">Name: </label>
+        <label htmlFor="name">Name </label>
         <input
           name="name"
           id="name"
@@ -87,7 +87,7 @@ const NewPizzaStyleForm = props => {
       </div>
 
       <div>
-        <label htmlFor="imgUrl">Image URL: </label>
+        <label htmlFor="imgUrl">Image URL </label>
         <input
           name="imgUrl"
           id="imgUrl"
@@ -98,7 +98,7 @@ const NewPizzaStyleForm = props => {
       </div>
 
       <div>
-        <label htmlFor="description">Description: </label>
+        <label htmlFor="description">Description </label>
         <textarea
           name="description"
           id="description"

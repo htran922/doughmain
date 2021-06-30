@@ -33,7 +33,7 @@ const PizzaStyleField = props => {
 
   return (
     <div>
-      <label htmlFor="pizzaStyleId">Pizza Style:</label>
+      <label htmlFor="pizzaStyleId">Pizza Style</label>
       <select
         name="pizzaStyleId"
         id="pizzaStyleId"

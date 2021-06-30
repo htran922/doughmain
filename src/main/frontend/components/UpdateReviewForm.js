@@ -135,7 +135,7 @@ const UpdateReviewForm = props => {
         pizzaStyleId={formPayload.pizzaStyleId}
       />
       <div>
-        <label htmlFor="title">Title: </label>
+        <label htmlFor="title">Title </label>
         <input
           name="title"
           id="title"
@@ -146,7 +146,7 @@ const UpdateReviewForm = props => {
       </div>
 
       <div>
-        <label htmlFor="comment">Comment: </label>
+        <label htmlFor="comment">Comment </label>
         <input
           name="comment"
           id="comment"
@@ -159,7 +159,7 @@ const UpdateReviewForm = props => {
       <StarRating formRating={formPayload.rating} handleRatingChange={handleRatingChange} />
 
       <div>
-        <label htmlFor="imgFile">Image URL: </label>
+        <label htmlFor="imgFile">Image </label>
         <input
           name="imgFile"
           id="imgFile"

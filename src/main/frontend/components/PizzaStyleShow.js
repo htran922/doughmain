@@ -90,10 +90,7 @@ const PizzaStyleShow = props => {
   return (
     <div className="grid-container">
       <div>
-        <div className="show-page" 
-        // style={{ backgroundImage: `url(${pizzaStyle.imgUrl})`}}
-        >
-          {/* <img src={pizzaStyle.imgUrl} /> */}
+        <div className="show-page" style={{ backgroundImage: `url(${pizzaStyle.imgUrl})` }}>
           <h1>{pizzaStyle.name}</h1>
         </div>
         {/* <div>
@@ -102,15 +99,13 @@ const PizzaStyleShow = props => {
           </Link>
         </div> */}
       </div>
-      <span className="inline">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in sollicitudin lacus. Proin imperdiet augue in metus auctor, tincidunt dictum felis pharetra. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nullam a placerat nibh. Sed non faucibus orci. Morbi maximus sit amet urna non blandit.</span>
+      <span className="inline">{pizzaStyle.description}</span>
 
       <div className="review-title">
         <h2>Reviews</h2>
-      <ReviewSortField sortOption={sortOption} handleSortSelect={handleSortSelect} />
+        <ReviewSortField sortOption={sortOption} handleSortSelect={handleSortSelect} />
       </div>
-      
 
-      
       {reviewTiles}
     </div>
   )
