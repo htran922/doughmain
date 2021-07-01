@@ -1,6 +1,9 @@
 @import "./foundation/settings";
 @import "~foundation-sites/scss/foundation";
 @include foundation-everything;
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Benne&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap");
 // place global css here
 *,
 *::before,
@@ -13,6 +16,24 @@
   tab-size: 4;
 }
 
+$title-font: "Montserrat", sans-serif;
+$header-font: "Benne", serif;
+$body-font: "Noto Sans JP", sans-serif;
+$white: #ffffff;
+$red: #933325;
+$orange: #e36f2c;
+$grey: #333333;
+$beige: #FBE6DA;
+$silver: #C2C2C2;
+$star-yellow: #ff9933;
+$green: #095D59;
+
+body {
+  background-color: $grey;
+  color: $white;
+  font-family: $body-font;
+}
+
 .pizza-image {
   width: 40%;
   display: block;
@@ -22,26 +43,306 @@
 
 .button {
   margin: 10px;
+  font-weight: bold;
 }
 
 .error-page {
   text-align: center;
+  height: 70vh;
+  overflow: hidden;
 }
 
 .error-page::after {
   content: "";
-  background: url("https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cGl6emF8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60");
+  background: url("https://images.unsplash.com/photo-1593246049226-ded77bf90326?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjF8fHBpenphfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1");
   opacity: 0.5;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   position: fixed;
-  z-index: -1; 
+  z-index: -1;
   background-size: cover;
 }
 
 .star {
-  color: #ff9933;
+  color: $orange;
+  display: inline-flex;
+  size: 10px;
+  margin: 5px;
   cursor: pointer;
+  font-size: 30px;
+}
+
+.top-bar {
+  padding: 0px;
+  padding-left: 5px;
+  font-family: $title-font;
+  background-color: $orange;
+  color: $grey;
+
+  .label {
+    padding: 12px;
+  }
+
+  a {
+    color: $grey;
+  }
+
+  h4 {
+    font-family: $title-font;
+    color: $beige;
+  }
+}
+
+.big-image {
+  text-align: center;
+  font-style: italic;
+  color: $white;
+  padding: 4em;
+  background: url("https://images.unsplash.com/photo-1542834369-f10ebf06d3e0?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mjl8fHBpenphfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60");
+  background-size: cover;
+  margin: 0;
+}
+
+h1,
+h2 {
+  font-family: $header-font;
+}
+
+h3,
+h4,
+p,
+span {
+  font-family: $body-font;
+}
+
+.card {
+  border-radius: 20px;
+  margin:  0 16px 20px;
+  font-family: $body-font;
+  background-color: $orange;
+  max-width: 300px;
+  border: none;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  
+  img {
+    width: 300px;
+    height: 200px;
+  }
+  
+  h4 {
+    color: $white;
+    font-weight: bold;
+    font-style: italic;
+  }
+}
+
+.cell {
+  margin-bottom: 20px;
+}
+
+.show-page {
+  padding: 10em;
+  background-size: cover;
+
+  h1 {
+    color: $white;
+    font-style: italic;
+    font-weight: bolder;
+    text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+  }
+}
+
+.stars {
+  color: $red;
+  font-size: larger;
+  margin-right: 10px;
+  margin-bottom: 20px;
+}
+
+.media-object {
+  display: flex;
+  justify-content: space-between;
+
+  img {
+    width: 300px;
+    max-height: 300px;
+  }
+
+  p {
+    margin-top: 10px;
+  }
+}
+
+.callout {
+  margin: 20px 50px;
+  padding: 20px;
+  background-color: $beige;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+
+  .button {
+    margin: 5px;
+    border-radius: 10%;
+  }
+}
+
+.form {
+  margin: 40px 200px;
+  color: $grey;
+
+  .button {
+    background-color: $red;
+    border-radius: 5px;
+    width: 20%;
+    margin-left: 0px;
+  }
+
+  label {
+    font-weight: bold;
+    color: $grey;
+  }
+}
+
+.grid-container {
+  padding: 0;
+}
+
+.fa-2x {
+  font-size: large;
+}
+
+.sort-field {
+  display: flex;
+  width: 40%;
+
+  label {
+    flex: 1;
+    text-align: right;
+    font-size: large;
+    margin-right: 10px;
+    color: $white;
+  }
+
+  select {
+    flex: 3;
+  }
+}
+
+.inline {
+  margin: 20px;
+  margin-bottom: 50px;
+  padding: 0 30px;
+  display: inline-flex;
+  flex-direction: row;
+  font-family: $body-font;
+}
+
+.review-title {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 50px;
+}
+
+.icons {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 40px;
+  padding: 40px;
+
+  i {
+    border: solid $orange;
+    border-radius: 50%;
+    padding: 30px;
+  }
+}
+
+.header {
+  padding-left: 30px;
+  margin-bottom: 20px;
+}
+
+.landing {
+  background-color: $beige;
+  color: $grey;
+  padding: 15px 0;
+  margin-bottom: 20px;
+}
+
+.label {
+  border-radius: 2px;
+  background-color: $beige;
+  color: $white;
+  box-shadow: 0 10px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.label:hover {
+  background-color: $grey;
+  color: $beige;
+}
+
+textarea {
+  resize: none;
+}
+
+.delete {
+  background-color: $red;
+}
+
+.edit {
+  background-color: $green;
+}
+
+.dropdown {
+  margin-right: 50px;
+
+  a:hover {
+    color: $red;
+  }
+
+  ul {
+    background-color: $beige;
+  }
+}
+
+.dropdown.menu > li.is-dropdown-submenu-parent > a:hover {
+  color: $grey;
+}
+
+.dropdown.menu > li.is-active > a {
+  color: $grey;
+}
+
+.dropdown.menu > li.is-dropdown-submenu-parent > a::after {
+  border-color: $grey transparent transparent;
+}
+
+footer {
+  padding: 10px;
+  background-color: $silver;
+  margin-top: 10%;
+
+  i {
+    padding: 10px;
+  }
+}
+
+.review-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.upload {
+  border: 3px dashed $red;
+  border-radius: 5px;
+  height: 200px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  i {
+    color: $red;
+  }
 }

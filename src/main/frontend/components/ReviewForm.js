@@ -15,15 +15,18 @@ const ReviewForm = props => {
     errors
   } = props
   return (
-    <form className="callout" onSubmit={handleSubmit}>
+    <form className="callout form" onSubmit={handleSubmit}>
       <h2>{formTitle}</h2>
       <ErrorList errors={errors} />
+
+      <StarRating formRating={formPayload.rating} handleRatingChange={handleRatingChange} />
+
       <PizzaStyleField
         handleInputChange={handleInputChange}
         pizzaStyleId={formPayload.pizzaStyleId}
       />
       <div>
-        <label htmlFor="title">Title: </label>
+        <label htmlFor="title">Title </label>
         <input
           name="title"
           id="title"
@@ -34,20 +37,19 @@ const ReviewForm = props => {
       </div>
 
       <div>
-        <label htmlFor="comment">Comment: </label>
-        <input
+        <label htmlFor="comment">Tell Us What You Think </label>
+        <textarea
           name="comment"
           id="comment"
-          type="text"
+          placeholder="This may be one of my favorite pizza styles out there. It's definitely better with olives and feta cheese in my opinion, but it's the sauce that really matters in the end and where you get it from of course."
+          rows="3"
           value={formPayload.comment}
           onChange={handleInputChange}
         />
       </div>
 
-      <StarRating formRating={formPayload.rating} handleRatingChange={handleRatingChange} />
-
       <div>
-        <label htmlFor="imgFile">Image URL: </label>
+        <label htmlFor="imgFile">Upload Image </label>
         <ImageDropzone handleImageUpload={handleImageUpload} />
       </div>
 

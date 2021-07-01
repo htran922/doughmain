@@ -55,17 +55,17 @@ const PizzaStyleShow = props => {
     return <Redirect to={"/404"} />
   }
 
-  const reviewTiles = pizzaStyle.reviews.map(review => {
+  let reviewTiles = pizzaStyle.reviews.map(review => {
     return (
-      <div key={review.id}>
+      <div key={review.id} className="callout">
         <ReviewTile review={review} />
         <div className="small button-group">
           <Link to={`/reviews/${review.id}/edit`}>
-            <button type="button" className="success button">
+            <button type="button" className="edit button">
               Edit
             </button>
           </Link>
-          <button type="button" value={review.id} onClick={handleDelete} className="alert button">
+          <button type="button" value={review.id} onClick={handleDelete} className="delete button">
             Delete
           </button>
         </div>
@@ -73,19 +73,23 @@ const PizzaStyleShow = props => {
     )
   })
 
+  if (_.isEmpty(reviewTiles)) {
+    reviewTiles = <div className="inline"><em>There aren't any reviews here yet</em></div>
+  }
+
   return (
     <div className="grid-container">
-      <div className="text-center">
-        <h1>{pizzaStyle.name}</h1>
-        <img src={pizzaStyle.imgUrl} />
-        <div>
-          <Link to="/reviews/new" className="button" type="button">
-            Add A Review
-          </Link>
+      <div>
+        <div className="show-page" style={{ backgroundImage: `url(${pizzaStyle.imgUrl})` }}>
+          <h1>{pizzaStyle.name}</h1>
         </div>
       </div>
-      <ReviewSortField sortOption={sortOption} handleSortSelect={handleSortSelect} />
-      <br />
+      <span className="inline">{pizzaStyle.description}</span>
+
+      <div className="review-title">
+        <h2>Reviews</h2>
+        <ReviewSortField sortOption={sortOption} handleSortSelect={handleSortSelect} />
+      </div>
       {reviewTiles}
     </div>
   )

@@ -39,10 +39,8 @@ const StarRating = ({ formRating, handleRatingChange }) => {
       name="rating"
       id="rating"
     >
-      <label htmlFor="rating">
-        Rating:
-        {starComponents}
-      </label>
+      <label htmlFor="rating">Rating </label>
+      {starComponents}
     </div>
   )
 }

@@ -56,11 +56,11 @@ const NewPizzaStyleForm = props => {
   }
 
   return (
-    <form className="callout" onSubmit={handleSubmit}>
-      <h2>Add A New Pizza Style</h2>
+    <form className="callout form" onSubmit={handleSubmit}>
+      <h2>Add A Pizza Style</h2>
       <ErrorList errors={errors} />
       <div>
-        <label htmlFor="name">Name: </label>
+        <label htmlFor="name">Name </label>
         <input
           name="name"
           id="name"
@@ -71,7 +71,7 @@ const NewPizzaStyleForm = props => {
       </div>
 
       <div>
-        <label htmlFor="imgUrl">Image URL: </label>
+        <label htmlFor="imgUrl">Image URL </label>
         <input
           name="imgUrl"
           id="imgUrl"
@@ -82,10 +82,12 @@ const NewPizzaStyleForm = props => {
       </div>
 
       <div>
-        <label htmlFor="description">Description: </label>
+        <label htmlFor="description">Description </label>
         <textarea
           name="description"
           id="description"
+          placeholder="Neapolitan is the original pizza and there are three official variants: Pizza Marinara, Pizza Margherita and Pizza margherita extra. The typical Neapolitan pizza toppings are fresh mozzarella, tomatoes, basil leaves, oregano, and olive oil."
+          rows="3"
           value={formPayload.description}
           onChange={handleInputChange}
         />

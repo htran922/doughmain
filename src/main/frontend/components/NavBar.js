@@ -43,17 +43,26 @@ const NavBar = () => {
       <div className="top-bar">
         <div className="top-bar-left">
           <Link to={`/pizza-styles`}>
-            <h5>doughmain</h5>
+            <h4> doughmain </h4>
           </Link>
         </div>
-        <div className="top-bar-right">
+        <div className="top-bar">
           <div className="dropdown menu" data-dropdown-menu>
             <li>
-              <Link to={`/pizza-styles`}>Find Reviews By Pizza Style</Link>
+              <Link  className="styles-link" to={`/pizza-styles`}>Pizza Styles</Link>
               <ul className="menu">{pizzaStyleLinks}</ul>
             </li>
           </div>
+          <div className="top-bar-right">
+            <div>
+              <Link className="button label" to={`/reviews/new`}>
+                {" "}
+                <i className="fas fa-pencil-alt"></i> Write A Review
+              </Link>
+            </div>
+          </div>
         </div>
+        
       </div>
       <Switch>
         <Route exact path="/">
@@ -67,6 +76,17 @@ const NavBar = () => {
         <Route exact path="/404" component={NotFoundPage} />
         <Route component={NotFoundPage} />
       </Switch>
+      <div className="text-center">
+          <footer>
+            <p>
+              <em> &#169; copyright 2021 doughmain</em>
+              <i className="fab fa-facebook-messenger"></i>
+              <i className="fab fa-twitter"></i>
+              <i className="fab fa-github"></i>
+              <i className="fab fa-reddit-alien"></i>
+            </p>
+          </footer>
+        </div>
     </div>
   )
 }

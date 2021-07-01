@@ -19,16 +19,16 @@ const ReviewSortField = props => {
   })
 
   return (
-    <div>
-      <label htmlFor="sortSelect">Sort By </label>
-      <select
-        id="sortSelect"
-        value={props.sortOption}
-        name="sortSelect"
-        onChange={props.handleSortSelect}
-      >
-        {sortOptions}
-      </select>
+    <div className="sort-field">
+      <label htmlFor="sortSelect">Sort By:</label>
+        <select
+          id="sortSelect"
+          value={props.sortOption}
+          name="sortSelect"
+          onChange={props.handleSortSelect}
+        >
+          {sortOptions}
+        </select>
     </div>
   )
 }
