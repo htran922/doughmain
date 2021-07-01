@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, Redirect } from "react-router-dom"
 import _ from "lodash"
 import { getData, jsonDelete } from "../public/js/jsonFetch"
 import ReviewTile from "./ReviewTile"
@@ -8,15 +8,15 @@ import ReviewSortField from "./ReviewSortField"
 const PizzaStyleShow = props => {
   const [pizzaStyle, setPizzaStyle] = useState({ reviews: [] })
   const [sortOption, setSortOption] = useState("")
+  const [shouldRedirect, setShouldRedirect] = useState(false)
   let location = useLocation()
 
   const fetchPizzaStyle = async () => {
-    try {
-      const pizzaStyleData = await getData(`/api/v1/pizza-styles/${props.match.params.id}`)
-      setPizzaStyle(pizzaStyleData.pizzaStyle)
-    } catch (err) {
-      console.error(`Error in fetch: ${err.message}`)
-    }
+    const pizzaStyleData = await getData(
+      `/api/v1/pizza-styles/${props.match.params.id}`,
+      setShouldRedirect
+    )
+    setPizzaStyle(pizzaStyleData.pizzaStyle)
   }
 
   const fetchPizzaStyleSort = async () => {
@@ -49,6 +49,10 @@ const PizzaStyleShow = props => {
   const handleSortSelect = event => {
     const selected = event.target.value
     setSortOption(selected)
+  }
+
+  if (shouldRedirect) {
+    return <Redirect to={"/404"} />
   }
 
   const reviewTiles = pizzaStyle.reviews.map(review => {
