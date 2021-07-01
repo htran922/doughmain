@@ -2,6 +2,7 @@ import React from "react"
 import PizzaStyleField from "./PizzaStyleField"
 import ErrorList from "./ErrorList"
 import StarRating from "./StarRating"
+import ImageDropzone from "./ImageDropzone"
 
 const ReviewForm = props => {
   const {
@@ -47,13 +48,7 @@ const ReviewForm = props => {
 
       <div>
         <label htmlFor="imgFile">Image URL: </label>
-        <input
-          name="imgFile"
-          id="imgFile"
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-        />
+        <ImageDropzone handleImageUpload={handleImageUpload} />
       </div>
 
       <input className="button" type="submit" value="Submit" />
