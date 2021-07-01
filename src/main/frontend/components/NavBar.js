@@ -55,10 +55,14 @@ const NavBar = () => {
           </div>
           <div className="top-bar-right">
             <div>
-              <Link className="button label" to={`/reviews/new`}> <i className="fas fa-pencil-alt"></i> Write A Review</Link>
+              <Link className="button label" to={`/reviews/new`}>
+                {" "}
+                <i className="fas fa-pencil-alt"></i> Write A Review
+              </Link>
             </div>
           </div>
         </div>
+        
       </div>
       <Switch>
         <Route exact path="/">
@@ -72,6 +76,17 @@ const NavBar = () => {
         <Route exact path="/404" component={NotFoundPage} />
         <Route component={NotFoundPage} />
       </Switch>
+      <div className="text-center">
+          <footer>
+            <h3>Contact Us</h3>
+            <h3>
+              <i className="fab fa-facebook-messenger"></i>
+              <i className="fab fa-twitter"></i>
+              <i className="fab fa-github"></i>
+              <i className="fab fa-reddit-alien"></i>
+            </h3>
+          </footer>
+        </div>
     </div>
   )
 }
