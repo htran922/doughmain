@@ -2,6 +2,7 @@ import React from "react"
 import PizzaStyleField from "./PizzaStyleField"
 import ErrorList from "./ErrorList"
 import StarRating from "./StarRating"
+import ImageDropzone from "./ImageDropzone"
 
 const ReviewForm = props => {
   const {
@@ -36,7 +37,7 @@ const ReviewForm = props => {
       </div>
 
       <div>
-        <label htmlFor="comment">Comment </label>
+        <label htmlFor="comment">Tell Us What You Think </label>
         <textarea
           name="comment"
           id="comment"
@@ -48,14 +49,8 @@ const ReviewForm = props => {
       </div>
 
       <div>
-        <label htmlFor="imgFile">Image </label>
-        <input
-          name="imgFile"
-          id="imgFile"
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-        />
+        <label htmlFor="imgFile">Upload Image </label>
+        <ImageDropzone handleImageUpload={handleImageUpload} />
       </div>
 
       <input className="button" type="submit" value="Submit" />

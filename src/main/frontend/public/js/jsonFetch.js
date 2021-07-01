@@ -1,4 +1,4 @@
-const getData = async url => {
+const getData = async (url, redirectCallback) => {
   try {
     const response = await fetch(url)
     if (!response.ok) {
@@ -9,7 +9,8 @@ const getData = async url => {
     const responseBody = await response.json()
     return responseBody
   } catch (err) {
-    console.error(`Error in fetch: ${err.message}`)
+    console.error(`Error in fetch: ${err.status} (${err.message})`)
+    redirectCallback(true)
   }
 }
 

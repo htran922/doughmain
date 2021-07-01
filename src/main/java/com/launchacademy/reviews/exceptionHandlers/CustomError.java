@@ -36,6 +36,6 @@ public class CustomError extends ResponseEntityExceptionHandler {
         Map<String, String> errors = new HashMap<>();
         errors.put("Style", "Not Found");
         ErrorResponse errorResponse = new ErrorResponse(errors, "Pizza Style Not Found");
-        return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 }
