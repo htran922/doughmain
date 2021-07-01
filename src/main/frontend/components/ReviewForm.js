@@ -17,6 +17,9 @@ const ReviewForm = props => {
     <form className="callout form" onSubmit={handleSubmit}>
       <h2>{formTitle}</h2>
       <ErrorList errors={errors} />
+
+      <StarRating formRating={formPayload.rating} handleRatingChange={handleRatingChange} />
+
       <PizzaStyleField
         handleInputChange={handleInputChange}
         pizzaStyleId={formPayload.pizzaStyleId}
@@ -34,16 +37,15 @@ const ReviewForm = props => {
 
       <div>
         <label htmlFor="comment">Comment </label>
-        <input
+        <textarea
           name="comment"
           id="comment"
-          type="text"
+          placeholder="This may be one of my favorite pizza styles out there. It's definitely better with olives and feta cheese in my opinion, but it's the sauce that really matters in the end and where you get it from of course."
+          rows="3"
           value={formPayload.comment}
           onChange={handleInputChange}
         />
       </div>
-
-      <StarRating formRating={formPayload.rating} handleRatingChange={handleRatingChange} />
 
       <div>
         <label htmlFor="imgFile">Image </label>

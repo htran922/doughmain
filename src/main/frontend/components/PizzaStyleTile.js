@@ -7,7 +7,7 @@ const PizzaStyleTile = props => {
     <div className="cell">
       <div className="card">
         <div className="card-image text-center">
-          <img src={imgUrl} width="300px" />
+          <img src={imgUrl} />
         </div>
         <div className="card-section">
           <a href={`/pizza-styles/${id}`}>

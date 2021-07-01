@@ -23,15 +23,19 @@ const PizzaStylesIndex = props => {
 
   return (
     <div className="grid-container">
-      <h1 className="big-image">Discover the best pizza styles for you</h1>
-      <h2 className="text-center header">For pizza lovers, by pizza lovers.</h2>
+        <h1 className="big-image">Discover the best pizza styles for you</h1>
+      <div className="landing">
+        <h2 className="text-center">For pizza lovers, by pizza lovers.</h2>
 
-      <h1 className="text-center icons">
-        <i className="fas fa-pizza-slice"></i>
-        <i className="fas fa-pizza-slice"></i>
-        <i className="fas fa-pizza-slice"></i>
-      </h1>
+        <h1 className="text-center icons">
+          <i className="fas fa-pizza-slice"></i>
+          <i className="fas fa-pizza-slice"></i>
+          <i className="fas fa-pizza-slice"></i>
+        </h1>
+      </div>
+
       <h2 className="header">Pizza Styles</h2>
+      <h4 className="header">Explore different pizza styles and see what others are saying about your favorite pizzas</h4>
       <div className="grid-x grid-margin-x small-up-2 medium-up-3">{pizzaStyleTiles}</div>
     </div>
   )

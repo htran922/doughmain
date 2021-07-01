@@ -23,19 +23,15 @@ $white: #ffffff;
 $red: #933325;
 $orange: #e36f2c;
 $grey: #333333;
-$beige: #f9eddc;
+$beige: #FBE6DA;
 $silver: #C2C2C2;
 $star-yellow: #ff9933;
+$green: #095D59;
 
 body {
   background-color: $grey;
   color: $white;
   font-family: $body-font;
-}
-
-h5 {
-  font-family: $title-font;
-  color: $red;
 }
 
 .pizza-image {
@@ -47,6 +43,7 @@ h5 {
 
 .button {
   margin: 10px;
+  font-weight: bold;
 }
 
 .error-page {
@@ -72,19 +69,27 @@ h5 {
   size: 10px;
   margin: 5px;
   cursor: pointer;
+  font-size: 30px;
 }
 
 .top-bar {
   padding: 0px;
   padding-left: 5px;
   font-family: $title-font;
+  background-color: $orange;
+  color: $grey;
 
   .label {
     padding: 12px;
   }
 
   a {
-    color: $red;
+    color: $grey;
+  }
+
+  h5 {
+    font-family: $title-font;
+    color: $grey;
   }
 }
 
@@ -111,20 +116,27 @@ span {
 
 .card {
   border-radius: 20px;
-  margin-left: 16px;
-  margin-right: 16px;
+  margin:  0 16px 20px;
   font-family: $body-font;
-  background-color: $silver;
+  background-color: $orange;
+  max-width: 300px;
+  border: none;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  
   img {
     width: 300px;
     height: 200px;
-    border-radius: 20px;
   }
+  
   h4 {
-    color: $red;
+    color: $white;
     font-weight: bold;
     font-style: italic;
   }
+}
+
+.cell {
+  margin-bottom: 20px;
 }
 
 .show-page {
@@ -139,10 +151,9 @@ span {
 
 .stars {
   color: $red;
-  font-size: large;
-  margin: 10px;
-  display: inline-flex;
-  justify-content: flex-start;
+  font-size: larger;
+  margin-right: 10px;
+  margin-bottom: 20px;
 }
 
 .media-object {
@@ -153,12 +164,17 @@ span {
     width: 300px;
     max-height: 300px;
   }
+
+  p {
+    margin-top: 10px;
+  }
 }
 
 .callout {
   margin: 20px 50px;
-  padding: 10px;
-  background-color: $silver;
+  padding: 20px;
+  background-color: $beige;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 
   .button {
     margin: 5px;
@@ -172,18 +188,15 @@ span {
 
   .button {
     background-color: $red;
-    border-radius: 10%;
+    border-radius: 5px;
+    width: 20%;
+    margin-left: 0px;
   }
 
   label {
     font-weight: bold;
     color: $grey;
   }
-}
-
-.top-bar {
-  background-color: $grey;
-  color: $red;
 }
 
 .grid-container {
@@ -208,7 +221,6 @@ span {
 
   select {
     flex: 3;
-    background-color: $silver;
   }
 }
 
@@ -232,6 +244,7 @@ span {
   justify-content: space-evenly;
   margin: 40px;
   padding: 40px;
+
   i {
     border: solid $orange;
     border-radius: 50%;
@@ -241,5 +254,36 @@ span {
 
 .header {
   padding-left: 30px;
-  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.landing {
+  background-color: $beige;
+  color: $grey;
+  padding: 15px 0;
+  margin-bottom: 20px;
+}
+
+.label {
+  border-radius: 2px;
+  background-color: $beige;
+  color: $white;
+  box-shadow: 0 10px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.label:hover {
+  background-color: $grey;
+  color: $beige;
+}
+
+textarea {
+  resize: none;
+}
+
+.delete {
+  background-color: $red;
+}
+
+.edit {
+  background-color: $green;
 }

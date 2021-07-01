@@ -55,7 +55,7 @@ const NavBar = () => {
           </div>
           <div className="top-bar-right">
             <div>
-              <Link className="button secondary label" to={`/reviews/new`}>Write A Review</Link>
+              <Link className="button label" to={`/reviews/new`}> <i className="fas fa-pencil-alt"></i> Write A Review</Link>
             </div>
           </div>
         </div>

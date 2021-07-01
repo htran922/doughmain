@@ -77,7 +77,12 @@ const ReviewTile = props => {
   return (
     <div className="media-object">
       <div>
-        <h3>{title}<i className="stars">{stars}</i></h3>
+        <h3>{title}</h3>
+        <i className="stars">{stars}</i>
+
+      <span>
+        {month}/{day}/{year}
+      </span>
         <p>{comment}</p>
         <div>
           <span>Was this review helpful to you? </span>
@@ -86,10 +91,6 @@ const ReviewTile = props => {
           </button>
           <span> {voteCount}</span>
         </div>
-
-      <p>
-        {month}/{day}/{year}
-      </p>
       </div>
 
       <div className="media-object-section">

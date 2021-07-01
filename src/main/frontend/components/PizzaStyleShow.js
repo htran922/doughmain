@@ -57,11 +57,11 @@ const PizzaStyleShow = props => {
         <ReviewTile review={review} />
         <div className="small button-group">
           <Link to={`/reviews/${review.id}/edit`}>
-            <button type="button" className="success button">
+            <button type="button" className="edit button">
               Edit
             </button>
           </Link>
-          <button type="button" value={review.id} onClick={handleDelete} className="alert button">
+          <button type="button" value={review.id} onClick={handleDelete} className="delete button">
             Delete
           </button>
         </div>

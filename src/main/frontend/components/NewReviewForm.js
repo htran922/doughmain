@@ -116,7 +116,7 @@ const NewReviewForm = props => {
 
   return (
     <ReviewForm
-      formTitle="Add a Review"
+      formTitle="Write A Review"
       handleSubmit={handleSubmit}
       handleInputChange={handleInputChange}
       handleImageUpload={handleImageUpload}
