@@ -69,8 +69,8 @@ const UpdateReviewForm = props => {
     })
   }
 
-  const handleImageUpload = event => {
-    const file = event.currentTarget.files[0]
+  const handleImageUpload = acceptedFiles => {
+    const file = acceptedFiles[0]
     if (file) {
       setImageFileSize(file.size)
       setImageFile(file)
