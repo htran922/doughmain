@@ -38,30 +38,29 @@ const ReviewTile = props => {
   }
 
   const stars = [
-    <i className={`${one} fa-star`}></i>, 
-    <i className={`${two} fa-star`}></i>, 
-    <i className={`${three} fa-star`}></i>, 
-    <i className={`${four} fa-star`}></i>, 
+    <i className={`${one} fa-star`}></i>,
+    <i className={`${two} fa-star`}></i>,
+    <i className={`${three} fa-star`}></i>,
+    <i className={`${four} fa-star`}></i>,
     <i className={`${five} fa-star`}></i>
   ]
-  
+
   const updateReview = async () => {
     try {
       const response = await fetch(`/api/v1/reviews/${id}/upvote`, {
-        method: 'PUT',
+        method: "PUT",
         headers: new Headers({
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         }),
         body: JSON.stringify(voteCount)
       })
       if (!response.ok) {
         const errorMessage = `${response.status} (${response.statusText})`
         const error = new Error(errorMessage)
-        throw(error)
+        throw error
       }
-
     } catch (err) {
-      console.error(`Error in fetch: ${err.status} (${err.message})`);
+      console.error(`Error in fetch: ${err.status} (${err.message})`)
     }
   }
 
@@ -76,14 +75,17 @@ const ReviewTile = props => {
 
   return (
     <div className="media-object">
-      <div>
-        <h3>{title}</h3>
-        <i className="stars">{stars}</i>
+      <div className="review-section">
+        <section>
+          <h3>{title}</h3>
+          <i className="stars">{stars}</i>
 
-      <span>
-        {month}/{day}/{year}
-      </span>
-        <p>{comment}</p>
+          <span>
+            {month}/{day}/{year}
+          </span>
+          <p>{comment}</p>
+        </section>
+
         <div>
           <span>Was this review helpful to you? </span>
           <button type="button" disabled={disabledStatus} onClick={handleUpvoteClick}>
@@ -95,8 +97,8 @@ const ReviewTile = props => {
 
       <div className="media-object-section">
         <img src={imgUrl} width="300px" />
+      </div>
     </div>
-  </div>
   )
 }
 

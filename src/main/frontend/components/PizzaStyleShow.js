@@ -51,7 +51,7 @@ const PizzaStyleShow = props => {
     setSortOption(selected)
   }
 
-  const reviewTiles = pizzaStyle.reviews.map(review => {
+  let reviewTiles = pizzaStyle.reviews.map(review => {
     return (
       <div key={review.id} className="callout">
         <ReviewTile review={review} />
@@ -69,17 +69,16 @@ const PizzaStyleShow = props => {
     )
   })
 
+  if (_.isEmpty(reviewTiles)) {
+    reviewTiles = <div className="inline"><em>There aren't any reviews here yet</em></div>
+  }
+
   return (
     <div className="grid-container">
       <div>
         <div className="show-page" style={{ backgroundImage: `url(${pizzaStyle.imgUrl})` }}>
           <h1>{pizzaStyle.name}</h1>
         </div>
-        {/* <div>
-          <Link to="/reviews/new" className="button" type="button">
-            Add A Review
-          </Link>
-        </div> */}
       </div>
       <span className="inline">{pizzaStyle.description}</span>
 
@@ -87,7 +86,6 @@ const PizzaStyleShow = props => {
         <h2>Reviews</h2>
         <ReviewSortField sortOption={sortOption} handleSortSelect={handleSortSelect} />
       </div>
-
       {reviewTiles}
     </div>
   )
