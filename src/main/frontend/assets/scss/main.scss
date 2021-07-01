@@ -330,5 +330,19 @@ footer {
 .review-section {
   display: flex;
   flex-direction: column;
-  align-content: space-between;
+  justify-content: space-between;
+}
+
+.upload {
+  border: 3px dashed $red;
+  border-radius: 5px;
+  height: 200px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  i {
+    color: $red;
+  }
 }

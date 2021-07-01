@@ -24,13 +24,18 @@ const ImageDropzone = props => {
   ))
 
   return (
-    <div {...getRootProps()}>
-      <input {...getInputProps()} />
-      {isDragActive ? (
-        <p>Drop the files here ...</p>
-      ) : (
-        <p>Drag 'n' drop your image here, or click to select files</p>
-      )}
+    <div>
+      <div {...getRootProps({ className: "upload text-center" })}>
+        <input {...getInputProps()} />
+        {isDragActive ? (
+          <p>Drop the files here ...</p>
+        ) : (
+          <div>
+            <i className="fas fa-cloud-upload-alt fa-5x"></i>
+            <p>Drag 'n' drop your image here, or click to select files</p>
+          </div>
+        )}
+      </div>
       <aside>{acceptedFileItems}</aside>
     </div>
   )
