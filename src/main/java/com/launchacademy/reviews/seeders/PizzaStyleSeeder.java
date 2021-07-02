@@ -56,7 +56,7 @@ public class PizzaStyleSeeder {
 
       pizzaStyle = new PizzaStyle();
       pizzaStyle.setName("Detroit");
-      pizzaStyle.setImgUrl("https://images.unsplash.com/photo-1546333083-608223219279?ixid=MnwxMjA3fDB8MHxzZWFyY2h8ODZ8fHBhbiUyMHBpenphfGVufDB8MHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60");
+      pizzaStyle.setImgUrl("https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8cGl6emF8ZW58MHwwfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60");
       pizzaStyle.setDescription("Detroit pizza is first topped with pepperoni, followed by brick cheese which is spread to the very edges of the pan, yielding a caramelized cheese perimeter. Sauce is then spooned over the pizza, an order similar to Chicago-style pizza. This pizza features a thick, extra crispy crust that is tender and airy on the inside. Other typical toppings include mushrooms and olives.");
       service.save(pizzaStyle);
 

@@ -40,7 +40,7 @@ public class Review {
   @Column(nullable = false)
   private String comment;
 
-  @Min(0)
+  @Min(1)
   @Max(5)
   @Column(nullable = false)
   private Integer rating;
@@ -66,13 +66,13 @@ public class Review {
   @Column(name = "upvote_count")
   private Integer upvoteCount = 0;
 
-  public Review(String title, String description, Integer rating, String imgUrl) {
+  public Review(String title, String description, Integer rating, String imgUrl, Integer upvoteCount) {
     this.title = title;
     this.comment = description;
     this.rating = rating;
     this.imgUrl = imgUrl;
     createdAt = LocalDateTime.now();
     updatedAt = LocalDateTime.now();
-    upvoteCount = 0;
+    this.upvoteCount = upvoteCount ;
   }
 }
