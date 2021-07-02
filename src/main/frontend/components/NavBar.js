@@ -7,6 +7,7 @@ import NewPizzaStyleForm from "./NewPizzaStyleForm"
 import NewReviewForm from "./NewReviewForm"
 import UpdateReviewForm from "./UpdateReviewForm"
 import NotFoundPage from "./NotFoundPage"
+import Footer from "./Footer"
 
 const NavBar = () => {
   const [pizzaStyles, setPizzaStyles] = useState([])
@@ -39,21 +40,23 @@ const NavBar = () => {
   })
 
   return (
-    <div>
-      <div className="top-bar">
-        <div className="top-bar-left">
-          <Link to={`/pizza-styles`}>
-            <h4> doughmain </h4>
-          </Link>
-        </div>
+    <div className="page-container">
+      <div className="content-wrap">
         <div className="top-bar">
-          <div className="dropdown menu" data-dropdown-menu>
-            <li>
-              <Link  className="styles-link" to={`/pizza-styles`}>Pizza Styles</Link>
-              <ul className="menu">{pizzaStyleLinks}</ul>
-            </li>
+          <div className="top-bar-left">
+            <Link to={`/pizza-styles`}>
+              <h4> doughmain </h4>
+            </Link>
           </div>
           <div className="top-bar-right">
+            <div className="dropdown menu" data-dropdown-menu>
+              <li>
+                <Link className="styles-link" to={`/pizza-styles`}>
+                  Pizza Styles
+                </Link>
+                <ul className="menu">{pizzaStyleLinks}</ul>
+              </li>
+            </div>
             <div>
               <Link className="button label" to={`/reviews/new`}>
                 {" "}
@@ -62,31 +65,20 @@ const NavBar = () => {
             </div>
           </div>
         </div>
-        
+        <Switch>
+          <Route exact path="/">
+            <Redirect to="/pizza-styles" />
+          </Route>
+          <Route exact path="/pizza-styles" component={PizzaStylesIndex} />
+          <Route exact path="/pizza-styles/new" component={NewPizzaStyleForm} />
+          <Route exact path="/pizza-styles/:id" component={PizzaStyleShow} />
+          <Route exact path="/reviews/new" component={NewReviewForm} />
+          <Route exact path="/reviews/:id/edit" component={UpdateReviewForm} />
+          <Route exact path="/404" component={NotFoundPage} />
+          <Route component={NotFoundPage} />
+        </Switch>
       </div>
-      <Switch>
-        <Route exact path="/">
-          <Redirect to="/pizza-styles" />
-        </Route>
-        <Route exact path="/pizza-styles" component={PizzaStylesIndex} />
-        <Route exact path="/pizza-styles/new" component={NewPizzaStyleForm} />
-        <Route exact path="/pizza-styles/:id" component={PizzaStyleShow} />
-        <Route exact path="/reviews/new" component={NewReviewForm} />
-        <Route exact path="/reviews/:id/edit" component={UpdateReviewForm} />
-        <Route exact path="/404" component={NotFoundPage} />
-        <Route component={NotFoundPage} />
-      </Switch>
-      <div className="text-center">
-          <footer>
-            <p>
-              <em> &#169; copyright 2021 doughmain</em>
-              <i className="fab fa-facebook-messenger"></i>
-              <i className="fab fa-twitter"></i>
-              <i className="fab fa-github"></i>
-              <i className="fab fa-reddit-alien"></i>
-            </p>
-          </footer>
-        </div>
+      <Footer />
     </div>
   )
 }

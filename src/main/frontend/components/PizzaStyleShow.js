@@ -61,11 +61,11 @@ const PizzaStyleShow = props => {
         <ReviewTile review={review} />
         <div className="small button-group">
           <Link to={`/reviews/${review.id}/edit`}>
-            <button type="button" className="edit button">
+            <button type="button" className="review-edit-btn button">
               Edit
             </button>
           </Link>
-          <button type="button" value={review.id} onClick={handleDelete} className="delete button">
+          <button type="button" value={review.id} onClick={handleDelete} className="review-delete-btn button">
             Delete
           </button>
         </div>
@@ -74,23 +74,28 @@ const PizzaStyleShow = props => {
   })
 
   if (_.isEmpty(reviewTiles)) {
-    reviewTiles = <div className="inline"><em>There aren't any reviews here yet</em></div>
+    reviewTiles = (
+      <div className="inline">
+        <em>There aren't any reviews here yet</em>
+      </div>
+    )
   }
 
   return (
-    <div className="grid-container">
-      <div>
-        <div className="show-page" style={{ backgroundImage: `url(${pizzaStyle.imgUrl})` }}>
-          <h1>{pizzaStyle.name}</h1>
-        </div>
+    <div>
+      <div className="show-page-image" style={{ backgroundImage: `url(${pizzaStyle.imgUrl})` }}>
+        <h1>{pizzaStyle.name}</h1>
       </div>
+
       <span className="inline">{pizzaStyle.description}</span>
 
-      <div className="review-title">
-        <h2>Reviews</h2>
-        <ReviewSortField sortOption={sortOption} handleSortSelect={handleSortSelect} />
-      </div>
-      {reviewTiles}
+      <section className="grid-container">
+        <div className="review-title">
+          <h2>Reviews</h2>
+          <ReviewSortField sortOption={sortOption} handleSortSelect={handleSortSelect} />
+        </div>
+        {reviewTiles}
+      </section>
     </div>
   )
 }
