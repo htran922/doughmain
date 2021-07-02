@@ -22,21 +22,38 @@ const PizzaStylesIndex = props => {
   })
 
   return (
-    <div className="grid-container">
-        <h1 className="big-image">Discover the best pizza styles for you</h1>
+    <div>
+      <h1 className="landing-image">Discover the best pizza styles for you</h1>
       <div className="landing">
         <h2 className="text-center">For pizza lovers, by pizza lovers.</h2>
 
-        <h1 className="text-center icons">
-          <i className="fas fa-pizza-slice"></i>
-          <i className="fas fa-pizza-slice"></i>
-          <i className="fas fa-pizza-slice"></i>
-        </h1>
+        <div className="text-center icons">
+          <section>
+            <i className="fas fa-pizza-slice"></i>
+            <p className="icon-label">Find Pizza</p>
+          </section>
+          <section>
+            <i className="fas fa-book"></i>
+            <p className="icon-label">Read Reviews</p>
+          </section>
+          <section>
+            <i className="fas fa-edit"></i>
+            <p className="icon-label">Leave a Review</p>
+          </section>
+        </div>
       </div>
 
-      <h2 className="header">Pizza Styles</h2>
-      <h4 className="header"><em>Explore different pizza styles and see what others are saying about your favorite pizzas</em></h4>
-      <div className="grid-x grid-margin-x small-up-2 medium-up-3">{pizzaStyleTiles}</div>
+      <div className="grid-container">
+        <h2 className="header">Pizza Styles</h2>
+        <h4 className="header">
+          <em>
+            Explore different pizza styles and see what others are saying about your favorite pizzas
+          </em>
+        </h4>
+        <div className="grid-x grid-margin-x small-up-1 medium-up-2 large-up-3">
+          {pizzaStyleTiles}
+        </div>
+      </div>
     </div>
   )
 }

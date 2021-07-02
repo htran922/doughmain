@@ -38,11 +38,11 @@ const ReviewTile = props => {
   }
 
   const stars = [
-    <i className={`${one} fa-star`}></i>,
-    <i className={`${two} fa-star`}></i>,
-    <i className={`${three} fa-star`}></i>,
-    <i className={`${four} fa-star`}></i>,
-    <i className={`${five} fa-star`}></i>
+    <i key="1" className={`${one} fa-star`}></i>,
+    <i key="2" className={`${two} fa-star`}></i>,
+    <i key="3" className={`${three} fa-star`}></i>,
+    <i key="4" className={`${four} fa-star`}></i>,
+    <i key="5" className={`${five} fa-star`}></i>
   ]
 
   const updateReview = async () => {
@@ -74,7 +74,7 @@ const ReviewTile = props => {
   }, [voteCount])
 
   return (
-    <div className="media-object">
+    <div className="review-container media-object">
       <div className="review-section">
         <section>
           <h3>{title}</h3>
@@ -89,14 +89,14 @@ const ReviewTile = props => {
         <div>
           <span>Was this review helpful to you? </span>
           <button type="button" disabled={disabledStatus} onClick={handleUpvoteClick}>
-            <i className="fas fa-thumbs-up fa-2x"></i>
+            <i className="fas fa-thumbs-up"></i>
           </button>
           <span> {voteCount}</span>
         </div>
       </div>
 
-      <div className="media-object-section">
-        <img src={imgUrl} width="300px" />
+      <div className="review-image">
+        <img src={imgUrl} />
       </div>
     </div>
   )

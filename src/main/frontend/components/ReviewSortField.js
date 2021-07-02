@@ -19,7 +19,7 @@ const ReviewSortField = props => {
   })
 
   return (
-    <div className="sort-field">
+    <div className="review-sort-select">
       <label htmlFor="sortSelect">Sort By:</label>
         <select
           id="sortSelect"
