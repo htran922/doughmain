@@ -46,8 +46,6 @@ const NewReviewForm = props => {
           throw error
         }
       } else if (response.ok) {
-        console.log(response.data)
-        console.log("File uploaded successfully")
         const body = await response.json()
         setStyleId(body.review.pizzaStyle.id)
         setShouldRedirect(true)

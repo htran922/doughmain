@@ -84,7 +84,6 @@ const UpdateReviewForm = props => {
     const formData = new FormData()
     formData.append("file", imageFile)
     formData.append("formPayload", JSON.stringify(formPayload))
-    console.log(formData)
     try {
       const response = await fetch(`/api/v1/reviews/${reviewId}/file`, {
         method: "put",
@@ -109,7 +108,6 @@ const UpdateReviewForm = props => {
 
   const handleUpdate = event => {
     event.preventDefault()
-    console.log(formPayload)
     if (validForSubmission()) {
       if (imageFile !== null) {
         updateReviewWithImage()
